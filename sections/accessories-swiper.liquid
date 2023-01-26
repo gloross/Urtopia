@@ -1,0 +1,259 @@
+
+  <div class="accessoriesSwiper mobileAccessoriesSwiper">   
+    <div class="swiperWrapped pcWrapped mobileWrapped" style="">
+      {% assign n = section.blocks.size | minus: 1 %}
+      
+      {% for i in (0..n) %}
+
+            <div class="swiper_item {% if i == 0 %}active{% else %}{% endif %}" data-index={{i | plus:1}} {% if i == 0 %} data-active=true {% else %}{% endif %}>
+              
+              <div class="left_des">
+                <div class="top">
+                  <div class="accessoriesTitle">{{section.blocks[i].settings.title | default:""}}</div>
+                  <div class="des pcAccessoriesDes">{{section.blocks[i].settings.des | default:""}}</div>
+                </div>
+                
+              </div>
+              
+              
+              <div class="right_img">
+                {% if section.blocks[i].settings.img != blank %}
+                {% assign default_src = section.blocks[i].settings.img | img_url: 'master' %}
+                <img
+                   src="{{ default_src }}"
+                   alt="{{ section.blocks[i].settings.img.alt | escape }}"
+                   />
+
+                {% endif %}
+				<div class="des mobileAccessoriesDes">{{section.blocks[i].settings.des | default:""}}</div>
+              </div>
+              
+            </div>
+
+      {% endfor %}     
+    </div>
+    <div class="swiper">
+      <span class="prev_btn" onclick="prev()"><</span>
+      <span class="btn_text" id="current_v">1</span>
+      <span class="btn_text">/</span>
+      <span class="btn_text">{{section.blocks.size}}</span>   
+      <span class="next_btn" onclick="next()">></span>
+    </div>
+  </div>
+
+
+
+<style>
+  .accessories-swiper{
+    overflow:hidden;
+  }
+  .accessoriesSwiper{
+    position:relative;
+    width:900px;
+    margin: 60px auto;
+  }
+  .accessoriesSwiper>.swiperWrapped{
+  	display:flex;
+  }
+  .accessoriesSwiper>.swiperWrapped>.swiper_item{
+    display: flex;
+    flex:0 0 900px;
+    height:365px;
+/*     margin-right:40px; */
+    opacity:0.2;
+  }
+  .accessoriesSwiper>.swiperWrapped>.swiper_item.active{
+    opacity:1;
+  }
+  .accessoriesSwiper>.swiperWrapped>.swiper_item>.right_img img{
+    height: 100%;
+    width: auto;
+    max-width: none;
+    border-radius:15px;
+  }
+  .swiper_item .left_des{
+    display: flex;
+    padding-right: 40px;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+   .swiper_item .left_des .accessoriesTitle{
+    font-size:36px;
+    line-height:50.4px;
+    font-weight:600;
+  }
+  .swiper_item .left_des .des{
+    margin-top:26px;
+  }
+  .accessories-swiper .swiper{
+    position:absolute;
+    bottom:0;
+    left:0;
+  }
+  @media screen and (max-width: 990px){
+    .mobileWrapped{
+/*       transform:translateX(-33.33%); */
+    }
+    .accessoriesSwiper{
+      width:100%;
+    }
+    .swiperWrapped{
+      width:300%;
+    }
+    .accessoriesSwiper>.swiperWrapped>.swiper_item{
+      overflow:hidden;
+      flex: 1;
+      flex-direction: column;
+      align-items: center;
+      height:auto;
+      margin-right:0px;      
+    } 
+    .swiper_item .left_des,
+    .swiper_item .right_img{
+      width:84%;
+    }
+    .accessoriesSwiper>.swiperWrapped>.swiper_item>.right_img img{
+      width:100%;
+      height:auto;
+    }
+    .swiper_item .left_des{
+      margin-right:0px;
+    }
+    .swiper_item .left_des .des{
+      width:100%;
+      margin:12px auto;
+    }
+    .swiper_item .right_img{
+      border-radius:15px;
+    }
+    .accessories-swiper .swiper{
+      position: static;
+      width:84%;
+      margin:0 auto;
+    }
+    .swiper_item .left_des .accessoriesTitle{
+    	margin-bottom:24px;
+    }
+    .mobileAccessoriesSwiper .mobileAccessoriesDes{
+    	display:block;
+      	margin:24px 0px;
+    }
+    .pcWrapped .pcAccessoriesDes{
+    	display:none;
+    }
+  }
+  @media screen and (min-width: 991px){
+    .mobileAccessoriesSwiper{
+      display:block;
+    }
+/*     .pcWrapped{
+      transform: matrix(1, 0, 0, 1, -900, 0);
+    } */
+    .mobileAccessoriesSwiper .mobileAccessoriesDes{
+    	display:none;
+    }
+    .pcWrapped .pcAccessoriesDes{
+    	display:block;
+    }
+    
+  }
+</style>
+
+
+{% schema %}
+  {
+    "name": "accessories-swiper",
+	"class": "accessories-swiper",
+    "settings": [],
+    "blocks":[{
+      "type":"list",
+      "name":"list",
+      "settings":[
+        {
+        "type":"image_picker",
+        "id":"img",
+        "label":"默认状态"
+        },
+        {
+        "type":"text",
+        "id":"title",
+        "label":"title"
+        },
+        {
+        "type":"text",
+        "id":"des",
+        "label":"des"
+        }
+      ]
+    }]
+  }
+{% endschema %}
+
+
+<script type='text/javascript'>
+
+    
+  function next(){
+    let swiper_target = $('.accessoriesSwiper>.swiperWrapped')[0]
+    let index = $('.accessoriesSwiper>.swiperWrapped>.swiper_item[data-active]')[0].getAttribute('data-index') 
+    let swiper_w
+
+    swiper_w = $('.accessoriesSwiper>.swiperWrapped>.swiper_item')[0].offsetWidth
+    
+    if(index<{{section.blocks.size}}){
+      document.querySelectorAll('.accessoriesSwiper>.swiperWrapped>.swiper_item').forEach(v=>v.removeAttribute('data-active'))
+      
+
+      
+      
+      $(".accessoriesSwiper #current_v")[0].innerText = +index+1
+      
+      $('.accessoriesSwiper>.swiperWrapped>.swiper_item')[+index].setAttribute('data-active',true)   
+        
+      TweenMax.to(swiper_target, 1, {
+        x:`-=${swiper_w}`,
+        onComplete:()=>{
+      		if((+index+1)<={{section.blocks.size}}){
+              $('.accessoriesSwiper>.swiperWrapped>.swiper_item').removeClass("active") 
+              $('.accessoriesSwiper>.swiperWrapped>.swiper_item')[+index].classList.add("active")
+            }
+            
+      	}
+      });         
+    } 
+  }
+  
+   function prev(){
+
+    let swiper_target = $('.accessoriesSwiper>.swiperWrapped')[0]
+    let index = $('.accessoriesSwiper>.swiperWrapped>.swiper_item[data-active]')[0].getAttribute('data-index') 
+
+    swiper_w = $('.accessoriesSwiper>.swiperWrapped>.swiper_item')[0].offsetWidth
+    
+    if(index>1){
+      document.querySelectorAll('.accessoriesSwiper>.swiperWrapped>.swiper_item').forEach(v=>v.removeAttribute('data-active'))
+      
+
+      
+      
+      $(".accessoriesSwiper #current_v")[0].innerText = +index-1
+      
+      $('.accessoriesSwiper>.swiperWrapped>.swiper_item')[+index-2].setAttribute('data-active',true)  
+         
+      TweenMax.to(swiper_target, 1, {
+        x:`+=${swiper_w}`,
+        onComplete:()=>{
+      		if((index-2)>=0){
+              $('.accessoriesSwiper>.swiperWrapped>.swiper_item').removeClass("active") 
+              $('.accessoriesSwiper>.swiperWrapped>.swiper_item')[+index-2].classList.add("active")
+            }
+            
+      	}
+      });         
+    } 
+    
+    
+  }
+
+
+</script>

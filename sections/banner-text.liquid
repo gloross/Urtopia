@@ -1,0 +1,211 @@
+<div class="bannerTxtWraped wrappedbox">
+    <div class="banner-img">
+        {% if section.settings.img == blank %}
+            <div class="placeholder-wrap">
+                {{ 'image' | placeholder_svg_tag: 'icon icon--placeholder' }}
+            </div>
+        {% else %}
+            {% render 'responsive-image' with section.settings.img, alt: section.settings.img.alt, class: class %}
+        {% endif %}
+        <div class="text-mask">
+          <div class="text-mask-big">Design</div>
+          <div>
+            <div class="text-mask-big">Light</div>
+            <div class="text-mask-small" style="font-size:60px;font-weight:550;">33lbs</div>
+          </div>
+          <div  class="text-mask-big">Smart</div>
+        </div>
+    </div>
+    <div  class="banner-txt">
+        <div style="width:455px; margin:0 auto;max-width:100%">
+          {% if section.settings.Heading != blank %}
+              <div class="banner_heading">{{ section.settings.Heading }}</div>
+          {% endif %}
+  
+          {% if section.settings.button1 != blank and section.settings.link1 != blank %}
+              <a  class="moreBtn bannerBtn " href={{section.settings.link1}}>{{section.settings.button1}}</a>
+          {% endif %}
+  
+          {% if section.settings.button2 != blank and section.settings.link2 != blank %}
+          <a  class="moreBtn bannerBtn buyBtn" href={{section.settings.link2}}>{{section.settings.button2}}</a>
+          {% endif %}
+        </div>
+    </div>
+</div>
+
+<style>
+  .banner-text{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    padding:80px 0px;
+  }
+    .bannerTxtWraped{
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .bannerTxtWraped .banner-img,
+    .bannerTxtWraped .banner-txt{
+        flex: 0 0 50%;
+        position:relative;
+        z-index:0;
+      overflow:hidden;
+    }
+    .bannerTxtWraped .banner-img img{
+      width:100%;
+      height:auto;
+    }
+    .bannerTxtWraped .banner-img .text-mask{
+      position:absolute;
+      top:0px;
+      left:0px;
+      width:100%;
+      height: 100%;
+      font-weight:bold;
+      color:#DEDEDE;
+    }
+    .bannerTxtWraped .banner-img .text-mask>div:nth-child(1){
+      position:absolute;
+      top:0;
+      right:0;
+      z-index:-1;
+    }
+    .bannerTxtWraped .banner-img .text-mask>div:nth-child(2){
+      position:absolute;
+      top:50%;
+      left:0;
+      transform:translateY(-50%);
+    }
+    .bannerTxtWraped .banner-img .text-mask>div:nth-child(3){
+      position:absolute;
+      bottom:0;
+      right:0;
+    }
+    .bannerTxtWraped .banner-img .text-mask .text-mask-big{
+      font-size:120px;      
+      line-height:146px;      
+    }
+    .bannerTxtWraped .banner-txt p{
+        margin:0px;
+        font-size: 36px;
+        font-weight: bold;
+        line-height: 1.4em;
+        background-image: linear-gradient(100deg, #FF6C00 0%, #E64104 100%);
+        background-clip:text;
+        -webkit-background-clip:text;
+        color: transparent;
+    }
+    .bannerTxtWraped .banner-txt p:nth-child(2){
+      margin-bottom:50px;
+    }
+    .bannerTxtWraped .banner-txt .bannerBtn{
+        padding:0px;
+        width: 100%;
+        height:52.85px;
+        line-height:52.85px;
+        border: 1px solid #4D4D4D;
+        font-size:20px;
+    }
+    .bannerTxtWraped .banner-txt .buyBtn{
+        margin-top:21px;
+        border: 1px solid #FD4B17;
+        color: #FD4B17; 
+    }
+    .banner_heading{
+		text-align:left;
+    }
+    @media screen and (max-width: 768px) {
+        .banner-text{
+          padding:34px 20px;
+        }
+        .bannerTxtWraped{
+          width:100%;
+        }
+        .bannerTxtWraped .banner-img,
+        .bannerTxtWraped .banner-txt{
+            flex: 0 0 100%;
+        }
+        .bannerTxtWraped .banner-txt{
+            text-align: center;
+        }
+        .bannerTxtWraped .banner-txt>div{
+          width:auto !important;
+        }
+        .bannerTxtWraped .banner-txt p{
+            margin: 0 auto;
+            padding: 0;
+            font-size: 24px;
+        }
+        .bannerTxtWraped .banner-txt p:nth-child(2){
+            margin-bottom:24.5px;
+        }
+        .bannerTxtWraped .banner-img .text-mask .text-mask-big{
+            font-size:72px;
+            line-height:72px;
+        }
+        .bannerTxtWraped .banner-img .text-mask .text-mask-small{
+            font-size:48px !important;
+            line-height:54px;
+        }
+        .bannerTxtWraped .banner-img .text-mask>div:nth-child(1){
+            top: 36px;
+            right: 18px;
+        }
+        .bannerTxtWraped .banner-img .text-mask>div:nth-child(3){
+            bottom: 20px;
+            right: 20px;
+        }
+        .bannerTxtWraped .banner-txt .bannerBtn{
+            height:37px;
+            line-height:37px;
+        }
+      .bannerTxtWraped .banner-txt .buyBtn{
+      	margin-top:12px;
+      }
+    }
+</style>
+
+{% schema %}
+{
+    "name":"banner-text",
+    "class":"banner-text",
+    "settings":[
+        {
+            "type":"image_picker",
+            "id":"img",
+            "label":"图片"
+        },
+        {
+            "type":"richtext",
+            "id":"Heading",
+            "label":"Heading"
+        },
+        {
+            "type":"text",
+            "id":"button1",
+            "label":"button"
+        },
+        {
+            "type":"url",
+            "id":"link1",
+            "label":"buttonlinks"
+        },
+        {
+            "type":"text",
+            "id":"button2",
+            "label":"button"
+        },
+        {
+            "type":"url",
+            "id":"link2",
+            "label":"buttonlinks"
+        }
+    ],
+    "presets":[
+        {
+            "name":"Banner Text"          
+        }
+    ]
+}
+{% endschema %}

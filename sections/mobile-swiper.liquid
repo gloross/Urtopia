@@ -1,0 +1,584 @@
+{{ 'section-image-banner.css' | asset_url | stylesheet_tag }}
+{{ 'component-slider.css' | asset_url | stylesheet_tag }}
+{{ 'component-slideshow.css' | asset_url | stylesheet_tag }}
+<section id="mobile-swiper" class="pcBox">
+  <div class="mobile-swiper-container box-container">   
+      {% assign n = section.blocks.size | minus: 1 %}
+            <div class="swiper_item">
+              <div class="left_img_container">
+                	<div class="wrapped">
+                		{% for i in (0..n) %}
+                       	<div class="left_img" data-index={{i}} {% if i == 0 %} data-active=true {% endif %}>
+                          {% if section.blocks[i].settings.img != blank %}
+                          {% assign default_src = section.blocks[i].settings.img | img_url: 'master' %}
+                          <img
+                               src="{{ default_src }}"
+                               alt="{{ section.blocks[i].settings.img.alt | escape }}"
+                               loading="lazy"
+                               />
+
+                          {% endif %}
+
+                          {% if section.blocks[i].settings.img_active1 != blank %}
+                          {% assign default_src = section.blocks[i].settings.img_active1 | img_url: 'master' %}
+                          <img
+                               class="active_img"
+                               src="{{ default_src }}"
+                               alt="{{ section.blocks[i].settings.img_active1.alt | escape }}"
+                               loading="lazy"
+                               />
+
+                          {% endif %}
+
+                          {% if section.blocks[i].settings.img_active2 != blank %}
+                          {% assign default_src = section.blocks[i].settings.img_active2 | img_url: 'master' %}
+                          <img
+                               class="active_img"
+                               src="{{ default_src }}"
+                               alt="{{ section.blocks[i].settings.img_active2.alt | escape }}"
+                               loading="lazy"
+                               />
+
+                          {% endif %}
+
+                          {% if section.blocks[i].settings.img_active3 != blank %}
+                          {% assign default_src = section.blocks[i].settings.img_active3 | img_url: 'master' %}
+                          <img
+                               class="active_img"
+                               src="{{ default_src }}"
+                               alt="{{ section.blocks[i].settings.img_active3.alt | escape }}"
+                               loading="lazy"
+                               />
+
+                          {% endif %}
+                        </div>
+                 		{% endfor %}
+                    </div>
+              	                
+              </div>
+              <div class="right_des_container">
+                <div class="wrapped">
+                	{% for i in (0..n) %}
+                 	 <div class="right_des">
+                    <div class="title" style="margin:0px">{{section.blocks[i].settings.title | default:""}}</div>
+                    <div class="des">{{section.blocks[i].settings.des | default:""}}</div>               
+                  </div>
+                	{% endfor %}
+                 </div>
+                <div class="swiper">
+                  <span class="prev_btn" onclick="prevSwiper()"><</span>
+                    <span id="current_v" class="btn_text">1</span>
+                    <span class="btn_text">/</span>
+                    <span class="btn_text">{{section.blocks.size}}</span>
+                    <span class="next_btn" onclick="nextSwiper()">></span>
+                </div>
+              </div>
+            </div>
+    
+  </div>
+  
+  <script>
+    $('#mobile-swiper').ready(()=>{
+     
+      
+     	var mobile_swiper1 = new TimelineMax()
+    		.add([
+      			TweenMax.to(".mobile-swiper-container .left_img:nth-child(1) img.active_img:nth-child(2)", 0.5, {
+                  opacity:1,
+                  top:"50%",
+                  left:"50%",
+                  y:"-50%",
+                  x:"-130%"
+          		}),
+      			TweenMax.to(".mobile-swiper-container .left_img:nth-child(1) img.active_img:nth-child(3)", 0.5, {
+                  opacity:1,
+                  top:"0%",
+                  right:"0%",
+                  y:"-10%",
+                  x:"30%"
+          		}),
+      			TweenMax.to(".mobile-swiper-container .left_img:nth-child(1) img.active_img:nth-child(4)", 0.5, {
+                  opacity:1,
+                  bottom:"0%",
+                  right:"0%",
+                  y:"10%",
+                  x:"30%"
+          		})
+    		])
+    
+    
+    	new ScrollMagic.Scene({ 
+          triggerElement:"#mobile-swiper", 
+          offset:100,
+          duration:0
+        })
+      	.setTween(mobile_swiper1)        
+        .addTo(controller);     
+            
+
+    })
+  </script>
+  
+</section>
+  
+    <!--  mobile start    -->
+<!--   	<section class="mobileBox"> -->
+    	<slideshow-component class="mobileBox mobileSwiper slider-mobile slider-mobile-gutter{% if section.settings.layout == 'grid' %} page-width{% endif %}{% if section.settings.show_text_below %} mobile-text-below{% endif %}" role="region" aria-roledescription="{{ 'sections.slideshow.carousel' | t }}" aria-label="{{ section.settings.accessibility_info | escape }}">
+        <div class="slideshow banner banner--{{ section.settings.slide_height }} grid grid--1-col slider slider--everywhere{% if section.settings.show_text_below %} banner--mobile-bottom{% endif %}{% if section.blocks.first.settings.image == blank %} slideshow--placeholder{% endif %}"
+          id="Slider-{{ section.id }}"
+          aria-live="polite"
+          aria-atomic="true"
+          data-autoplay="{{ section.settings.auto_rotate }}"
+          data-speed="{{ section.settings.change_slides_speed }}"
+        >
+          {%- for block in section.blocks -%}
+            <style>
+              #Slide-{{ section.id }}-{{ forloop.index }} .banner__media::after {
+                opacity: {{ block.settings.img_overlay_opacity | divided_by: 100.0 }};
+              }
+            </style>
+            <div class="slideshow__slide grid__item grid--1-col slider__slide"
+              id="Slide-{{ section.id }}-{{ forloop.index }}"
+              {{ block.shopify_attributes }}
+              role="group"
+              aria-roledescription="{{ 'sections.slideshow.slide' | t }}"
+              aria-label="{{ forloop.index }} {{ 'general.slider.of' | t }} {{ forloop.length }}"
+              tabindex="-1"
+            >
+              <div class="slideshow_des">
+                {% if block.settings.title != blank %}
+                  <div class="mobileSwiperTitle">{{block.settings.title}}</div>
+                {% endif %}
+                {% if block.settings.des != blank %}
+                  <div class="mobileSwiperDes">{{block.settings.des}}</div>
+                {% endif %}
+              </div>
+              <div class="slideshow__media banner__media media{% if block.settings.img == blank %} placeholder{% endif %}">
+                {%- if block.settings.img -%}
+                  <img
+                    srcset="{%- if block.settings.img.width >= 375 -%}{{ block.settings.img | image_url: width: 375 }} 375w,{%- endif -%}
+                    {%- if block.settings.img.width >= 550 -%}{{ block.settings.img | image_url: width: 550 }} 550w,{%- endif -%}
+                    {%- if block.settings.img.width >= 750 -%}{{ block.settings.img | image_url: width: 750 }} 750w,{%- endif -%}
+                    {%- if block.settings.img.width >= 1100 -%}{{ block.settings.img | image_url: width: 1100 }} 1100w,{%- endif -%}
+                    {%- if block.settings.img.width >= 1500 -%}{{ block.settings.img | image_url: width: 1500 }} 1500w,{%- endif -%}
+                    {%- if block.settings.img.width >= 1780 -%}{{ block.settings.img | image_url: width: 1780 }} 1780w,{%- endif -%}
+                    {%- if block.settings.img.width >= 2000 -%}{{ block.settings.img | image_url: width: 2000 }} 2000w,{%- endif -%}
+                    {%- if block.settings.img.width >= 3000 -%}{{ block.settings.img | image_url: width: 3000 }} 3000w,{%- endif -%}
+                    {%- if block.settings.img.width >= 3840 -%}{{ block.settings.img | image_url: width: 3840 }} 3840w,{%- endif -%}
+                    {{ block.settings.img | image_url }} {{ block.settings.img.width }}w"
+                    sizes="100vw"
+                    src="{{ block.settings.img | image_url: width: 1500 }}"
+                    loading="lazy"
+                    alt="{{ block.settings.img.alt | escape }}"
+                    width="{{ block.settings.img.width }}"
+                    height="{{ block.settings.img.width | divided_by: block.settings.img.aspect_ratio | round }}"
+                  >
+                {%- else -%}
+                  {{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder-svg' }}
+                {%- endif -%}
+                {% if block.settings.img_active1 != blank %}
+                  {% assign default_src = block.settings.img_active1 | img_url: 'master' %}
+                  <img
+                       class="active_img"
+                       src="{{ default_src }}"
+                       alt="{{ block.settings.img_active1.alt | escape }}"
+                       loading="lazy"
+                       />
+
+                  {% endif %}
+
+                  {% if block.settings.img_active2 != blank %}
+                  {% assign default_src = block.settings.img_active2 | img_url: 'master' %}
+                  <img
+                       class="active_img"
+                       src="{{ default_src }}"
+                       alt="{{ block.settings.img_active2.alt | escape }}"
+                       loading="lazy"
+                       />
+
+                  {% endif %}
+
+                  {% if block.settings.img_active3 != blank %}
+                  {% assign default_src = block.settings.img_active3 | img_url: 'master' %}
+                  <img
+                       class="active_img"
+                       src="{{ default_src }}"
+                       alt="{{ block.settings.img_active3.alt | escape }}"
+                       loading="lazy"
+                       />
+
+                  {% endif %}
+              </div>
+
+            </div>
+          {%- endfor -%}
+        </div>
+
+        {%- if section.blocks.size > 1 -%}
+        <div class="slideshow__controls slider-buttons no-js-hidden{% if section.settings.show_text_below %} slideshow__controls--border-radius-mobile{% endif %}">
+          <button type="button" class="slider-button slider-button--prev" name="previous" aria-label="{{ 'sections.slideshow.previous_slideshow' | t }}" aria-controls="Slider-{{ section.id }}">{% render 'icon-caret' %}</button>
+          <div class="slider-counter slider-counter--{{ section.settings.slider_visual }}{% if section.settings.slider_visual == 'counter' or section.settings.slider_visual == 'numbers' %} caption{% endif %}">
+            {%- if section.settings.slider_visual == 'counter' -%}
+              <span class="slider-counter--current">1</span>
+              <span aria-hidden="true"> / </span>
+              <span class="visually-hidden">{{ 'general.slider.of' | t }}</span>
+              <span class="slider-counter--total">{{ section.blocks.size }}</span>
+            {%- else-%}
+              <div class="slideshow__control-wrapper">
+                {%- for block in section.blocks -%}
+                  <button class="slider-counter__link slider-counter__link--dots link" aria-label="{{ 'sections.slideshow.load_slide' | t }} {{ forloop.index }} {{ 'general.slider.of' | t }} {{ forloop.length }}" aria-controls="Slider-{{ section.id }}">
+                    <span class="dot"></span>
+                  </button>
+                {%- endfor -%}
+              </div>
+            {%- endif -%}
+          </div>
+          <button type="button" class="slider-button slider-button--next" name="next" aria-label="{{ 'sections.slideshow.next_slideshow' | t }}" aria-controls="Slider-{{ section.id }}">{% render 'icon-caret' %}</button>
+
+          {%- if section.settings.auto_rotate -%}
+            <button type="button" class="slideshow__autoplay slider-button no-js-hidden{% if section.settings.auto_rotate == false %} slideshow__autoplay--paused{% endif %}" aria-label="{{ 'sections.slideshow.pause_slideshow' | t }}">
+              {%- render 'icon-pause' -%}
+              {%- render 'icon-play' -%}
+            </button>
+          {%- endif -%}
+        </div>
+        <noscript>
+          <div class="slider-buttons">
+            <div class="slider-counter">
+              {%- for block in section.blocks -%}
+                <a href="#Slide-{{ section.id }}-{{ forloop.index }}" class="slider-counter__link link" aria-label="{{ 'sections.slideshow.load_slide' | t }} {{ forloop.index }} {{ 'general.slider.of' | t }} {{ forloop.length }}">
+                  {{ forloop.index }}
+                </a>
+              {%- endfor -%}
+            </div>
+          </div>
+        </noscript>
+        {%- endif -%}
+    	</slideshow-component>
+      
+<script>
+
+  function nextSwiper(){
+    
+    let current_i = +document.querySelector("#mobile-swiper .left_img_container .left_img[data-active]").getAttribute("data-index")
+	if(current_i>=2) return;
+    
+    document.querySelectorAll("#mobile-swiper .left_img_container .left_img").forEach(v=>v.removeAttribute('data-active'))
+    document.querySelectorAll("#mobile-swiper .left_img_container .left_img")[+current_i+1].setAttribute('data-active',true)
+    let swiperLeftItem = document.querySelectorAll("#mobile-swiper .left_img_container .left_img")
+    let swiperRightItem = document.querySelectorAll("#mobile-swiper .right_des_container .right_des")
+
+       
+    TweenMax.staggerTo([swiperLeftItem[current_i],swiperRightItem[current_i]],0.7,{
+      x:"150%",
+      opacity:0,
+      onComplete:()=>{
+      	TweenMax.staggerTo(".mobile-swiper-container .swiper_item .left_img img.active_img",0.5,{
+          opacity:0,
+          top:"50%",
+          left:"50%",
+          x:"-50%",
+          y:"-50%"
+    	})	
+      }
+    })
+    TweenMax.staggerTo([swiperLeftItem[current_i+1],swiperRightItem[current_i+1]],0.7,{
+      x:"0%",
+      opacity:1,
+      onComplete:()=>{
+    	TweenMax.to(".mobile-swiper-container .left_img:nth-child("+(current_i+2)+") img.active_img:nth-child(2)", 0.5, {
+          opacity:1,
+          top:"50%",
+          left:"50%",
+          y:"-50%",
+          x:"-130%"
+        }),
+          TweenMax.to(".mobile-swiper-container .left_img:nth-child("+(current_i+2)+") img.active_img:nth-child(3)", 0.5, {
+          opacity:1,
+          top:"0%",
+          right:"0%",
+          y:"-10%",
+          x:"30%"
+        }),
+          TweenMax.to(".mobile-swiper-container .left_img:nth-child("+(current_i+2)+") img.active_img:nth-child(4)", 0.5, {
+          opacity:1,
+          bottom:"0%",
+          right:"0%",
+          y:"10%",
+          x:"30%"
+        })   	
+      }
+    })
+    
+    document.querySelector("#mobile-swiper #current_v").innerText=current_i+2
+  }
+  
+   function prevSwiper(){
+    
+    let current_i = +document.querySelector("#mobile-swiper .left_img_container .left_img[data-active]").getAttribute("data-index")
+	if(current_i<=0) return;
+    
+    document.querySelectorAll("#mobile-swiper .left_img_container .left_img").forEach(v=>v.removeAttribute('data-active'))
+    document.querySelectorAll("#mobile-swiper .left_img_container .left_img")[+current_i-1].setAttribute('data-active',true)
+    let swiperLeftItem = document.querySelectorAll("#mobile-swiper .left_img_container .left_img")
+    let swiperRightItem = document.querySelectorAll("#mobile-swiper .right_des_container .right_des")
+
+       
+    TweenMax.staggerTo([swiperLeftItem[current_i],swiperRightItem[current_i]],0.7,{
+      x:"-100%",
+      opacity:0,
+      onComplete:()=>{
+      	TweenMax.staggerTo(".mobile-swiper-container .swiper_item .left_img img.active_img",0.5,{
+        opacity:0,
+        top:"50%",
+        left:"50%",
+        x:"-50%",
+        y:"-50%"
+    	})	
+      }
+    })
+    TweenMax.staggerTo([swiperLeftItem[current_i-1],swiperRightItem[current_i-1]],0.7,{
+      x:"0%",
+      opacity:1,
+      onComplete:()=>{
+      	console.log(".mobile-swiper-container .left_img:nth-child("+(current_i)+") img.active_img:nth-child(2)")
+    	TweenMax.to(".mobile-swiper-container .left_img:nth-child("+(current_i)+") img.active_img:nth-child(2)", 0.5, {
+          opacity:1,
+          top:"50%",
+          left:"50%",
+          y:"-50%",
+          x:"-130%"
+        }),
+          TweenMax.to(".mobile-swiper-container .left_img:nth-child("+(current_i)+") img.active_img:nth-child(3)", 0.5, {
+          opacity:1,
+          top:"0%",
+          right:"0%",
+          y:"-10%",
+          x:"30%"
+        }),
+          TweenMax.to(".mobile-swiper-container .left_img:nth-child("+(current_i)+") img.active_img:nth-child(4)", 0.5, {
+          opacity:1,
+          bottom:"0%",
+          right:"0%",
+          y:"10%",
+          x:"30%"
+        })   	
+      }
+    })
+    
+    document.querySelector("#mobile-swiper #current_v").innerText=current_i
+  }
+
+
+</script>
+
+<style>
+  #mobile-swiper{
+  	background-color: #F1F1F1;
+  }
+  .mobile-swiper-container{
+  	margin:0 auto;
+    height:100%;
+    display:flex;
+    align-items:center;
+    justify-content: center;
+  }
+
+  .left_img_container{
+  	flex:0 0 60%;
+  }
+  .right_des_container{
+    overflow:hidden;
+    position:relative;
+  	flex:0 0 40%;
+  }
+  .left_img_container .wrapped,
+  .right_des_container .wrapped{
+  	width:100%;
+    height:100%;
+    position:relative;
+  }
+  .swiper_wrapped{
+    height:630px;
+  }
+  .mobile-swiper-container .swiper_item{
+    display:flex;
+    width:1160px;
+    text-align: center;
+  }
+
+  .mobile-swiper-container .swiper_item .left_img,
+  .mobile-swiper-container .swiper_item .right_des{
+    flex:0 0 100%;
+    position:relative;
+  }
+  .mobile-swiper-container .swiper_item .left_img:nth-child(2),
+  .mobile-swiper-container .swiper_item .left_img:nth-child(3),
+  .mobile-swiper-container .swiper_item .right_des:nth-child(2),
+  .mobile-swiper-container .swiper_item .right_des:nth-child(3){
+    width:100%;   
+  	position:absolute;
+    top:0;
+    left:0;
+    transform:translateX(-100%);
+    opacity:0;
+  }
+  .mobile-swiper-container .swiper_item .left_img img{
+  	width:255px;
+  }
+  .mobile-swiper-container .swiper_item .left_img img:nth-child(1){
+    position:relative;
+    z-index:2;
+    border-radius:30px;
+  }
+
+  .mobile-swiper-container .swiper_item .left_img img.active_img{
+  	position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    opacity:0;
+  }
+
+  #mobile-swiper .swiper{
+  	position:absolute;
+    bottom:10%;
+    left:80px;
+  }
+
+  .mobile-swiper-container .swiper_item .right_des{
+    height:100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left:80px;
+  }
+  .mobile-swiper-container .swiper_item:nth-child(1) .left_img img{
+    
+  }
+  .swiper_item .right_des .title{
+    text-align:left;
+    font-size:36px;
+    font-weight:600;
+    line-height:50.4px
+  }
+  .swiper_item .right_des .des{
+    margin-top:12px;
+    text-align:left;
+  }
+  @media screen and (max-width: 990px){
+    .mobileBox.mobileSwiper{
+    	padding:0 8%;
+      background-color: #F1F1F1;
+    }
+    .mobile-swiper .mobileBox.mobileSwiper .banner__media{
+    	position:relative;
+      background-color: #F1F1F1;
+       
+    }
+    .mobile-swiper .mobileBox.mobileSwiper .slideshow_des {}
+    .mobile-swiper .mobileBox.mobileSwiper .slideshow_des > .mobileSwiperTitle{
+        margin-bottom:12px;
+    	font-family:Proxima Nova Semibold;
+      	font-size:30px;
+      	line-height:42px;
+    }
+    .mobile-swiper .mobileBox.mobileSwiper .slideshow_des > .mobileSwiperDes{
+    	font-family:Gotham Book;
+        font-size:14px;
+    	line-height:19.6px;
+    }
+    .mobile-swiper .mobileBox.mobileSwiper .banner__media{
+        position:relative;
+    	height:400px;
+      
+    }
+    .mobile-swiper .mobileBox.mobileSwiper .slideshow__slide{
+    	justify-content: space-between;
+    }
+    .mobile-swiper .mobileBox.mobileSwiper .banner__media img{
+    	width:137.85px;
+      	height:auto;
+      	border-radius:15px;
+    }
+    .mobile-swiper .mobileBox.mobileSwiper .banner__media img:nth-child(1){
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%,-50%);
+      z-index:1;
+    }
+    .mobile-swiper .mobileBox.mobileSwiper .banner__media img:nth-child(2){
+      	position: absolute;
+        top: 50%;
+        right: 0;
+        transform: translate(0%,-50%);
+    }
+    .mobile-swiper .mobileBox.mobileSwiper .banner__media img:nth-child(3){
+      	position: absolute;
+        top: 0;
+        left: unset;
+        right: 6px;
+    }
+    .mobile-swiper .mobileBox.mobileSwiper .banner__media img:nth-child(4){
+       position: absolute;
+        top: 50%;
+        left: unset;
+        right: 0;
+    }
+    
+  }
+  
+
+</style>
+
+
+{% schema %}
+  {
+    "name": "mobile-swiper",
+	"class":"mobile-swiper",
+    "settings": [],
+	"blocks":[{
+		"type":"list",
+		"name":"list",
+		"settings":[
+			{
+				"type":"image_picker",
+				"id":"img",
+				"label":"默认状态"
+			},
+			{
+				"type":"image_picker",
+				"id":"img_active1",
+				"label":"hover状态"
+			},
+			{
+				"type":"image_picker",
+				"id":"img_active2",
+				"label":"hover状态"
+			},
+			{
+				"type":"image_picker",
+				"id":"img_active3",
+				"label":"hover状态"
+			},
+			{
+				"type":"text",
+				"id":"title",
+				"label":"title"
+			},
+			{
+				"type":"text",
+				"id":"des",
+				"label":"des"
+			}
+		]
+	}]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

@@ -1,0 +1,196 @@
+<div class="wrappedbox">
+    <div class="title" style="margin-top:0px;">Enjoyment from the very beginning</div>
+    <div class="photoWall">
+    {% for block in section.blocks %}
+
+        <div class="col-img">
+            {% if block.settings.img == blank %}
+                <div class="placeholder-wrap">
+                    {{ 'image' | placeholder_svg_tag: 'icon icon--placeholder' }}
+                </div>
+            {% else %}
+                {% render 'responsive-image' with block.settings.img, alt: block.settings.img.alt, class: class %}
+            {% endif %}
+
+            <div class="wordWrap">
+                {% if block.settings.Heading != blank %}
+                    <div class="heading">{{block.settings.Heading}}</div>
+                {% endif %}
+                <div class="bannerBtnConatiner">
+                  {% if block.settings.button1 != blank and block.settings.link1 != blank %}
+                  <a  class="bannerBtn" href={{block.settings.link1}}>{{block.settings.button1}}</a>
+                  {% endif %}
+      
+                  {% if block.settings.button2 != blank and block.settings.link2 != blank %}
+                  <a  class="bannerBtn" href={{block.settings.link2}}>{{block.settings.button2}}</a>
+                  {% endif %}
+                </div>
+            </div>
+        </div>
+
+    {% endfor %}
+    </div>
+</div>
+
+<style>
+    .photo-wall{
+        padding: 78px 0px;
+        display:flex;
+        justify-content: center;
+        background: #F2F2F2;
+    }
+    .photoWall{
+        display: flex;
+        flex-wrap: wrap;
+        width:100%;
+        justify-content: space-between;
+    }
+    .photo-wall .col-img{
+        overflow: hidden;
+        position: relative;
+        border-radius: 15px;
+        height: 422px;
+        margin-bottom: 12px;
+
+    }
+    .photo-wall .col-img:nth-child(2),
+    .photo-wall .col-img:nth-child(3){        
+        flex: 0 0 39%;
+    }
+    .photo-wall .col-img:nth-child(1),
+    .photo-wall .col-img:nth-child(4){
+        flex: 0 0 60%;
+    }
+    .col-img .wordWrap{
+        position: absolute;
+        top: 8%;
+        left: 5%;
+        color: #fff;
+    }
+    .col-img .wordWrap .heading{
+        margin-bottom:30px;
+        font-size: 36px;
+      	font-weight:650;
+        line-height:50.4px;
+    }
+    .col-img .wordWrap .bannerBtn{
+        margin-right:10px;
+        padding:12px 22px;
+        font-size:19px;
+        line-height:27px;
+        font-weight:550;
+        background-color: #fff;
+        border-radius: 30px;
+        color: #161C1F;
+    }
+    .photo-wall .responsive-image-wrapper{
+        height:100%;
+        position:relative;
+    }
+  
+    @media screen and (max-width: 768px) {
+      .wrappedbox{
+        width:100vw;
+      }
+      .photo-wall{
+        padding:24px 0px;
+      }
+      .col-img .wordWrap .heading{
+        font-size:18px;
+      }
+      .photoWall{       
+        justify-content: center;
+      }
+      .photo-wall .title{
+        margin:0 auto;
+        margin-bottom:40px;
+        width:80%;
+        text-align:left;
+        font-size:30px;
+        line-height:33.75px;
+      }
+     .photo-wall .col-img{ 
+        height:422px;
+        max-width: 388px;
+        flex: 0 0 calc(100vw*388/428) !important;
+        overflow:hidden;
+     }
+     .photo-wall .col-img img{
+       height:100%;
+       width:auto;
+       position: absolute;
+       left: 0px;
+       bottom: 0;
+     }
+     .photo-wall .col-img:nth-child(1) img{
+       left: -90px;
+     }
+     .photo-wall .col-img .wordWrap .heading p {
+       width:320px;
+       max-width:100%;
+       font-size:30px;
+       line-height:33.75px;
+     }
+     .col-img .wordWrap .bannerBtn{
+       margin-bottom: 8px;
+       padding:8px 20px;
+       font-size:18px;
+       line-height:25.2px;
+     }
+     .bannerBtnConatiner{
+       display:flex;
+       flex-wrap: wrap;
+     }
+    }
+</style>
+
+{% schema %}
+{
+    "name":"photo-wall",
+    "class":"photo-wall",
+    "settings":[],
+    "blocks":[
+        {
+            "type":"col",
+            "name":"col",
+            "settings":[
+                {
+                    "type":"image_picker",
+                    "id":"img",
+                    "label":"图片"
+                },
+                {
+                    "type":"richtext",
+                    "id":"Heading",
+                    "label":"Heading"
+                },
+                {
+                    "type":"text",
+                    "id":"button1",
+                    "label":"button"
+                },
+                {
+                    "type":"url",
+                    "id":"link1",
+                    "label":"buttonlinks"
+                },
+                {
+                    "type":"text",
+                    "id":"button2",
+                    "label":"button"
+                },
+                {
+                    "type":"url",
+                    "id":"link2",
+                    "label":"buttonlinks"
+                }
+            ]
+        }
+    ],
+    "presets":[
+        {
+            "name":"Photo Wall"          
+        }
+    ]
+}
+{% endschema %}

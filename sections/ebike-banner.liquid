@@ -1,0 +1,381 @@
+<div class="pinContainer" id="ebikeContainer">
+	<div class="slideContainer">
+        {% for block in section.blocks %}
+            {% case block.type %} 
+              
+              {% when 'state3' %}  
+              <section class="ebikebanner" id="ebikebanner1"  style="background-color:#000">
+    			<div class="container">
+                <div class="state1Top" >
+                  <div class="title">{{block.settings.Heading}}</div>
+    
+                  {% if block.settings.checkbox %}
+                      {% render "ebike-icons" %}
+                  {% endif %}
+    
+                </div>
+
+                <div class="stateBottom" style="width:100%">
+                
+                  {% if block.settings.hover_img == blank %}
+                    <div class="placeholder-wrap">
+                      {{ 'image' | placeholder_svg_tag: 'icon icon--placeholder' }}
+                    </div>
+                  {% else %}
+                    {% render 'responsive-image' with block.settings.hover_img, alt: block.settings.hover_img.alt %}
+                  {% endif %}
+
+                    <div class="containerRiding">
+                      <div class="ridingWaving1"></div>
+                      <div class="ridingWaving2"></div>
+                      <div class="ridingtext">Let’s get riding</div>
+                    </div>
+  
+                </div>
+                </div>
+        	  </section>
+
+              {% when 'state1' %}  
+          		<section class="ebikebanner" id="ebikebanner2" style="background-color:#fff">
+            		<div class="container">
+                  	<div class="state1Top" >
+                    <div class="title">{{block.settings.Heading}}</div>
+        
+                    {% if block.settings.checkbox %}
+                      {% render "ebike-icons" %}
+                    {% endif %}
+        
+                  </div>
+        
+                  	<div class="stateBottom" style="width:100%">
+                      
+                      {% if block.settings.hover_img == blank %}
+                      <div class="placeholder-wrap">
+                        {{ 'image' | placeholder_svg_tag: 'icon icon--placeholder' }}
+                      </div>
+                      {% else %}
+                      {% render 'responsive-image' with block.settings.hover_img, alt: block.settings.hover_img.alt %}
+                      {% endif %}
+                  	</div>
+                  </div>
+               </section>
+
+              {% when 'state2' %}
+                <section class="ebikebanner" id="ebikebanner3" style="display:none;background:#000 url({{ block.settings.img | img_url: 'master' }}) center center/100% 100% no-repeat">
+                  <div class="textMask"></div>
+                  <div class="container">
+                     <div class="textContainer">{{block.settings.text}}</div>             
+                  </div>
+        	  </section>
+              {% else %}
+            {% endcase %}
+        {% endfor %}
+      
+	</div>
+</div>
+
+
+<script>
+
+  
+//     if(navigator.userAgent.indexOf('Mobile')<0){
+  if(navigator.userAgent.indexOf('Mobile')<0){
+  	TweenMax.staggerTo(["#ebikebanner1 .ridingWaving2","#ebikebanner1 .ridingWaving1"], 2, {width:300,height:300,repeat:-1,opacity:1},1);
+  }else{
+  	TweenMax.staggerTo(["#ebikebanner1 .ridingWaving2","#ebikebanner1 .ridingWaving1"], 2, {width:250,height:250,repeat:-1,opacity:1},1);
+  }
+      
+      var ebike_state1 = new TimelineMax()
+            .add([             
+                TweenMax.to("#ebikebanner2", 2, {backgroundColor:"#000",delay:1}),
+              	TweenMax.set("#ebikebanner1 .stateBottom > .containerRiding",  {display:"none"}),
+              	TweenMax.to(".ebikebanner:nth-child(2)", 2, {
+                  opacity:1,
+                  delay:1,
+                  onComplete:()=>{
+                    TweenMax.set("#ebikebanner1 .stateBottom > .containerRiding",  {display:"block"})              		
+                  }
+                }),
+                TweenMax.set("#ebikebanner2", {display:"none",delay:2})
+              ])
+            .add([             
+                TweenMax.to("#ebikebanner1 .stateBottom", 2, {x:"25%",opacity:0,delay:1}),
+                TweenMax.to("#ebikebanner1 .state1Top", 2, {x:"-25%",opacity:0,delay:1}),
+                TweenMax.set("#ebikebanner1",  {display:"none",delay:1.5}),
+                TweenMax.set("#ebikebanner3",  {display:"block",delay:1.5}),
+              ])
+   
+      		new ScrollMagic.Scene({
+				triggerElement: "#ebikeContainer",
+				triggerHook: "onLeave", 
+// 				duration: 2400,
+//               	offset: 9500
+              duration: 4000
+			})
+			.setPin("#ebikeContainer")
+            .setTween(ebike_state1)
+            .addTo(controller)
+//     }
+
+</script>
+
+<style>
+  .ebike-banner{
+
+  }
+  .ebikebanner{
+    width:100%;
+    height:100%;
+    position:relative;
+    display:flex;
+  }
+  .ebikebanner:nth-child(2){
+    width:100%;
+    height:100%;
+    position:absolute;
+    top:0px;
+    left:0px;
+    opacity:0;
+/*     background-color:black; */
+  }
+  .ebikebanner:nth-child(3){
+    width:100%;
+    height:100%;
+  }
+  .ebikebanner .textMask{
+    width:100%;
+    height:100%;
+    background-color:rgba(0,0,0,0.5)
+  }
+  .ebikebanner .container{
+    position:absolute;
+    top:0;
+    height:100%;
+    width:100%;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  .ebikebanner .textContainer{
+    width:1160px;
+    text-align:center;
+  }
+  .ebikebanner .textContainer p:nth-child(1){
+    font-size:100px;
+    font-weight:600;
+    color:#939393;
+    text-align:left;
+  }
+   .ebikebanner .textContainer p:nth-child(2){
+   font-size:100px;
+    font-weight:600;
+    color:#fff;
+    text-align:right;
+  }
+  .ebikebanner .textContainer p:nth-child(3){
+    color:#fff;
+    font-size:48px;
+  }
+  .ebikebanner .container .state1Top .title{
+    margin-bottom:40px;
+    font-size:60px;
+    font-weight:600;
+    text-align:center;
+  }
+  .container .state1Top {
+    flex: 0 0 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+  .container .stateBottom{
+    flex:0 0 60%;
+  }
+  #ebikebanner1 .container .state1Top{
+    opacity:1;
+  }
+  #ebikebanner1 .container .stateBottom{
+    opacity:1;
+  }
+  #ebikebanner1 .title{
+    color:#fff;
+  }
+  #ebikebanner1 .smart_icons{
+    color:#FFFFFFA6;
+  }
+  #ebikebanner1 .stateBottom .containerRiding{
+    position: absolute;
+    bottom: 40%;
+    left: 50%;
+    display:none;
+  }
+  #ebikebanner1 .stateBottom{
+    overflow:hidden;
+    position:relative;
+  }
+  #ebikebanner1 .stateBottom .containerRiding .ridingWaving1,
+  #ebikebanner1 .stateBottom .containerRiding .ridingWaving2{
+  	height:0px;
+    width:0px;
+    border-radius: 50%;
+    background: radial-gradient(transparent, transparent,#FF6200);
+    opacity:0;
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+  }
+
+  #ebikebanner1 .stateBottom .containerRiding .ridingtext{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    font-size: 36px;
+    white-space: nowrap;
+    color: #fff;
+  }
+  .ebikebanner .stateBottom .responsive-image-wrapper {
+    height: 100%;
+    align-items: flex-end;
+    justify-content: center;
+  }
+  .ebike-banner .stateBottom img{
+  	height:100%;
+    width:auto;
+    max-width:initial !important;
+  }
+  @media screen and (max-width: 990px){
+/*     .pinContainer{
+      overflow: visible !important;
+      height:auto !important;
+    } */
+    .ebikebanner,
+    .ebikebanner:nth-child(2),
+    .ebikebanner:nth-child(3){
+      height: calc(100vh - 69.06px);
+      justify-content: center;
+    }
+    .ebikebanner:nth-child(3){
+    	background-size:auto 100% !important;
+    }
+    .ebikebanner .container .state1Top .title{
+      font-size:48px;
+      line-height:67.2px;
+    }
+    .ebikebanner .container{
+      width:100%;
+      padding:0% 8%;
+      justify-content: space-around;
+    }
+    #ebikebanner1 .stateBottom{
+      overflow: visible;
+    }
+    .ebikebanner .textContainer{
+      width:100%;
+    }
+    .ebikebanner .textMask{
+      position:absolute;
+      top:0;
+    }
+    #ebikebanner1 .stateBottom .containerRiding{
+      display:none;
+    }
+    .ebikebanner .textContainer p:nth-child(1),
+    .ebikebanner .textContainer p:nth-child(2){
+      font-size:36px;
+      line-height:60px;
+    }
+    .ebikebanner .textContainer p:nth-child(3){
+      font-size:30px;
+      line-height:40.75px;
+    }
+    .smart_icons{
+      font-size:14px;
+      line-height:19.6px;
+    }
+    .smart_icons img{
+      height:30px;
+      width:30px;
+    }
+    .ebike-banner .stateBottom img{
+/*       height:537px; */
+      width:auto;
+    }
+    .ebike-banner .stateBottom .responsive-image-wrapper{
+      justify-content: center;
+    }
+  }
+</style>
+
+
+
+{% schema %}
+{
+    "name":"ebike-banner",
+    "class":"ebike-banner",
+    "settings":[],
+	"blocks":[
+		{
+          "type":"state1",
+          "name":"state1",
+          "settings":[
+			{
+                "type":"text",
+                "id":"Heading",
+                "label":"Heading"
+            },
+            {
+                "type":"image_picker",
+                "id":"hover_img",
+                "label":"hover_img"
+            },
+			{
+				"type":"checkbox",
+				"id":"checkbox",
+				"label":"show icons"
+			}
+          ]
+		},
+		{
+          "type":"state2",
+          "name":"state2",
+          "settings":[
+            {
+                "type":"image_picker",
+                "id":"img",
+                "label":"图片"
+            },
+            {
+                "type":"richtext",
+                "id":"text",
+                "label":"text"
+            }
+          ]
+		},
+		{
+          "type":"state3",
+          "name":"state3",
+          "settings":[
+			{
+                "type":"text",
+                "id":"Heading",
+                "label":"Heading"
+            },
+            {
+                "type":"image_picker",
+                "id":"hover_img",
+                "label":"hover_img"
+            },
+			{
+				"type":"checkbox",
+				"id":"checkbox",
+				"label":"show icons"
+			}
+          ]
+		}
+		
+	]
+}
+{% endschema %}

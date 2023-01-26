@@ -1,0 +1,235 @@
+
+<section id="rideGame" class="pcBox">
+  <div class="rideGameWrapped box-container">
+    <div class="left_box">
+      <div class="title">Always Stay Connected</div>
+      <div class="subTitle">Ride like a game</div>
+      {% if section.settings.text != blank %}
+      	<div class="des">{{section.settings.text}}</div>
+      {% endif %}
+    </div>
+    <div class="right_box">
+      <div class="state1">
+        {% if section.settings.img1 != blank %}
+          {% assign default_src = section.settings.img1 | img_url: 'master' %}
+          <img
+               src="{{ default_src }}"
+               alt="{{ section.settings.img1.alt | escape }}"
+               loading="lazy"
+               />
+
+      	{% endif %}
+      </div>
+      
+      <div class="state2">
+        {% if section.settings.img2 != blank %}
+          {% assign default_src = section.settings.img2 | img_url: 'master' %}
+          <img
+               src="{{ default_src }}"
+               alt="{{ section.settings.img2.alt | escape }}"
+               loading="lazy"
+               />
+
+      	{% endif %}
+      </div>
+       
+    </div>
+  </div>
+ 
+</section>
+
+<section class="mobileBox rideMobileBox normalSection">
+  <div class="title">Always Stay Connected</div>
+  <div class="subTitle">Ride like a game</div>
+  {% if section.settings.text != blank %}
+    <div class="des">{{section.settings.text}}</div>
+  {% endif %}
+  
+  <div class="bottom_box right_box">
+      <div class="state1">
+        {% if section.settings.img1 != blank %}
+          {% assign default_src = section.settings.img1 | img_url: 'master' %}
+          <img
+               src="{{ default_src }}"
+               alt="{{ section.settings.img1.alt | escape }}"
+               loading="lazy"
+               />
+
+      	{% endif %}
+      </div>
+      
+      <div class="state2">
+        {% if section.settings.img2 != blank %}
+          {% assign default_src = section.settings.img2 | img_url: 'master' %}
+          <img
+               src="{{ default_src }}"
+               alt="{{ section.settings.img2.alt | escape }}"
+               loading="lazy"
+               />
+
+      	{% endif %}
+      </div>
+       
+   </div>
+</section>
+
+
+  <script>
+    $('#rideGame').ready(()=>{
+      
+     	var rideGame_state1 = new TimelineMax()
+    		.add(TweenMax.to(".rideGameWrapped .right_box .state2", 0.1, { opacity:1,scale:1 }))
+    
+    	var rideGame_state2 = new TimelineMax()
+    		.add(TweenMax.to(".rideMobileBox .bottom_box .state2", 0.1, { opacity:1,scale:1 }))
+        
+    	new ScrollMagic.Scene({ 
+          triggerElement:"#rideGame", 
+          offset:230,
+          duration:100
+        })
+      	.setTween(rideGame_state1)        
+        .addTo(controller);     
+
+    
+    	new ScrollMagic.Scene({ 
+          triggerElement:".rideMobileBox", 
+          offset:100,
+          duration:"30%"
+        })
+      	.setTween(rideGame_state2)        
+        .addTo(controller);      
+
+
+    })
+  </script>
+<style>
+  #rideGame{
+    overflow:hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  	background-color:#F1F1F1;
+  }
+
+  .rideGameWrapped{
+    width:1160px;
+    display:flex;    
+  }
+  .rideGameWrapped .left_box .title,
+  .mobileBox .title{
+    margin-bottom:0px;
+    font-size:48px;
+  	font-weight: bold;
+    background-image: linear-gradient(95deg, #0090EA 0%, #AB1FC4 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    white-space:nowrap;
+    text-align:left;
+    
+  }
+  .rideGameWrapped .left_box .subTitle,
+  .mobileBox .subTitle{
+    margin-bottom:40px;
+    font-size:42px;
+    font-weight: 300;
+    line-height:58px;
+    color:#161C1FA6;
+  }
+  .rideGameWrapped .left_box .des{
+    width:320px;
+    color:#161C1F;
+  }
+  .rideGameWrapped .right_box{
+  	position:relative;
+    top:0;
+    left:-10%;
+  }
+  
+  .rideGameWrapped .right_box img{
+  	width:150%;
+  }
+  .rideGameWrapped .right_box .state1{
+    position:relative;
+	opacity:1;
+    z-index:2;
+  }
+  .rideGameWrapped .right_box .state2{
+  	position:absolute;
+    top:0;
+    right:0;
+	opacity:0;
+    transform-origin:center center;
+    transform:scale(0.2);
+  }
+  @media screen and (max-width: 990px){
+    .mobileBox.rideMobileBox{
+      padding:70px 8%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      background-color:#F1F1F1;
+      padding-top:0px;
+    }
+    .mobileBox.rideMobileBox .title{
+      width:100%;
+      font-size:48px;
+      line-height:1.125em;
+      white-space: initial;
+    }
+    .mobileBox.rideMobileBox .subTitle{
+      margin-bottom:12px;
+      width:100%;
+      font-size:36px;
+      line-height:50.4px;
+      text-align:left;
+    }
+    .mobileBox.rideMobileBox .des{
+      margin-bottom:12px;
+      font-size:14px;
+      line-height:19.6px;
+    }
+    .mobileBox.rideMobileBox .bottom_box{
+    	position:relative;
+    }
+    .mobileBox.rideMobileBox .bottom_box .state2{
+    	position:absolute;
+      	top:0px;
+      	left:0px;
+      	opacity:0;
+      	transform:scale(0.2);
+    }
+  }
+</style>
+
+{% schema %}
+  {
+    "name": "rideGame",
+	"class":"rideGame",
+    "settings": [
+		{
+			"type":"image_picker",
+			"id":"img1",
+			"label":"默认状态"
+		},
+		{
+			"type":"image_picker",
+			"id":"img2",
+			"label":"hover状态"
+		},
+		{
+			"type":"text",
+			"id":"text",
+			"label":"des"
+		}
+	]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

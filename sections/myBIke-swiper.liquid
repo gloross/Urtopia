@@ -1,0 +1,267 @@
+
+  <div class="myBikeSwiper">   
+    <div class="title" style="text-align:left;margin-top:0px">
+      <span>Which Style is Yours?</span>
+    </div>
+    <div class="myBikeSwiperContent">
+        <div class="swiperWrapped">
+          {% assign n = section.blocks.size | minus: 1 %}
+
+
+          {% for i in (0..n) %}
+
+                <div class="swiper_item" data-index={{i | plus:1}}>
+
+                  <div class="left_des">
+                    <div class="bike-title">{{section.blocks[i].settings.title | default:""}}</div>
+                    <div class="des">{{section.blocks[i].settings.des | default:""}}</div>
+                  </div>
+
+
+                  <div class="right_img">
+                    {% if section.blocks[i].settings.img != blank %}
+                    {% assign default_src = section.blocks[i].settings.img | img_url: 'master' %}
+                    <img
+                         src="{{ default_src }}"
+                         alt="{{ section.blocks[i].settings.img.alt | escape }}"
+                         loading="lazy"
+                         />
+
+                    {% endif %}
+
+                  </div>
+
+                </div>
+
+          {% endfor %}
+
+          {% for block in section.blocks limit:1%}
+              <div class="swiper_item" data-index=4>
+                 <div class="left_des">
+                    <div class="bike-title">{{block.settings.title | default:""}}</div>
+                    <div class="des">{{block.settings.des | default:""}}</div>
+                  </div>
+
+
+                <div class="right_img">
+                  {% if block.settings.img != blank %}
+                  {% assign default_src = block.settings.img | img_url: 'master' %}
+                  <img
+                       src="{{ default_src }}"
+                       alt="{{ block.settings.img.alt | escape }}"
+                       loading="lazy"
+                       />
+
+                  {% endif %}
+
+                </div>
+              </div>
+          {% endfor %}
+
+        </div>
+      	<div class="chooseType">
+          <div class="bikeType active" data-value="1">SIRIUS</div>
+          <div class="bikeType" data-value="2">LYRA</div>
+          <div class="bikeType" data-value="3">MIDNIGHT IN PARIS</div>
+      	</div>
+    </div>
+  </div>
+
+<script>
+  	$(".myBikeSwiper").ready(()=>{
+      let target_w = document.querySelector(".myBikeSwiperContent .swiper_item").offsetWidth
+      let chooseType = document.querySelector(".chooseType")
+
+      $('.chooseType .bikeType').click(function(){
+          $('.chooseType .bikeType').removeClass('active');
+          let current_i = $(this)[0].getAttribute("data-value")
+          $(this).addClass('active');
+          TweenMax.set(".myBikeSwiperContent>.swiperWrapped", {x:`-${target_w*(+current_i)}`});
+          TweenMax.to(".myBikeSwiperContent>.swiperWrapped",1, {x:`-${target_w*(current_i-1)}`});
+      })
+                      
+  })
+  	
+
+	
+</script>
+
+
+<style>
+  .myBike-swiper{
+    height:calc(100vh - 57.24px);
+    min-height:813px;
+    overflow:hidden;
+  }
+  .myBike-swiper>.myBikeSwiper{
+  	width: 1160px;
+    height: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    
+  }
+  .myBikeSwiper>.title{
+    margin-bottom:80px;
+  	font-size: 48px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .myBikeSwiper>.title>span{
+    background-image: linear-gradient(91deg, #161C1F 30%, #FF5D00 6%, #F4AC3A 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+  }
+  .myBikeSwiperContent{
+  	overflow:hidden;
+  }
+  .myBikeSwiperContent>.swiperWrapped,
+  .myBikeSwiperContent>.chooseType{
+  	display:flex;
+  }
+  .myBikeSwiperContent>.chooseType{
+    margin-top:60px;
+  	justify-content: space-between;
+  }
+  .myBikeSwiperContent>.swiperWrapped>.swiper_item{
+    flex:0 0 1160px;
+  	display:flex;
+  }
+  .myBikeSwiper .swiper_item .left_des{
+    width:320px;
+    justify-content: center;
+  }
+  .myBikeSwiper .swiper_item .left_des .bike-title{
+    font-size:36px;
+    font-weight:bold;
+    line-height:50.4px;
+    white-space:nowrap;
+  }
+  .myBikeSwiper .swiper_item .right_img img{
+    width:730px;
+  }
+  
+  .myBikeSwiperContent>.chooseType>.bikeType{
+  	width:376px;
+    height:60px;
+    padding:0px 40px;
+    box-sizing: border-box;
+    border:2px solid black;
+    border-radius:15px;
+    font-size:25px;
+    font-weight:bold;
+    line-height:60px;
+  }
+  
+  .myBikeSwiperContent>.chooseType>.bikeType.active{
+  	border:2px solid #FD4B17;
+  }
+  
+  .myBikeSwiperContent>.chooseType>.bikeType{
+  	background-repeat:no-repeat;
+    background-size:cover;
+    background-position:left bottom;
+  }
+  
+  .myBikeSwiperContent>.chooseType>.bikeType:nth-child(1){
+    background-image:url("https://cdn.shopify.com/s/files/1/0583/5810/4213/files/sirius.png?v=1657007035");
+  }
+  
+  .myBikeSwiperContent>.chooseType>.bikeType:nth-child(2){
+    background-image:url("https://cdn.shopify.com/s/files/1/0583/5810/4213/files/lyra.png?v=1657007005");
+  }
+  
+  .myBikeSwiperContent>.chooseType>.bikeType:nth-child(3){
+    background-image:url("https://cdn.shopify.com/s/files/1/0583/5810/4213/files/midnight.png?v=1657007019");
+  }
+  @media screen and (max-width: 990px){
+    .myBike-swiper>.myBikeSwiper{
+    	width:84%;
+    }
+    .myBikeSwiper>.title{
+      	margin-bottom:40px;
+    	white-space:normal;
+      	font-size:30px;
+     	line-height:42px;
+    }
+    .myBikeSwiperContent>.swiperWrapped{
+    	width:400%
+    }
+    .myBikeSwiperContent>.swiperWrapped>.swiper_item{
+    	flex-direction: column;
+    }
+    .myBikeSwiper .swiper_item .right_img img{
+    	width:100%;
+    }
+    .myBikeSwiperContent>.swiperWrapped>.swiper_item{
+    	flex:0 0 25%;
+    }
+    .myBikeSwiper .swiper_item .left_des .bike-title{
+    	font-size:30px;
+      	line-height:42px;
+    }
+    .myBikeSwiper .swiper_item .left_des{
+    	width:90%;
+      	margin-bottom:24px;
+    }
+    .myBikeSwiper .swiper_item .right_img{
+    	width:100%;
+    }
+    .myBikeSwiperContent>.chooseType{
+    	margin-top:24px;
+    }
+    .myBikeSwiperContent>.chooseType>.bikeType{
+    	flex: 0 0 30%;
+        overflow: hidden;
+        color: transparent;
+        background-size: cover;
+        background-position: center;
+        padding: 0;
+        height: 40px;
+    }
+    .myBikeSwiperContent>.chooseType>.bikeType.active{
+    	border: 2px solid #FD4B17;
+    }
+    .myBikeSwiperContent>.chooseType>.bikeType:nth-child(1){
+      background-position:bottom right;
+    }
+  }
+  
+</style>
+
+{% schema %}
+  {
+    "name": "myBike-swiper",
+	"class":"myBike-swiper",
+    "settings": [],
+    "blocks":[{
+      "type":"list",
+      "name":"list",
+      "settings":[
+        {
+        "type":"image_picker",
+        "id":"img",
+        "label":"默认状态"
+        },
+        {
+        "type":"text",
+        "id":"title",
+        "label":"title"
+        },
+        {
+        "type":"text",
+        "id":"des",
+        "label":"des"
+        }
+      ]
+    }]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

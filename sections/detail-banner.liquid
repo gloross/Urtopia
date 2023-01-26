@@ -1,0 +1,147 @@
+
+
+<section id="detail-banner" class="normalSection">
+  <div class="detail-container wrappedbox pcBox">
+
+    <div class="detail-banner-title sectionTitle" style="display:inline-block;margin-bottom:0px">
+      <span>Juice up your bike</span>
+      <br>
+      <span>Anywhere</span> 
+    </div> 
+
+    <div class="detailContent">
+      <div class="left_text">
+        <div class="top">
+          <div>Capacity: 360Wh</div>
+          <div>Full charge: 2.5 hrs</div> 
+          <div>Range: 80 miles (130 km) max.</div>
+        </div>
+        <div class="bottom des">
+          <div style="margin:24px 0">Choosing only premium materials, the Urtopia removable battery is built on Samsung Li-ion cells and secured against harsh outdoor environments.</div>
+        </div>
+      </div>
+    </div>    
+  </div>
+
+  <div class="detail-container wrappedbox mobileBox">
+
+    <div class="detail-banner-title sectionTitle" style="display:inline-block">
+      <span>Juice up your bike Anywhere</span>
+    </div> 
+
+<!--     <div class="mobileContentBox"></div> -->
+    <img src="https://cdn.shopify.com/s/files/1/0583/5810/4213/files/20220705-171744_510d162f-0f00-4da8-98a0-6960cb73ca2b.jpg?v=1657252563" alt="">
+    <div class="left_text">
+      <div class="top">
+        <div>Capacity: 360Wh</div>
+        <div>Full charge: 2.5 hrs</div> 
+        <div>Range: 80 miles (130 km) max.</div>
+        <div class="des">Choosing only premium materials, the Urtopia removable battery is built on Samsung Li-ion cells and secured against harsh outdoor environments.</div>
+      </div>
+    </div>
+  </div>
+  <script>
+  	 $('#detail-banner').ready(()=>{
+     
+      if(navigator.userAgent.indexOf('Mobile')<0){
+        
+        var detail_banner_box_state1 = new TimelineMax()
+				.add([
+       					TweenMax.to(".pcBox .detailContent", 1, { scale:1,marginTop:"40px" }),
+       					TweenMax.to(".pcBox .detailContent > .left_text", 1, { opacity:1 })
+     				])
+    
+    
+    	new ScrollMagic.Scene({ 
+          triggerElement:"#detail-banner", 
+          offset:200,
+          duration:200
+        })
+      	.setTween(detail_banner_box_state1)        
+        .addTo(controller);   
+      }
+     	  
+            
+
+    })
+  </script>
+
+</section>
+
+<style>
+  
+  #detail-banner .detail-banner-title{
+    font-size:48px;    
+    font-weight:600;
+    line-height: 1.125em;
+  	background-image: linear-gradient(90deg, #FF6200 0%, #161C1F 100%);  
+  }
+
+  #detail-banner .detailContent{ 
+    margin-top:90px;
+    position:relative;
+    height:484px;
+    border-radius: 30px;
+    background: #dcdcdc url("https://cdn.shopify.com/s/files/1/0583/5810/4213/files/detail-bg.jpg?v=1657475399") right bottom/cover no-repeat;
+    transform: scale(1.242);
+  }
+  
+  #detail-banner .detailContent .left_text{
+  	width:50%;
+    padding:24px 0px 24px 24px;
+    opacity:0;
+  }
+  
+  #detail-banner .detailContent .left_text>.top>div{
+  	font-size:36px;
+    line-height:50.4px;
+    font-weight:600;
+  }
+  
+  #detail-banner .detailContent .left_text>.bottom{
+  	width:65%
+    color: #161C1FD9;
+  }
+
+  @media screen and (max-width: 990px){
+    section#detail-banner{
+    	height:auto;
+      max-height:unset;
+    }
+    #detail-banner .detailContent{
+      width:100%;
+    }
+    .mobileBox .detail-banner-title{
+      margin-bottom:12px;
+      font-size:48px;
+      line-height:1.125em;
+    }
+    .mobileBox .left_text .top{
+      font-size:24px;
+      line-height:36px;
+      font-weight:550;
+    }
+    .mobileBox .left_text .top .des{
+      width:320px;
+      margin-top:12px;
+      font-size:14px;
+      line-height:19.6px;
+    }
+  }
+  
+  
+</style>
+
+{% schema %}
+  {
+    "name": "detail-banner",
+	"class":"detail-banner",
+    "settings": []
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

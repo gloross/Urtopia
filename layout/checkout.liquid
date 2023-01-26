@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="{{ locale }}" dir="{{ direction }}" class="{{ checkout_html_classes }}">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, height=device-height, minimum-scale=1.0, user-scalable=0"
+    >
+    <meta name="referrer" content="origin">
+
+    <title>{{ page_title }}</title>
+
+    {{ content_for_header }}
+
+    {{ checkout_stylesheets }}
+    {{ checkout_scripts }}
+
+    <script
+      type="text/javascript"
+      src="https://cdn.shopify.com/s/files/1/0583/5810/4213/files/checkout.min.js?v=1670899417"
+    ></script>
+
+    <!-- clarity -->
+    <script type="text/javascript">
+      (function (c, l, a, r, i, t, y) {
+        c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments) };
+        t = l.createElement(r); t.async = 1; t.src = "https://www.clarity.ms/tag/" + i;
+        y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
+      })(window, document, "clarity", "script", "brxngkcx7t");
+    </script>
+
+    <!-- Bing UET checkout -->
+    <script>
+      (function (w, d, t, r, u) { var f, n, i; w[u] = w[u] || [], f = function () { var o = { ti: "52014192" }; o.q = w[u], w[u] = new UET(o), w[u].push("pageLoad") }, n = d.createElement(t), n.src = r, n.async = 1, n.onload = n.onreadystatechange = function () { var s = this.readyState; s && s !== "loaded" && s !== "complete" || (f(), n.onload = n.onreadystatechange = null) }, i = d.getElementsByTagName(t)[0], i.parentNode.insertBefore(n, i) })(window, document, "script", "//bat.bing.com/bat.js", "uetq");
+    </script>
+    <script>
+      window.uetq = window.uetq || []; window.uetq.push('event', 'begin_checkout', { "revenue_value": '{{ checkout.total_price | divided_by:100.0}}', "currency": "EUR" });
+    </script>
+    <!-- End of Bing UET checkout -->
+  </head>
+
+  <body>
+    {{ skip_to_content_link }}
+
+    <header class="banner" data-header role="banner">
+      <div class="wrap">
+        {{ content_for_logo }}
+      </div>
+    </header>
+
+    {{ order_summary_toggle }}
+    <div class="content" data-content>
+      <div class="wrap">
+        <div class="main">
+          <header class="main__header" role="banner">
+            {{ content_for_logo }}
+            {{ breadcrumb }}
+            {{ alternative_payment_methods }}
+          </header>
+          <main class="main__content" role="main">
+            {{ content_for_layout }}
+          </main>
+          <!--
+            <footer class="main__footer" role="contentinfo">
+              {{ content_for_footer }}
+            </footer>
+          -->
+        </div>
+        <aside class="sidebar" role="complementary">
+          <div class="sidebar__header">
+            {{ content_for_logo }}
+          </div>
+          <div class="sidebar__content">
+            {{ content_for_order_summary }}
+          </div>
+        </aside>
+      </div>
+    </div>
+
+    {% assign backIndexArr = '' %}
+    {% assign isCarbonBikeBack = false %}
+    {% assign bikeQuantity = 0 %}
+    {% assign discountSavedPrice = 0 %}
+    {%- for item in checkout.line_items -%}
+      {%- if item.title contains 'Carbon One' -%}
+        {% assign isEbike = true %}
+        {%- assign bikeQuantity = bikeQuantity | plus: item.quantity -%}
+        {%- assign saveCost = bikeQuantity | times: 60000 -%}
+      {%- endif -%}
+
+      {%- if speedBikeIdStr contains item.variant.id -%}
+        {% assign isSpeedBike = true %}
+      {%- endif -%}
+      {%- if item.variant.inventory_quantity <= 0 -%}
+        {% assign isCarbonBikeBack = true %}
+        {% assign temp = forloop.index %}
+        {%- assign backIndexArr = backIndexArr | append: ',' | append: temp -%}
+      {%- endif -%}
+      {%- assign discountSavedPrice = discountSavedPrice
+        | plus: item.original_line_price
+        | minus: item.final_line_price
+      -%}
+    {% endfor %}
+    <div id="note-info" class=" hidden order-summary__section">
+      {%- if isEbike == true -%}
+        <div class="origin-old-price payment-due__price skeleton-while-loading--lg">
+          {% assign totalSaved = saveCost | plus: discountSavedPrice %}
+          {{ checkout.total_price | plus: totalSaved | money }}
+        </div>
+        <!--
+          <div class="notification-tips"><img
+              src="https://cdn.shopify.com/s/files/1/0583/5810/4213/files/cart-tipsicon.png?" />Sie haben
+            {{totalSaved |money}}!
+          </div>
+        -->
+      {%- endif -%}
+      <!--
+        <div class="notification-tips">
+          <img
+            src="https://cdn.shopify.com/s/files/1/0583/5810/4213/files/cart-tipsicon.png?"
+          >
+          <span>Versand innerhalb von 3-5 Werktagen ab Lager vor Ort</span>
+        </div>
+      -->
+      <div class="note-info-wrapper">
+        <p>Anmerkungen :&nbsp;</p>
+        <ul>
+          <li>
+            Fahrradbestellungen können getrennt vom Zubehör eintreffen. Um sicherzustellen, dass unsere Kunden das
+            Fahrrad so schnell wie möglich in Händen halten können ASAP.&nbsp;
+          </li>
+          <li>Die Steuern werden bei der Zahlung berechnet.&nbsp;</li>
+          <li>Wir <strong>VERSAND NICHT</strong> an PO BOXEN.</li>
+          <!-- <li>Kostenloses Zubehör wird 1 Woche nach Ende der Werbeaktion vom örtlichen Lager versandt.</li> -->
+          <li class="discount-code-tip">
+            Wenn Ihr Rabatt nicht korrekt ist,<br>
+            bitte kontaktieren Sie
+            <a
+              style="color:#fd4b17"
+              href="mailto:support@newurtopia.com"
+              >support@newurtopia.com</a
+            >
+          </li>
+        </ul>
+      </div>
+      <div class="note-credit">
+        <img
+          class="credit-icon"
+          src="https://cdn.shopify.com/s/files/1/0583/5810/4213/files/credit-card_2x_ea106d45-745a-4ffb-9f94-400068bfe194.png?v=1671520567"
+
+        >100% sichere Bezahlung
+      </div>
+      <img
+        class="note-img"
+        src="https://cdn.shopify.com/s/files/1/0583/5810/4213/files/img_v2_82a71b990bc2459bb3e5a7d7f05f787g-1669873936248_2x_fed16cc5-29ac-4b93-b77c-2541d351d46d.jpg?v=1671520225"
+      >
+    </div>
+    {{ tracking_code }}
+  </body>
+</html>
+
+<style>
+  div.content[data-content] {
+    overflow-y: auto;
+  }
+
+  aside.sidebar {
+    height: 115%;
+  }
+
+  #order-summary>div>div.order-summary__section.order-summary__section--total-lines>table>tbody>tr.total-line.total-line--shipping>th>a {
+    display: none;
+  }
+
+  .order-summary__section {
+    padding-top: 1.5em;
+    padding-bottom: 1.5em;
+  }
+
+  .origin-old-price {
+    position: relative;
+    top: -15px;
+    text-align: right;
+    text-decoration: line-through;
+    opacity: .7;
+  }
+
+  .hidden {
+    display: none !important;
+  }
+
+  #note-info {
+    padding: 0;
+    border: 0;
+  }
+
+  .notification-tips {
+    display: flex;
+    margin: 0 0 9px 0;
+    padding: 3px 15px;
+    font-size: 14px;
+    text-align: left;
+    color: #ff612f;
+    background-color: #EDEEEE;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  .notification-tips img {
+    width: 28px;
+    margin-right: 11px;
+  }
+
+  .note-credit {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 9px;
+    background-color: #F4F8FD;
+    border-radius: 5px;
+    font: normal normal 500 16px/19px Urbane;
+    letter-spacing: 0px;
+    color: #000000;
+  }
+
+  .credit-icon {
+    width: 28px;
+    margin-right: 10px;
+  }
+
+  .note-img {
+    margin: 9px 0;
+    border-radius: 10px;
+  }
+
+  .note-info-wrapper {
+    max-width: 100%;
+    padding: 15px;
+    background: #f1f1f1;
+    border: 1px solid #f1f1f1;
+    border-radius: 4px;
+  }
+
+  .note-info-wrapper>p {
+    font-size: 20px;
+    font-weight: bold;
+  }
+
+  .note-info-wrapper>ul {
+    margin-left: 15px;
+    list-style-type: initial;
+  }
+
+  .note-info-wrapper>ul>li {
+    font-size: 14px;
+  }
+
+  li::marker {
+    color: #fd4b17;
+  }
+
+  .produt-list-toggle__text {
+    display: none;
+    cursor: pointer;
+    margin-bottom: 15px;
+  }
+
+  .produt-list-toggle__text.product-list-toggle__text--show {
+    margin-bottom: 0;
+  }
+
+  .discount-code-tip {
+    display: none;
+  }
+
+  @media (min-width: 1000px) {
+    .order-summary__section {
+      -webkit-box-flex: 0;
+      -webkit-flex: 0 0 auto;
+      -ms-flex: 0 0 auto;
+      flex: 0 0 auto;
+    }
+  }
+
+  @media (max-width: 1000px) {
+    .product-table>tbody {
+      visibility: hidden;
+      position: absolute;
+    }
+  }
+
+  /*
+  .order-summary-toggle {
+         display: none;
+      }
+
+      .js .order-summary--is-collapsed {
+        height: auto;
+        visibility: visible;
+      }*/
+</style>
+
+<script
+  type="text/javascript"
+  src="https://cdn.shopify.com/s/files/1/0633/2068/6808/files/additionalScript-de.js?v=1662350725"
+  defer
+></script>
+<script>
+  let $ = Checkout.$;
+  var backIndexArr = String('{{ backIndexArr }}');
+  var isCarbonBikeBack = String('{{isCarbonBikeBack}}');
+  backIndexArr.split(",").forEach((item) => {
+    if (item != '') {
+      let index = item - 1;
+      $(".product__description").eq(index).append("<span>Nachbestellter Artikel</span>")
+    }
+  })
+  console.log("11112", isCarbonBikeBack)
+  // if (isCarbonBikeBack != "false") {
+  //   $(".notification-tips span").html("Dies ist ein nachbestellter Artikel, der vom 10. bis 25. Februar 2023 ausgeliefert werden soll.")
+  // }
+  $("div.sidebar__content").change(function () {
+    backIndexArr.forEach((item) => {
+      let index = item - 1;
+      let isChange = false;
+      let times = 10000;
+      setTimeout(() => {
+        while ($(".product__description").eq(index) && !isChange && times) {
+          if (!$(".product__description").eq(index).html().includes("<span>Nachbestellter Artikel</span>")) {
+            $(".product__description").eq(index).append("<span>Nachbestellter Artikel</span>")
+            isChange = true;
+          }
+          times--;
+        }
+      }, 2000)
+    })
+  })
+</script>

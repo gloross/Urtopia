@@ -1,0 +1,507 @@
+
+<div id="pinContainer" class="pinContainer">
+	<div id="slideContainer">
+		<section class="panel">
+          	<div class="bg"></div>
+          	<div class="bg1"></div>
+            <div class="mask"></div>
+          	<div class="content">
+              <div class="content-container">
+                <div class="topText">            	
+                <div class="state1">
+                  <div class="title" style="color:#fff;margin-bottom:24px;margin-top:0px">Know your bike anytime, anywhere</div>
+            	  <div class="des" style="color:#fff">Aided by a constant 4G connection, GPS tracking keeps you informed of the e-bike’s position, even in the worst scenario of theft. Once locked, the onboard alarm monitors movements and alerts you against unauthorized ones.</div>
+                </div>
+                <div class="state2" style="opacity:0">
+                  <div class="title">You are the Key, Just ride</div>
+            	  <div class="des">Forget everything but happiness</div>
+                </div>
+              </div>
+                <div class="bottomImg">
+                <div class="state1">
+                  <img
+                    id="bike"
+                   src="https://cdn.shopify.com/s/files/1/0633/2068/6808/files/20220716-135153.png?v=1657950749"
+                 />
+                  <img
+                    id="bike2"
+                   src="https://cdn.shopify.com/s/files/1/0583/5810/4213/files/20220630-144836.png?v=1657008450"
+                 />
+                   <img
+                   id="moveBtn"
+                   src="https://cdn.shopify.com/s/files/1/0583/5810/4213/files/moveBtn.png?v=1657477087"
+                 />
+                   <img
+                    id="mobile"
+                   src="https://cdn.shopify.com/s/files/1/0583/5810/4213/files/lock.png?v=1657476939"
+                 />
+                 
+                <div class="changeCircle">
+                  <div class="wave wave1"></div>
+                  <div class="wave wave2"></div>
+                  <div class="wave wave3"></div>
+                </div>
+              </div>
+                <div class="state2">
+                  <div class="item">
+                    <div class="title">Lock in your Direction</div>
+                    <div class="des">You won’t have to rely on your phone to navigate during the ride, the smartbar screen will show you the direction and distance, and there will be voice prompts to help you where to go.</div>
+                  </div>
+                  <div class="item">
+                    <img
+                       src="https://cdn.shopify.com/s/files/1/0583/5810/4213/files/Group_522.png?v=1657477294"
+                       loading="lazy"
+                     />
+                  </div>
+                  <div class="item">
+                    <div class="title">No more keys to carry</div>
+                    <div class="des">Fingerprint unlock provide maximum convenience whenever you hop on the e-bike. No more hassle worrying about losing another key.</div>
+                  </div>
+                </div> 
+
+
+              </div>
+           
+              </div>
+            </div>
+          <div class="alarmMask" style="display:none">
+            <div class="alarm" style="display:none"></div>
+          </div>
+          
+        </section>
+	</div>
+  <script>
+    if(navigator.userAgent.indexOf('Mobile')>=0){
+    	document.querySelector("#slideContainer .content #bike").src="https://cdn.shopify.com/s/files/1/0633/2068/6808/files/20220716-135202.png?v=1657950762"
+        document.querySelector("#slideContainer .content #bike2").src="https://cdn.shopify.com/s/files/1/0633/2068/6808/files/20220714-094914.png?v=1657763409"
+    }
+    
+      var wipeAnimation = new TimelineMax()
+      
+      if(window.innerWidth>990 && navigator.userAgent.indexOf('Mobile')<0){
+      	wipeAnimation
+          .staggerTo(
+            ["#slideContainer .content .topText .state1","#slideContainer .content #moveBtn","#slideContainer .content #mobile"], 
+            2, 
+            {y: "-50%",opacity:0,delay:1}, 
+            0)   
+         .add(TweenMax.set("#slideContainer .content #moveBtn", {display:"none",delay:0.5}))
+        .add([
+         		  TweenMax.to(".panel>.bg1", 1, {opacity:1}), 
+                  TweenMax.to("#slideContainer .content .bottomImg>.state1 #bike2",1,{opacity:1}),
+            	  TweenMax.to("#slideContainer .content .topText .state2", 2, {y: "-100%",opacity:1,delay:0.5}), 
+                  TweenMax.to("#slideContainer .content .bottomImg>.state2", 2, {y: "-70%",opacity:1,delay:0.5}), 
+				  TweenMax.set(".changeCircle", {opacity:1,delay:2})
+         		  
+          ])
+      }else{
+      	wipeAnimation
+        .staggerTo(
+          ["#slideContainer .content .topText .state1","#slideContainer .content #moveBtn","#slideContainer .content #mobile"], 
+          0.5, 
+          {y: "-50%",opacity:0,delay:0.5}, 
+          0)   
+        .add(TweenMax.set("#slideContainer .content #moveBtn", {display:"none",delay:0.5}))
+        .add([
+         		  TweenMax.to(".panel>.bg1", 0.5, {opacity:1}), 
+                  TweenMax.to("#slideContainer .content .bottomImg>.state1 #bike2",0.5,{opacity:1}),
+            	  TweenMax.to("#slideContainer .content .topText .state2", 0.5, {y: "-100%",opacity:1}), 
+          		  TweenMax.to(".panel .content .bottomImg .state2", 0.5, {y: "0%",opacity:1,delay:1}),
+          		  TweenMax.to(".panel .content .bottomImg .state2 .item:nth-child(1)", 0.5, {opacity:0,delay:1.5}),	      	  
+                  TweenMax.to(".panel .content .bottomImg .state2 .item:nth-child(3)", 0.5, {y: "-100%",opacity:1,delay:2}),
+				  TweenMax.set(".changeCircle", {opacity:1,delay:2})
+         		  
+          ])
+      	
+      }
+  
+  
+  
+      new ScrollMagic.Scene({
+  				triggerElement: "#pinContainer",
+  				triggerHook: "onLeave",
+  				duration: "4500"
+  			})
+  			.setPin("#pinContainer")
+  			.addTo(controller);
+  
+      new ScrollMagic.Scene({
+  				triggerElement: "#pinContainer",
+                  triggerHook: "onLeave",
+                  offset:500,               
+  				duration: "4000"
+  			})
+              .setTween(wipeAnimation)
+  			.addTo(controller);
+
+//       }
+  </script>
+</div>
+
+<style>  
+  .anti-theft{
+  	background-color:#000;
+  }
+    .panel>.bg{
+      background:url("https://cdn.shopify.com/s/files/1/0583/5810/4213/files/20220711-112620.jpg?v=1657511241");
+    }
+  	.panel>.bg1{
+      background:url("https://cdn.shopify.com/s/files/1/0583/5810/4213/files/floorMove.jpg?v=1657476480");
+      opacity:0;
+  	}
+    .panel>.bg::after,
+  	.panel>.bg1::after{
+        display:inline-block;
+        content:"";
+        position:absolute;
+        top:0px;
+        left:0px;
+        width:100%;
+        height: 100%;
+        background: linear-gradient(180deg, black, transparent,transparent,black);
+    }
+	.pinContainer {
+		width: 100%;
+		height: calc(100vh - 73px);
+        min-height:757px;
+		overflow: hidden;
+        transform: translateY(73px);
+	}
+	#slideContainer {
+		width: 100%; 
+		height: 200%;
+	}
+	.panel {
+	  height: 50%;
+	  width: 100%;     	
+	  float: left;
+      position:relative;
+      
+	}
+    .panel .bg,
+  	.panel .bg1,
+    .panel .mask,
+    .panel .content,
+  	
+    .panel .alarmMask{      
+      position:absolute;
+      top:0;
+      right:0;
+      bottom:0;
+      left:0;
+    }
+    .panel .bg,
+  	.panel .bg1{
+      background-position:center center;
+      background-repeat:no-repeat;
+      background-size:100% auto;
+      background-color:black;
+    }
+  	.panel .mask{
+      background-color:#000;
+      opacity:0.4;
+    }
+  	.panel .alarm{
+      width:100%;
+      height:100%;
+      background-image: radial-gradient(ellipse farthest-corner at center center, transparent 50%, #ff000059 100%);
+    }
+    .panel .content{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .panel .content .title{
+      margin-bottom: 24px;
+      margin-top: 0px;
+      text-align:left;
+      color:#fff;
+      font-size:48px;
+      font-weight:600;
+    }
+  .panel .content .content-container{
+    width:1160px;
+    display:flex;
+  }
+  .panel .content .topText{
+    position:absolute;
+    top:0px;
+    left:0;
+    z-index:1;
+    display:flex;
+    flex-direction: column;
+    color:#fff;
+/*   	transform:translateY(100%) */
+  }
+  .panel .content .topText .state1,
+  .panel .content .topText .state2{
+    flex:0 0 300px;
+  }
+  .panel .content .bottomImg{
+  	position:relative;
+  }
+  .panel .content .bottomImg #bike2{
+  	position: absolute;
+    top: 0;
+    left: 0;
+    opacity:0
+  }
+  .panel .content .bottomImg img:nth-child(3),
+  .panel .content .bottomImg img:nth-child(4){
+  	position:absolute;
+    left:0;
+    bottom:0;
+  }
+  .panel .content .bottomImg img:nth-child(3){
+    width:114px;
+    left: 22%;
+    bottom: 50%;
+    cursor:pointer;
+    z-index:3;
+  }
+  .panel .content .bottomImg img:nth-child(4){    
+    width:220px;
+
+  }
+  .panel .content .bottomImg .wave{
+/*     display: flex;
+    justify-content: center;
+    align-items:center; */
+    position:absolute;
+    top:50%;
+    left:50%;
+  	transform:translate(-50%,-50%);
+    border:3px solid #27BD0A;
+    border-radius:50%;
+    opacity:0;
+  }
+  .panel .content .bottomImg .wave1{
+    height:0px;
+    width:0px;
+  }
+  .panel .content .bottomImg .wave2{
+    height:0px;
+    width:0px;
+  }
+  .panel .content .bottomImg .wave3{
+    height:0px;
+    width:0px;
+  }
+  .panel .content .bottomImg .changeCircle{
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    right: 243px;
+    bottom: 360px;
+/*     display: flex;
+    justify-content: center;
+    align-items: center; */
+    transform: rotate3d(1, 0, 0, 0.11turn);
+    opacity:0;
+  }
+  .panel .content .bottomImg>.state2{
+    position:absolute;
+    bottom:-50px;
+    left:0;
+    opacity:0;
+  }
+  .panel .content .bottomImg .state2{
+    display:flex;
+    width:100%;
+  }
+  .panel .content .bottomImg .state2 .item{
+    flex:1;
+    
+    color:#fff;
+  }
+  .panel .content .bottomImg .state2 .item .title{
+    text-align:left;
+    color:#fff;
+    font-size:24px;
+    white-space:nowrap;
+  }
+  .content .topText .state1 .des{
+    width:480px;
+  }
+  .panel .topText .state2 .des{
+    white-space:nowrap;
+    font-size:36px;
+    font-weight:300;
+    line-height:50.4px;
+  	color:#fff;
+  }
+  .panel .content .bottomImg .state2 .item .des{
+    color:#fff;
+  }
+  .panel .content .bottomImg .state2 .item img{
+    width:50%;
+  }
+  @media screen and (max-width: 990px){
+    .pinContainer {
+		height: calc(100vh - 70px);
+        min-height:unset;
+	}
+    .panel .bg,
+    .panel .bg1{
+      background-size: auto 100%;
+    }
+    .panel .content .content-container{
+      width:100%;
+      height:100%;
+      padding:0% 8%;
+    }
+    .content .topText .state1 .des,
+    .panel .content .topText > .state1 > .title,
+    .panel .content .topText .state2{
+      width: 100%;
+      padding: 0 8%;
+    }
+    .content .topText .title{
+    	margin:24px 0px !important;
+    }
+    .panel .content .title{
+      width:100%;
+      margin-bottom:8px;
+      font-size:30px;
+      line-height:33.6px;
+    }
+    .panel .topText .state2 .des{
+      font-size:17px;
+      font-weight:300;
+      line-height:33.6px;
+    }
+    .panel .bottomImg .state2 .des{
+      width:auto;
+    }
+    .panel .content .bottomImg{
+      width:100%;
+    }
+    .panel .content .bottomImg .state2{
+    	flex-direction: column;
+      transform:translateY(50%);
+      top:30%;
+      opacity:0;
+    }
+    .panel .content .bottomImg .state2 .item:nth-child(3){
+      padding-right:0;
+    }
+    .panel .content .bottomImg .state2 .item:nth-child(3){
+    	opacity:0;
+    }
+    .panel .content .bottomImg .state2>.item:nth-child(2){
+    	display:none;
+    }
+    #slideContainer .content .bottomImg > .state1{
+      height:100%;
+      position:relative;
+    }
+    #slideContainer .content .bottomImg > .state1 #bike,
+    #slideContainer .content .bottomImg > .state1 #bike2{
+      position: absolute;
+      bottom: 0;
+      top: auto;
+      left: -8%;
+      width: 400px;
+    }
+    .panel .content .bottomImg .changeCircle{
+/*       display:none; */
+      left: 170px;
+      bottom: 161px;
+    }
+    .panel .content .bottomImg img:nth-child(4){
+      max-width:120px;
+      width:calc(100vw*120/428);
+    }
+    .panel .content .bottomImg img:nth-child(3){
+      width:calc(100vw*57/428);
+      max-width:57px;
+    }
+    .panel .content .bottomImg img:nth-child(3){
+        left: 38%;
+    	bottom: 205px;
+    }
+    .panel .content .bottomImg img:nth-child(4){
+      left:200px;
+      bottom: 10%;
+    }
+  }
+</style>
+
+<script>
+//   $('#pinContainer').ready(()=>{
+    if(navigator.userAgent.indexOf('Mobile')<0){
+    	TweenMax.to(".panel .content .bottomImg .wave1", 3,  {width:120,height:120,opacity:1,repeat:-1,delay:1});
+      TweenMax.to(".panel .content .bottomImg .wave2", 3, {width:120,height:120,opacity:1,repeat:-1,delay:2});
+      TweenMax.to(".panel .content .bottomImg .wave3", 3, {width:120,height:120,opacity:1,repeat:-1,delay:3});	      
+    }else{
+     	TweenMax.to(".panel .content .bottomImg .wave1", 3,  {width:80,height:80,opacity:1,repeat:-1,delay:1});
+      TweenMax.to(".panel .content .bottomImg .wave2", 3, {width:80,height:80,opacity:1,repeat:-1,delay:2});
+      TweenMax.to(".panel .content .bottomImg .wave3", 3, {width:80,height:80,opacity:1,repeat:-1,delay:3});	     
+    }
+    
+  
+    $("img#moveBtn").mouseover(()=>{
+    	$(".panel>.bg")[0].style.backgroundImage="url(https://cdn.shopify.com/s/files/1/0583/5810/4213/files/theft.jpg?v=1657476445)"
+    })
+    
+    $("img#moveBtn").mouseout(event=>{
+        console.log('离开了',event)
+    })
+    
+    $("img#moveBtn").click(()=>{
+    	$(".panel>.bg")[0].style.backgroundImage="url(https://cdn.shopify.com/s/files/1/0583/5810/4213/files/theft.jpg?v=1657476445)"
+        document.querySelector(".anti-theft img#mobile").src="https://cdn.shopify.com/s/files/1/0583/5810/4213/files/alarm.png?v=1657476553"
+        
+      if(navigator.userAgent.indexOf('Mobile')<0){
+        document.querySelector(".anti-theft img#bike").src="https://cdn.shopify.com/s/files/1/0583/5810/4213/files/ba-1.png?v=1657476911"	
+      }else{
+      	document.querySelector(".anti-theft img#bike").src="https://cdn.shopify.com/s/files/1/0633/2068/6808/files/20220714-094920.png?v=1657763424"
+      }
+
+      if($(".panel .alarmMask")[0].style.display==="none"){
+        $(".panel .alarmMask")[0].style.display="block";
+        clearInterval(timer)
+        var times= 0
+        var timer = setInterval(()=>{ 
+          
+          if($(".panel .alarm")[0].style.display==="none"){
+            $(".panel .alarm")[0].style.display="block"
+            times++
+          }else{
+            $(".panel .alarm")[0].style.display="none"
+          }
+          if(times>3){
+            clearInterval(timer)
+            $(".panel .alarmMask")[0].style.display="none"
+            $(".panel .alarm")[0].style.display="none"
+            document.querySelector(".anti-theft img#mobile").src="https://cdn.shopify.com/s/files/1/0583/5810/4213/files/lock.png?v=1657476939"
+            
+          if(navigator.userAgent.indexOf('Mobile')<0){
+            document.querySelector(".anti-theft img#bike").src="https://cdn.shopify.com/s/files/1/0633/2068/6808/files/20220716-135153.png?v=1657950749"
+          }else{
+            document.querySelector(".anti-theft img#bike").src="https://cdn.shopify.com/s/files/1/0633/2068/6808/files/20220716-135202.png?v=1657950762"
+          }
+            
+            
+            $(".panel>.bg")[0].style.backgroundImage="url(https://cdn.shopify.com/s/files/1/0583/5810/4213/files/20220711-112620.jpg?v=1657511241)"
+          }
+        },300)
+      }
+        
+    })
+//   })
+</script>
+
+{% schema %}
+  {
+    "name": "anti-theft",
+	"class":"anti-theft",
+    "settings": []
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

@@ -1,0 +1,269 @@
+<div class="swiperWraped">
+  <div class="title">{{section.settings.heading|default:""}}</div>
+  <div class="swiper">
+    <div class="swiperContainer">
+      {% assign n = section.blocks.size | minus: 1 %}
+      
+      
+      {% for i in (0..n) %}
+        <div class="review-item {% if i <3 %}showReview {% else %}{% endif %}" data-index={{ i }} {% if i == 1 %} data-active=true {% else %}{% endif %}>
+        {% if section.blocks[i].settings.img == blank %}
+          <div class="placeholder-wrap">
+              {{ 'image' | placeholder_svg_tag: 'icon icon--placeholder' }}
+          </div>
+          {% else %}
+          {% render 'responsive-image' with section.blocks[i].settings.img, alt: section.blocks[i].settings.img.alt, default_size: '200x200', force_height: 66 %}
+        {% endif %}
+        <div class="des" style="margin:40px 0px 80px 0px;height: 165px;margin-bottom:0">{{section.blocks[i].settings.review|default:""}}</div>
+        
+         {% if section.blocks[i].settings.rate > 0 %}
+        	<div class="testimonials--star-wrapper" style="text-align:right;color:#FFE200">
+              {% assign star_total = section.blocks[i].settings.rate %}
+              {% for i in (1..star_total) %}
+                {% render 'star' %}
+              {% endfor %}
+          	</div>
+        {% endif %}
+
+        
+        <div style="text-align:right" class="reviewName">{{section.blocks[i].settings.name|default:""}}</div>
+        <div style="text-align:right" class="reviewDate">{{section.blocks[i].settings.date|default:""}}</div>
+       </div>
+      {% endfor %}
+
+
+    </div>
+  </div>
+  <div class="arrowContainer">
+    <span class="prev_btn" onclick="prevSwiper()"><</span>
+    <span class="btn_text" id="current_v">2</span>
+    <span class="btn_text">/</span>
+    <span class="btn_text">{{section.blocks.size}}</span>   
+    <span class="next_btn" onclick="nextSwiper()">></span>
+  </div>
+</div>
+    
+<style>
+  .reviewList{
+    overflow:hidden;
+    padding:78px 0px;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .reviewList .swiper{
+      overflow:unset;
+    }
+  .reviewList>.swiperWraped{
+    width:1248px;
+  }
+  .swiper .swiperContainer{
+    display:flex;
+  }
+  .swiper .swiperContainer .review-item{
+    width:400px;
+    margin-right:24px;
+    padding:40px;
+    box-shadow: 0px 3px 6px #00000029;
+	border-radius: 30px;
+    opacity:0.2;
+  }
+  .swiper .swiperContainer .review-item img{
+    height:100%;
+    width:auto;
+  }
+  .swiper .swiperContainer .review-item>.responsive-image-wrapper{
+      justify-content: flex-start;
+  }
+  .swiper .swiperContainer .review-item .reviewName{
+    font-size:24px;
+    line-height:33.6px;
+    font-weight:550;
+  }
+  .swiper .swiperContainer .review-item.showReview{
+    opacity:1
+  }
+  .swiper .swiperContainer .review-item .reviewDate{
+    font-size:20px;
+    font-weight:550;
+    line-height:33.6px;
+  }
+  .arrowContainer{
+    width:100%;
+    margin:24px auto;
+    text-align:center;
+  }
+  @media screen and (max-width: 768px){
+    
+    .reviewList{
+      padding:40px 0px;
+    }
+    .reviewList .title{
+      margin:0px;
+      font-size:30px;
+      line-height:42px;
+    }
+    .swiper .swiperContainer .review-item .reviewName,
+    .swiper .swiperContainer .review-item .reviewDate{
+    	font-size:20px;
+      	line-height:28px;
+    }
+
+  }
+  
+  
+</style>
+
+<script>
+  function prevSwiper(){
+    let swiper_target = $('.reviewList .swiperContainer')[0]
+    let index = $('.reviewList .swiperContainer>.review-item[data-active]')[0].getAttribute('data-index')
+    
+    if(index>0){
+      
+      document.querySelectorAll('.reviewList .swiperContainer>.review-item').forEach(v=>v.removeAttribute('data-active'))
+      let swiper_w = $('.reviewList .swiperContainer>.review-item')[0].offsetWidth+24
+
+      if((+index-1)<=0){
+        $('.reviewList .swiperContainer>.review-item').removeClass("showReview") 
+        $('.reviewList .swiperContainer>.review-item')[+index-1].classList.add("showReview")
+        $('.reviewList .swiperContainer>.review-item')[+index].classList.add("showReview")
+        console.log(index,swiper_w)
+        if(swiper_w===324){
+          TweenMax.to(swiper_target, 1, {
+            x:0
+          }); 
+        }else{
+          TweenMax.to(swiper_target, 1, {
+          x:`${swiper_w}`
+        }); 
+        }
+        
+      }else{
+        $('.reviewList .swiperContainer>.review-item').removeClass("showReview") 
+        $('.reviewList .swiperContainer>.review-item')[+index-2].classList.add("showReview")
+        $('.reviewList .swiperContainer>.review-item')[+index-1].classList.add("showReview")
+        $('.reviewList .swiperContainer>.review-item')[+index].classList.add("showReview")
+       
+        if(swiper_w===324){
+          TweenMax.to(swiper_target, 1, {
+            x:`-${swiper_w*(index-1)}`  
+          });
+        }else{
+           TweenMax.to(swiper_target, 1, {
+            x:`-${swiper_w*(index-2)}`  
+          }); 
+        }
+      }
+  
+      $(".reviewList #current_v")[0].innerText = +index
+      $('.reviewList .swiperContainer>.review-item')[+index-1].setAttribute('data-active',true)   
+    }   
+    
+  }
+  
+  function nextSwiper(){
+    let swiper_target = $('.reviewList .swiperContainer')[0]
+    let index = $('.reviewList .swiperContainer>.review-item[data-active]')[0].getAttribute('data-index') 
+    let swiper_w = $('.reviewList .swiperContainer>.review-item')[0].offsetWidth+24
+    
+    if(index<{{section.blocks.size | minus: 1 }}){
+      document.querySelectorAll('.reviewList .swiperContainer>.review-item').forEach(v=>v.removeAttribute('data-active'))
+      
+
+      if((+index+1)<{{section.blocks.size | minus: 1}}){
+        $('.reviewList .swiperContainer>.review-item').removeClass("showReview") 
+        $('.reviewList .swiperContainer>.review-item')[+index].classList.add("showReview")
+        $('.reviewList .swiperContainer>.review-item')[+index+1].classList.add("showReview")
+        $('.reviewList .swiperContainer>.review-item')[+index+2].classList.add("showReview")
+      }else{
+        $('.reviewList .swiperContainer>.review-item').removeClass("showReview") 
+        $('.reviewList .swiperContainer>.review-item')[+index].classList.add("showReview")
+        $('.reviewList .swiperContainer>.review-item')[+index+1].classList.add("showReview")
+      }
+      
+      $(".reviewList #current_v")[0].innerText = +index+2
+      $('.reviewList .swiperContainer>.review-item')[+index+1].setAttribute('data-active',true)     
+   
+        if(swiper_w===324){
+          TweenMax.to(swiper_target, 1, {
+            x:`-${swiper_w*(+index+1)}`
+          });
+        }else{
+          TweenMax.to(swiper_target, 1, {
+            x:`-${swiper_w*index}`
+          });
+        }
+    }   
+
+  }
+</script>
+
+{% schema %}
+  {
+    "name": "media-review-list",
+	"class":"reviewList",
+    "settings": [
+		{
+          "type":"text",
+          "id":"heading",
+          "label":"Heading"
+        }
+	],
+	"blocks":[
+		{
+			"type":"review",
+			"name":"review",
+			"settings":[
+              
+              {
+                  "type":"image_picker",
+                  "id":"img",
+                  "label":"图片"
+              },
+              {
+                  "type":"text",
+                  "id":"review",
+                  "label":"review"
+              },
+    		  {
+                  "type": "range",
+                  "id": "rate",
+                  "min": 0,
+                  "max": 5,
+                  "step": 1,
+                  "label":"rate",
+                  "default": 0
+              },
+			  {
+                  "type":"text",
+                  "id":"name",
+                  "label":"name"
+              },
+			  {
+                  "type":"text",
+                  "id":"date",
+                  "label":"date"
+              }
+			]
+		}
+	],
+	"presets":[
+		{
+			"name":"media-review-list",
+			"category":"review",
+			"blocks":[
+				{
+					"type":"review"
+				}
+			]
+		}
+	]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

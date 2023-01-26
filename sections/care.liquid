@@ -1,0 +1,84 @@
+<div class="wrappedbox">
+  <div class="careWrapped">
+    <div class="careItem">
+      <div class="imgDiv truck lozad"        
+        data-background-image="https://cdn.shopify.com/s/files/1/0583/5810/4213/files/hp-care-truck-white.png"></div>
+        <a target="_blank" href="/pages/privacy-policy" style="color:#fff">Free Shipping</a>
+    </div>
+    <div class="careItem">
+      <div class="imgDiv return lozad"
+        data-background-image="https://cdn.shopify.com/s/files/1/0583/5810/4213/files/hp-care-return-white.png"></div>
+      <a target="_blank" href="/pages/privacy-policy" style="color:#fff">14 Days Free Return</a>
+    </div>
+    <div class="careItem">
+      <div class="imgDiv protected lozad"
+        data-background-image="https://cdn.shopify.com/s/files/1/0583/5810/4213/files/hp-care-protected-white.png">
+      </div>
+      <a target="_blank" href="/pages/privacy-policy" style="color:#fff">2 Years Warranty</a>
+    </div>
+    <div class="careItem">
+      <div class="imgDiv support lozad"
+        data-background-image="https://cdn.shopify.com/s/files/1/0583/5810/4213/files/hp-care-support-white.png"></div>
+      <a target="_blank" href="/pages/care" style="color:#fff">Quick Support</a>
+    </div>
+  </div>
+</div>
+
+<style>
+  .care {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 88px;
+    background: #161C1F14;
+    color: #161C1F;
+    font-size: 17px;
+    font-weight: 600;
+  }
+
+  .careWrapped {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .care .careItem {
+    flex: 1;
+    text-align: center;
+  }
+
+  .care .careItem .imgDiv {
+    width: 35px;
+    height: 35px;
+    background-size: contain;
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  @media screen and (max-width: 768px) {
+    .care .careItem {
+      flex: 0 0 50%;
+    }
+
+    .careItem {
+      padding: 12px 0px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .care {
+      height: auto;
+      font-size: 14px;
+      line-height: 19.6px;
+    }
+
+  }
+</style>
+
+{% schema %}
+{
+"name":"care",
+"class":"care",
+"settings":[]
+}
+{% endschema %}

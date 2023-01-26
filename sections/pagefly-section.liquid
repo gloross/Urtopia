@@ -1,0 +1,99 @@
+
+{% if request.design_mode %}
+<style>.pf-ph{font-size:14px!important;background:#fafafa;padding:20px;text-align:center;border:1px solid #f0f0f0;border-radius:4px;margin:15px}.pf-ph span{display:block;background:#e6f7ff;padding:8px 15px;border:1px solid #91d5ff}</style>
+{% endif %}
+{% if section.settings.section_id.size > 0 %}
+  {% assign snippet_name = section.settings.section_id %}
+  {% render 'pagefly-settings' %}
+  {% include snippet_name %}
+  {% else %}
+    
+    {% if request.design_mode %}
+      <div class="pf-ph">
+        <h3>PageFly Section</h3>
+        <span>No section selected. Please select your section from the list</span>
+      </div>
+    {% endif %}
+  
+{% endif %}
+
+{% schema %}
+{
+  "name": "PageFly Section",
+  "settings": [
+    {
+      "id": "section_id",
+      "type": "select",
+      "label": "Sections",
+      "options": [
+        {
+          "label": "Select section",
+          "value": ""
+        },
+        {
+          "label": "testride, branner ",
+          "value": "pf-3c1fe2e5"
+        },
+        {
+          "label": "testride, process pc",
+          "value": "pf-aa945a9d"
+        },
+        {
+          "label": "testride,to order",
+          "value": "pf-17299d38"
+        },
+        {
+          "label": "testride,media logo",
+          "value": "pf-56e0f4ec"
+        },
+        {
+          "label": "testride,process,mb",
+          "value": "pf-e8142c74"
+        },
+        {
+          "label": "2 - accessiores 1 - 2023-01-19 17:12:36",
+          "value": "pf-14b2d311"
+        },
+        {
+          "label": "1 - accessiores 2 - 2023-01-19 17:12:36",
+          "value": "pf-aca59ed4"
+        },
+        {
+          "label": "accessiories detail",
+          "value": "pf-fd1841b2"
+        },
+        {
+          "label": "order page spec sheet",
+          "value": "pf-ca304bfd"
+        },
+        {
+          "label": "carbon 1 sales test ride lead form",
+          "value": "pf-bd335982"
+        },
+        {
+          "label": "tutorial",
+          "value": "pf-f2a8bf99"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "content": "Find and edit your section on the [section listing](https://apps.pagefly.io/sections)"
+    },
+    {
+      "type": "paragraph",
+      "content": "To add block to a section, please use the App Block element on PageFly section editor."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "@app"
+    }
+  ],
+  "presets": [
+    {
+      "name": "PageFly Section"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,72 @@
+
+<div class="video-wraped">
+  <video src="https://cdn.shopify.com/videos/c/o/v/dba9a33851fb4e36b0e56680c2bff38d.mp4" autoplay="" loop="" playsinline="" muted=""></video>
+</div>
+<div class="title">
+  Smooth Riding
+</div>
+
+<style>
+  .video-bg-text{
+    overflow:hidden;
+    height:400px;
+    position:relative;
+  }
+  .video-bg-text>.video-wraped{    
+    position:relative;
+  }
+  .video-bg-text>.video-wraped video{    
+    width:100%;
+    position: absolute;
+    top: -50%;
+    left: 0;
+    transform:translateY(-50%)
+  }
+
+  .video-bg-text>.title{
+    position:absolute;
+    top:0;
+    bottom:0;
+    right:0;
+    left:0;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 120px;
+    background-image: linear-gradient(85deg, #F7E5DE 0%, #D0FDFF 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+  }
+
+  @media screen and (max-width: 990px){
+    .video-bg-text{
+      height:auto;
+    }
+    .video-bg-text>.title{
+      font-size:48px;
+    }
+    .video-bg-text>.video-wraped video{    
+ 	  width:100%;
+      height:auto;
+      position: static;
+      transform: initial;
+    }
+  }
+      
+</style>
+
+{% schema %}
+  {
+    "name": "video-bg-text",
+    "class":"video-bg-text",
+    "settings": []
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

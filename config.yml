@@ -1,0 +1,23 @@
+development:
+  theme: 136788082904
+  store: urtopia-de.myshopify.com
+  ignore:
+    - settings_data.json # To avoid resetting theme settings
+    - 404.json
+    - article.json
+    - blog.json
+    - cart.json
+    - collection.json
+    - index.json
+    - list-collections.json
+    - page.about.json
+    - page.contact.json
+    - page.faq.json
+    - page.json
+    - page.lookbook.json
+    - page.story.json
+    - page.team.json
+    - page.timeline.json
+    - password.json
+    - product.json
+    - search.json

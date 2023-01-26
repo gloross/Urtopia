@@ -1,0 +1,170 @@
+<div class="coupon-popup">
+  <!--<button class="close-btn" onclick="closePopup()">-->
+    <svg class="close-btn" onclick="closePopup()" xmlns="http://www.w3.org/2000/svg" width="22.571" height="22.571" viewBox="0 0 22.571 22.571">
+  <g id="Group_18603" data-name="Group 18603" transform="translate(-1875.464 -743.714)">
+    <line id="Line_213" data-name="Line 213" x2="15.334" y2="15.334" transform="translate(1879 747.25)" fill="none" stroke="#707070" stroke-linecap="round" stroke-width="5"/>
+    <line id="Line_214" data-name="Line 214" x1="15" y2="15" transform="translate(1879.5 747.75)" fill="none" stroke="#707070" stroke-linecap="round" stroke-width="5"/>
+  </g>
+</svg>
+  <div class="from-title">From <span></span></div>
+  <div class="congratulations">Congratulations!<br/>€700 discount is activated. Enjoy!</div>
+  <div class="content">It will automatically apply to each Urtopia Carbon E-Bike when you check out in this section. Enjoy the ride with your friends. Copy the code to use it later.</div>      
+  <div class="copy-input"><div id="coupon-code"></div><button onclick="copyCouponCode()"><span>Copy</span>
+  <svg xmlns="http://www.w3.org/2000/svg" width="29" height="27" viewBox="0 0 29 27">
+  <g id="Group_18592" data-name="Group 18592" transform="translate(-1777 -1085)">
+    <g id="Rectangle_204" data-name="Rectangle 204" transform="translate(1777 1091)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+      <rect width="21" height="21" stroke="none"/>
+      <rect x="1" y="1" width="19" height="19" fill="none"/>
+    </g>
+    <g id="Rectangle_205" data-name="Rectangle 205" transform="translate(1785 1085)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+      <rect width="21" height="21" stroke="none"/>
+      <rect x="1" y="1" width="19" height="19" fill="none"/>
+    </g>
+  </g>
+</svg></button></div>
+  
+</div>
+<style>
+  .coupon-popup{
+    display:none;
+    flex-direction: column;
+    justify-content: center;
+    width: 554px;
+    height: 348px;
+    background: #F2F2F2 0% 0% no-repeat padding-box;
+    border-radius: 30px;
+    padding:30px 36px 0 36px;
+    position:fixed;
+    bottom:0;
+    right:0;
+    z-index: 1000000;
+  }
+  .coupon-popup .close-btn{
+    position:absolute;
+    top:22px;
+    right:25px;
+    cursor:pointer;
+  }
+  .coupon-popup .from-title{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: left;
+    font: normal normal bold 36px/44px proxima-nova, sans-serif;
+    letter-spacing: 0px;
+    margin-bottom:12px;
+  }
+  .coupon-popup .congratulations{
+    font: normal normal 600 24px/29px proxima-nova, sans-serif;
+    margin-bottom:8px;
+  }
+  .coupon-popup .content{
+    margin-bottom:12px;
+    font: normal normal normal 17px/22px "Gotham Book";
+  }
+  .copy-input{
+    display:flex;
+    width:473px;
+    height:58px;
+    background:#161C1F;
+    color:#fff;
+    font: normal normal 600 30px/58px proxima-nova, sans-serif;
+    border-radius:30px;
+    border:0;
+    text-align:center;
+  }
+  #coupon-code{
+    padding:0 15px;
+    flex:2.5; 
+    overflow:hidden; 
+    text-overflow:ellipsis; 
+    white-space:nowrap;
+  }
+  .display-hidden{
+    visibility:hidden;
+  }
+  .copy-input>button{
+    display: flex;
+    margin-right:-2px;
+    border: 1px;
+    cursor: pointer;
+    flex:1;
+    border-radius:30px;
+    background: #FF4800 0% 0% no-repeat padding-box;
+    font: normal normal 600 30px proxima-nova, sans-serif;
+    color:#fff;
+    align-items: center;
+    justify-content: space-evenly;
+  }
+  @media screen and (min-width:768px){
+  .copy-input>button:hover{
+    background: #fff;
+    color:#000;
+  }
+  .copy-input>button:hover svg>g g{
+    stroke:#000;
+  }
+  }
+  @media screen and (max-width:768px){
+  .coupon-popup{
+    flex-direction: column;
+    width: 94%;
+    height: 470px;
+    transform: translate(50%,50%);
+    bottom: 45%;
+    right: 50%;
+  }
+  .coupon-popup .close-btn{
+  }
+  .coupon-popup .from-title{
+  }
+  .coupon-popup .congratulations{
+    font-size:22px;
+  }
+  .coupon-popup .content{
+  }
+  .copy-input{
+    width: 100%;
+    height: 34px;
+    display:block;
+    margin-bottom: 50px;
+  }
+  #coupon-code{
+    padding:0 10px;
+    margin-bottom:12px;
+    font-size:24px;
+    line-height:34px;
+  }
+  .copy-input>button{
+    font-size:20px;
+    justify-content: center;
+    width: 100%;
+  }
+  .copy-input>button>svg{
+    width:19px;
+  }
+  .copy-input>button:active{
+    background: #fff;
+    color:#000;
+  }
+  .copy-input>button:active svg>g g{
+    stroke:#000;
+  }
+  }
+</style>
+<script>
+  function copyCouponCode(){
+    var dummy = document.createElement("textarea");
+    var codeText = document.querySelector('#coupon-code').innerText;
+    document.body.appendChild(dummy);
+    dummy.value = codeText;
+    dummy.select();
+    document.execCommand("copy");
+    document.body.removeChild(dummy);
+
+  }
+  function closePopup(){
+    document.querySelector(".coupon-popup").classList.add("display-hidden");
+    window.localStorage.setItem("codsan-shown14",new Date().getTime());
+  }
+</script>

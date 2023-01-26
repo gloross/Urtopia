@@ -1,0 +1,29 @@
+
+@import "//cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/fontawesome.min.css";
+@import "//use.fontawesome.com/releases/v6.2.0/css/all.css";
+@font-face {
+	font-family: 'Proxima Nova Lt';
+	src: url('https://cdn.shopify.com/s/files/1/0583/5810/4213/files/ProximaNova-Semibold.woff2?v=1638841180') format('woff2'),url('https://cdn.shopify.com/s/files/1/0583/5810/4213/files/ProximaNova-Semibold.woff?v=1638841180') format('woff');
+	font-weight: 600;
+	font-style: normal;
+	font-display: swap;
+}
+@font-face {
+	font-family: 'Gotham Book';
+	src: url('https://cdn.shopify.com/s/files/1/0583/5810/4213/files/Gotham-Book.woff2?v=1637286127') format('woff2'),url('https://cdn.shopify.com/s/files/1/0583/5810/4213/files/Gotham-Book.woff?v=1637286127') format('woff');
+	font-weight: normal;
+	font-style: normal;
+	font-display: swap;
+}
+@font-face {
+   font-family:ProximaNova Bold;
+   src: url("https://cdn.shopify.com/s/files/1/0583/5810/4213/files/ProximaNova-Bold.woff2?v=1642988930") format("woff2");
+ }
+@font-face {
+   font-family:ProximaNova Semibold;
+   src: url("https://cdn.shopify.com/s/files/1/0583/5810/4213/files/ProximaNova-Semibold.woff2?v=1638841180") format("woff2");
+ }
+ @font-face {
+   font-family:Gotham Book;
+   src: url("https://cdn.shopify.com/s/files/1/0583/5810/4213/files/Gotham-Book.woff2?v=1637286127") format("woff2");
+ }

@@ -1,0 +1,283 @@
+<section id="aresLight" class="normalSection">
+  
+  <div class="aresLightContainer  wrappedbox pcBox" >
+    <div class="left_box">
+      <div class="wrapped">
+        {% assign num = section.blocks.size | minus:1 %}
+        {% for i in (0..num) %}
+            <div style="position:relative;width:320px">
+              <div style="color:#FFFFFF;">{{section.blocks[i].settings.title | default:""}}</div>
+              <div class="des aresdes">{{section.blocks[i].settings.des | default:""}}</div>
+              {% if section.blocks[i].settings.checkbox %}
+                <div class="aresLight_icons">
+                  <img src="https://cdn.shopify.com/s/files/1/0583/5810/4213/files/position-1645838644880.png?v=1657513079">
+                  <img src="https://cdn.shopify.com/s/files/1/0583/5810/4213/files/projection-light-1645838664603.png?v=1657513092">
+                </div>
+              {% else %}
+              {% endif %}
+
+              {% if i == 1 %}
+                <div class="aresLight_arrow1">
+                  <img src="https://cdn.shopify.com/s/files/1/0583/5810/4213/files/Path_91.png?v=1657513142">
+                </div>
+              {% elsif i == 2 %}
+                <div class="aresLight_arrow2">
+                  <img src="https://cdn.shopify.com/s/files/1/0583/5810/4213/files/Path_90.png?v=1657513130">
+                </div>
+              {% endif %}
+      		</div>
+        {% endfor %}
+
+
+      </div>
+    </div>
+    <div class="right_box">
+    {% assign default_src = section.settings.right_img | img_url: 'master' %}
+      <img
+         src="{{ default_src }}"
+         alt="{{ section.settings.right_img.alt | escape }}"
+         loading="lazy"
+      />
+    </div>
+  </div>
+
+  <div class="aresLightContainer  wrappedbox mobileBox" >
+    <div class="right_box">
+      <div class="aresbox">
+          <div style="color:#FFFFFF;">ARES Light</div>
+          <div class="des aresdes">Advanced Rear Early-indication System (ARES)</div>
+          <div class="aresLight_icons">
+            <img src="https://cdn.shopify.com/s/files/1/0583/5810/4213/files/position-1645838644880.png?v=1657513079">
+            <img src="https://cdn.shopify.com/s/files/1/0583/5810/4213/files/projection-light-1645838664603.png?v=1657513092">
+          </div>          
+      </div>
+      
+    </div>
+    <div class="left_box">
+      <div class="wrapped">
+        {% assign num = section.blocks.size | minus:1 %}
+        {% for i in (1..num) %}
+            <div style="position:relative;width:320px">
+              <div style="color:#FFFFFF;" class="aresTitle">{{section.blocks[i].settings.title | default:""}}</div>
+              <div class="des aresdes" >{{section.blocks[i].settings.des | default:""}}</div>
+              {% if section.blocks[i].settings.checkbox %}
+                <div class="aresLight_icons">
+                  <img src="https://cdn.shopify.com/s/files/1/0583/5810/4213/files/position-1645838644880.png?v=1657513079">
+                  <img src="https://cdn.shopify.com/s/files/1/0583/5810/4213/files/projection-light-1645838664603.png?v=1657513092">
+                </div>
+              {% else %}
+              {% endif %}
+
+      		</div>
+        {% endfor %}
+
+
+      </div>
+    </div>
+    
+  </div>
+
+</section>
+
+<style>
+  section#aresLight{
+  	background-color:#000;
+  }
+  .aresLightContainer{
+    overflow:hidden;
+    display:flex;
+    justify-content: space-between;    
+    background-color:#000 !important;
+  }
+  
+  .aresLightContainer .left_box{
+    overflow:hidden;
+   	flex:0 0 691px;
+    background-repeat:no-repeat;
+    background-position:right top;
+    background-size: auto 100%;
+    border-radius:30px;
+  }
+  
+  .aresLightContainer .left_box>.wrapped{
+    height:100%;
+    display:flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    background-image: linear-gradient(132deg, #004474 0%, #00000000 50%);   
+  }
+  
+  .aresLightContainer .wrapped>div{
+  	padding-left:24px;
+  }
+  .aresLightContainer .left_box>.wrapped .aresdes{
+/*     font-size:20px; */
+    color:#FFFFFF;
+  }
+  
+  .aresLightContainer .left_box>.wrapped>div>div:first-child{
+  	font-size:30px;
+    font-weight:bold;
+  }
+  
+  .aresLightContainer .left_box>.wrapped>div:first-child>div:first-child{
+  	font-size:36px;
+    font-weight:bold;
+  }
+  
+  .aresLightContainer .right_box{
+    position:relative;
+	flex:0 0 456.46px;
+  }
+  .aresLightContainer .right_box img{
+    height:100%;
+  }
+  .aresLight_icons img{
+    margin-top:12px;
+    width:40px;
+  }
+  .aresLight_arrow1,
+  .aresLight_arrow2{
+    position:absolute;
+    right:0px;
+    top:0px;
+    transform: translate(88%,27px);
+  }
+  .aresLight_arrow1 img{
+    width:150px;
+  }
+  .aresLight_arrow2 img{
+    width:75px;
+  }
+  .mobileBox.aresLightContainer>.right_box{
+    background-size:cover;
+    background-position:bottom center;
+  }
+  {% if section.settings.right_img %}
+  	{% render 'responsive-background-image' with section.settings.right_img, selector: ".mobileBox.aresLightContainer>.right_box" %}  
+  {% endif %}
+  
+  {% if section.settings.left_img %}
+  	{% render 'responsive-background-image' with section.settings.left_img, selector: ".aresLightContainer .left_box" %}  
+  {% endif %}
+
+  @media screen and (max-width: 990px){
+    section#aresLight{
+    	max-height:unset;
+      height:auto;
+    }
+    .aresLightContainer.mobileBox{
+      display:block;
+    }
+    .aresLightContainer.mobileBox .aresbox{
+      position:absolute;
+      top:0px;
+      bottom:0px;
+    }
+    .mobileBox .right_box .aresbox{
+      margin: 0 20px;
+    }
+    .aresLightContainer .right_box ,
+    .aresLightContainer .left_box{
+      border-radius:15px;
+      overflow: hidden;
+    }
+    
+    .aresLightContainer .right_box{
+      overflow:hidden;
+      height:235px;
+      margin-bottom:6px;
+    }
+    .aresLightContainer .right_box img{
+      height:auto;
+    }
+    .mobileBox.aresLightContainer>.right_box>.aresbox{
+      display: flex;
+      color: #fff;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .mobileBox.aresLightContainer>.right_box>.aresbox>div:nth-child(1){
+      font-size:36px;
+      line-height:54px;
+      font-weight:550;
+    }
+    .mobileBox.aresLightContainer>.right_box>.aresbox>.aresdes{
+      width:auto;
+      font-size:14px;
+      line-height:19.6px;
+      font-weight:300;
+      color: #fff;
+    }
+    .aresLightContainer .left_box>.wrapped{
+      height:453px;
+      justify-content: flex-start;
+    }
+    .aresLightContainer .right_box>.wrapped>div{
+    	width:auto !important;
+    }
+    .aresLightContainer .left_box>.wrapped>div{
+      	width:auto !important;
+    	margin-top:25px;
+      	padding:0px 24px;
+    }
+    .aresLightContainer .left_box>.wrapped>div:first-child>div:first-child{
+      font-size:30px;
+      line-height:42px;
+    }
+    #aresLight > div.aresLightContainer.wrappedbox.mobileBox > div.left_box .aresTitle{
+    	font-weight:600;
+    }
+    .aresLightContainer .left_box>.wrapped .aresdes{
+    	width:auto;
+    }
+  }
+</style>
+
+{% schema %}
+  {
+    "name": "aresLight",
+	"class": "aresLight",
+    "settings": [
+		{
+			"type":"image_picker",
+			"id":"left_img",
+			"label":"左侧图片"
+		},
+		{
+			"type":"image_picker",
+			"id":"right_img",
+			"label":"右侧图片"
+		}
+	],
+	"blocks":[
+		{
+			"type":"list",
+			"name":"list",
+            "settings": [
+                {
+                    "type":"text",
+                    "id":"title",
+                    "label":"title"
+                },
+				{
+                    "type":"text",
+                    "id":"des",
+                    "label":"des"
+                },
+				{
+                    "type":"checkbox",
+                    "id":"checkbox",
+                    "label":"show icons"
+                }
+            ]
+		}
+	]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

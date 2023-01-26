@@ -1,0 +1,208 @@
+<div class="image-text">
+    <div class="listWrapped">
+    {% for block in section.blocks %}
+        <div  class="listItem">
+            {% if block.settings.img == blank %}
+                <div class="placeholder-wrap">
+                {{ 'image' | placeholder_svg_tag: 'icon icon--placeholder' }}
+                </div>
+            {% else %}
+                {% render 'responsive-image' with block.settings.img, alt: block.settings.img.alt, class: class %}
+            {% endif %}
+            <div class="wordBox">
+                <div class="word">
+                {% if block.settings.word != blank %}
+                    <div>{{ block.settings.word }}</div>
+                {% endif %}
+                </div>
+                <div class="peopleInfo">
+                    {% if block.settings.Heading != blank %}
+                        <div>{{ block.settings.Heading }}</div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+</div>
+
+<style>
+    .peopleList{    
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding-bottom:50px;
+    }
+    .listWrapped{
+        max-width:1160px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-evenly;     	
+    }
+    .listWrapped .listItem{
+        overflow: hidden;
+        margin-bottom:30px;
+        flex: 0 0 48%;
+        max-width:561px;
+        min-width: 480px;
+        position: relative;
+        border-radius: 30px;
+        background-color:#F2F2F2;
+    }
+    .listWrapped .listItem img{
+      width:90%;
+    }
+    .wordBox{
+        position: absolute;
+        top: 0;
+        right: 0;
+        width:320px;
+        height: 100%;
+        margin-right: 40px;
+    }
+    .wordBox .word{
+        margin-top: 80px;
+        line-height:22.4px;
+        font-family:"Gotham";
+        color: #161C1FD9;
+    }
+    .wordBox  .peopleInfo{
+        height:220.75px;
+        position: absolute;
+        top: 50%;
+        left: 0;
+        right:0;
+        text-align:center;
+        transform: translateY(-30%);
+    }
+    .wordBox  .peopleInfo p{
+        margin:0;
+        font-size:24px;        
+      	line-height:33.6px;
+        color:#161C1FA6;
+        text-align:right;     
+    }
+    .wordBox  .peopleInfo p:last-child{
+        margin-top:40px 
+    }
+    .wordBox  .peopleInfo p:nth-child(1){
+      margin-bottom:12px;
+    }
+    .wordBox  .peopleInfo p:nth-child(1) strong{
+      	
+        font-size:36px; 
+      	font-weight:650;
+        color:#161C1F;
+        line-height: 50.4px;
+    }
+  	.wordBox  .peopleInfo p:nth-child(2) strong,
+    .wordBox  .peopleInfo p:nth-child(2) strong{
+        line-height:33.6px;
+      	font-weight:550;
+    }
+    .wordBox  .peopleInfo a{   
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        padding: 8px 25px;
+        border: 1px solid #FD4B17;
+        border-radius: 30px;
+        color: #FD4B17;
+    }
+
+    @media (max-width: 767px){
+      .peopleList{
+        padding-bottom:20px;
+      }
+      .listWrapped{
+          padding: 0 5%;
+          flex-direction: column-reverse;
+          justify-content: center;
+        }
+        .listWrapped .listItem{
+            display: flex;
+            align-items: flex-end;
+            min-height: 427px;
+            flex:0 0 90%;
+            min-width:auto;
+            font-size: 17px;
+        }
+        .wordBox{
+           width:240px;
+           margin-right:15px;
+        }
+        .wordBox .word{
+          margin-top:40px;         
+          font-size:14px;         
+        }
+        .wordBox .peopleInfo{
+          margin-top:17px;
+          position: static;
+          transform: none;
+        }
+        .wordBox .peopleInfo a{
+          position: static;
+          font-weight: 550;
+        }
+        .wordBox .peopleInfo p{
+          font-size:17px;
+          line-height:1.125em;
+        }
+        .wordBox .peopleInfo p:nth-child(3){
+          white-space:nowrap;
+        }
+        .wordBox .peopleInfo p:last-child{
+          margin-top:24px;
+        }
+        .wordBox .peopleInfo p:nth-child(1) strong{
+            white-space: nowrap;
+            font-size: 24px;
+            line-height:33.6px;
+        }
+      .wordBox .peopleInfo p:nth-child(1){
+      	margin-bottom:0px;
+      }
+    }
+</style>
+
+{% schema %}
+{
+    "name":"图片+文字",
+    "class":"peopleList",
+    "settings":[],
+    "blocks":[
+        {
+            "type": "list",
+            "name":"list",
+            "settings":[
+                {
+                    "type":"image_picker",
+                    "id":"img",
+                    "label":"图片"
+                },
+                {
+                    "type":"text",
+                    "id":"word",
+                    "label":"word"
+                },
+                {
+                    "type":"richtext",
+                    "id":"Heading",
+                    "label":"Heading"
+                }
+            ]
+        }
+    ],
+    "presets":[
+        {
+            "name":"people-list",
+            "category":"people",
+            "blocks": [
+                {
+                    "type": "list"
+                }
+            ]
+        }
+    ]
+}
+{% endschema %}

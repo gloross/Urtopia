@@ -1,0 +1,217 @@
+<section id="accessories">
+  <div class="accessoriesContainer box-container pcBox">
+     <div class="accessoriesImgWrap">
+
+      {% if section.settings.img != blank %}
+      {% assign default_src = section.settings.img | img_url: 'master' %}
+      <img
+           src="{{ default_src }}"
+           alt="{{ section.settings.img.alt | escape }}"
+           loading="lazy"
+           />
+
+      {% endif %}
+
+     </div>
+    
+    <div class="rightContent">
+
+      {% assign num = section.blocks.size | minus:1 %}
+        {% for i in (0..num) %}
+          <div style="position:relative;">
+            <div class="accessoriesTitle">
+              {{section.blocks[i].settings.title | default:""}}
+            </div>
+            <div class="des">{{section.blocks[i].settings.des | default:""}}</div>
+            {% if i == 0 %}
+              <div class="accessories_arrow1">
+                <img src="https://cdn.shopify.com/s/files/1/0583/5810/4213/files/Group_531.png?v=1657513239">
+              </div>
+            {% elsif i == 1 %}
+              <div class="accessories_arrow2">
+                <img src="https://cdn.shopify.com/s/files/1/0583/5810/4213/files/Group_532.png?v=1657513252">
+              </div>
+            {% elsif i == 2 %}
+              <div class="accessories_arrow3">
+                <img src="https://cdn.shopify.com/s/files/1/0583/5810/4213/files/Group_533.png?v=1657513266">
+              </div>
+            {% endif %}
+         </div>
+        {% endfor %}
+
+    </div>
+      
+  </div>
+	
+  <div class="mobileBox mobileAccessories">
+    {% assign accessoriesPic = "https://cdn.shopify.com/s/files/1/0633/2068/6808/files/20220713-120419.jpg?v=1657685105,https://cdn.shopify.com/s/files/1/0633/2068/6808/files/20220713-120423.jpg?v=1657685127,https://cdn.shopify.com/s/files/1/0633/2068/6808/files/20220713-120415.jpg?v=1657685143" | split:"," %}
+    <div class="rightContent">
+
+      {% assign num = section.blocks.size | minus:1 %}
+        {% for i in (0..num) %}
+          <div>
+            <div class="accessoriesTitle">
+              {{section.blocks[i].settings.title | default:""}}
+            </div>
+            <div class="des">{{section.blocks[i].settings.des | default:""}}</div>
+             <img
+              src="{{accessoriesPic[i]}}"
+              loading="lazy"
+            />
+         </div>
+        {% endfor %}
+
+    </div>
+  </div>
+</section>
+
+<style>
+  #accessories{
+    max-height:unset;
+    padding:12px 0px;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    background-color:#F1F1F1;
+  }
+  .box-container{
+  	max-width:1440px;
+    min-width:1160px;
+  }
+  .accessoriesContainer{
+    display:flex;
+  }
+  .accessoriesContainer .accessoriesImgWrap{   
+    width:908px;
+    margin-left: -8%;
+  }
+  
+  .accessoriesContainer .rightContent{
+    display: flex;
+    flex-direction: column;
+    transform: translate(7%, 4%);
+  }
+  
+  .accessoriesContainer .rightContent>div{
+  	flex:0 0 30%;
+    padding-top:40px;
+  }
+
+  .accessoriesContainer .rightContent>div{
+    flex:0 0 24%;
+  }
+  
+  .accessoriesContainer .rightContent .accessoriesTitle{
+    position:relative;
+  	font-size: 30px;
+    font-weight:600;
+  }
+  
+  .accessoriesContainer .rightContent .des{
+  	width:70%;
+  }
+
+  .accessories_arrow1,
+  .accessories_arrow2,
+  .accessories_arrow3{
+    position:absolute;
+    left:0px;
+    top:0px;
+    transform: translate(-110%,18px);
+  }
+
+  .accessories_arrow1 img,
+  .accessories_arrow2 img{
+    width:236px;
+  }
+
+  .accessories_arrow3 img{
+    width:272px;
+  }
+
+  .mobileAccessories{
+    width:100%;
+    background-repeat: no-repeat;
+    background-size: auto 100%;
+    background-position: 80% center;
+  }
+  
+
+
+
+  
+  @media screen and (max-width: 990px){
+      #accessories{
+        height:auto;
+          padding:20px 0px;
+      }
+
+      .mobileAccessories .rightContent{
+        padding:20px 0px;
+        display: flex;
+        height: 100%;
+        flex-direction: column;
+        justify-content: center;
+        background-color:#fff;
+      }
+      .mobileAccessories .rightContent>div{
+          flex:1;
+          overflow:hidden;
+          padding:0 8%;
+          background-color:#fff;
+        }
+      .mobileAccessories .rightContent img{
+        border-radius:15px;   
+      }
+      .mobileAccessories .rightContent .accessoriesTitle{
+          font-size:28px;
+          font-weight:550;
+          line-height:42px;
+        }
+    .mobileAccessories .rightContent .des{
+    	margin-bottom:8px;
+    }
+  }
+  
+</style>
+
+
+{% schema %}
+  {
+    "name": "accessories",
+	"class":"accessories",
+    "settings": [
+		{
+			"type":"image_picker",
+			"id":"img",
+			"label":"图片"
+		}
+	],
+	"blocks":[
+		{
+			"type":"list",
+			"name":"list",
+            "settings": [
+                {
+                    "type":"text",
+                    "id":"title",
+                    "label":"title"
+                },
+				{
+                    "type":"text",
+                    "id":"des",
+                    "label":"des"
+                }
+            ]
+		}
+	]
+  }
+{% endschema %}
+
+
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

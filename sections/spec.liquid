@@ -1,0 +1,177 @@
+
+<div class="wrappedbox">
+  <div class="title spectit">
+    <span>SPECS</span>
+  </div>
+  <div class="spec_item">
+    <div class="spec_title">Smart</div>
+    <div class="spec_des_box">
+      <div class="spec_des_item">
+        <div class="spec_des_title">Smartbar features</div>
+        <div class="spec_des_detail">Voice control, fingerprint unlock, LED dot-matrix display, Haptic interaction, Built-in Navigation, OTA upgrade</div>
+      </div>
+      <div class="spec_des_item">
+        <div class="spec_des_title">Connectivity</div>
+        <div class="spec_des_detail">eSIM with 4G, Bluetooth & WiFi</div>
+      </div>
+      <div class="spec_des_item">
+        <div class="spec_des_title">IOT sensors</div>
+        <div class="spec_des_detail">Accelerometer, gyroscope, torque</div>
+      </div>
+      <div class="spec_des_item" style="padding-bottom:40px">
+        <div class="spec_des_title">App</div>
+        <div class="spec_des_detail">IOS & Android</div>
+      </div>
+    </div>
+  </div>
+  <div class="spec_item">
+    <div class="spec_title">Power</div>
+    <div class="spec_des_box">
+      <div class="spec_des_item">
+        <div class="spec_des_title">Motor</div>
+        <div class="spec_des_detail">Customized rear hub, 36 V 250 W (rated), 35 N⋅m</div>
+      </div>
+      <div class="spec_des_item">
+        <div class="spec_des_title">Speed modes</div>
+        <div class="spec_des_detail">Pedal, Eco, Comfort, Sport, Turbo</div>
+      </div>
+      <div class="spec_des_item">
+        <div class="spec_des_title">Top speed (assisted)</div>
+        <div class="spec_des_detail">
+          20 mph (32 km/h), US version,
+          <br>
+          16 mph (25 km/h), DE version</div>
+      </div>
+      <div class="spec_des_item" style="padding-bottom:40px">
+        <div class="spec_des_title">Removable battery</div>
+        <div class="spec_des_detail">36V, 10Ah, Samsung Li-ion</div>
+      </div>
+    </div>
+  </div>
+  <div class="spec_item">
+    <div class="spec_title">General</div>
+    <div class="spec_des_box">
+      <div class="spec_des_item">
+        <div class="spec_des_title">Frame</div>
+        <div class="spec_des_detail">Aluminum 6061</div>
+      </div>
+      <div class="spec_des_item">
+        <div class="spec_des_title">Sizes</div>
+        <div class="spec_des_detail">Medium, Large</div>
+      </div>
+      <div class="spec_des_item">
+        <div class="spec_des_title">Front lights</div>
+        <div class="spec_des_detail">StVZO headlight;</div>
+      </div>
+      <div class="spec_des_item">
+        <div class="spec_des_title">Wheels</div>
+        <div class="spec_des_detail">Aluminum 700C</div>
+      </div>
+      <div class="spec_des_item">
+        <div class="spec_des_title">Tires</div>
+        <div class="spec_des_detail">CST 700 × 50C A/V</div>
+      </div>
+      <div class="spec_des_item">
+        <div class="spec_des_title">Transmission</div>
+        <div class="spec_des_detail">Carbon Drive belt</div>
+      </div>
+      <div class="spec_des_item">
+        <div class="spec_des_title">Brakes</div>
+        <div class="spec_des_detail">TEKTRO disc Brakes</div>
+      </div>
+    </div>
+  	<div class="spec_tips">*This spec sheet is subject to change. Please confirm on actual release.</div>
+  </div>
+</div>
+
+<style>
+  .spec{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    font-family:proxima-nova,sans-serif;
+  }
+  .spec .spectit{
+    margin-top:60px;
+    margin-bottom:24px;
+    font-weight:700;
+    font-size:120px;
+    line-height:146px;
+  }
+  .spec>.wrappedbox>.spec_item>.spec_title{
+    padding:0px 24px;
+    font-size:30px;    
+    font-weight:600;    
+    background-color: rgb(203 203 203 / 20%);
+  }
+  .spec>.wrappedbox>.spec_item>.spec_des_box{
+    display:flex;
+    flex-wrap: wrap;
+  }
+  .spec>.wrappedbox>.spec_item>.spec_des_box>.spec_des_item{
+    flex:0 0 33.3%;
+    padding:0px 25px;
+    padding-top: 40px;
+  }
+  .spec>.wrappedbox>.spec_item>.spec_des_box>.spec_des_item>.spec_des_title{
+    font-size:24px;
+	font-weight:600;
+    line-height:24px;
+    color:#161C1F;
+    
+  }
+  .spec>.wrappedbox>.spec_item>.spec_des_box>.spec_des_item>.spec_des_detail{
+    margin-top:12px;
+    line-height:22.4px;
+    font-size:16px;
+    font-family:Gotham Book;
+    color:#4D4D4D;
+  }
+  .spec .spec_tips{
+    padding-left:40px;
+    padding-top:40px;
+    padding-bottom:80px;
+    font-size:14px;
+    line-height:22.4px;
+  	font-family:Gotham Book;
+  }
+  @media screen and (max-width: 768px) {
+    .spec>.wrappedbox{
+    	width:84%;
+      	margin:0 auto;
+    }
+    .spec>.wrappedbox>.spec_item>.spec_des_box>.spec_des_item{
+      flex:0 0 100%;
+      overflow:hidden;
+      padding:12px 17px;
+    }
+    .spec>.wrappedbox>.spec_item>.spec_title{
+      padding:12px 17px;
+      font-size:24px;
+      line-height:33.6px;
+    }
+    .spec>.wrappedbox>.spec_item>.spec_des_box>.spec_des_item>.spec_des_title{
+    	font-size:20px;
+      line-height:28px;
+    }
+    .spec .spectit{
+    	font-size:60px;
+    }
+    .spec .spec_tips{
+    	padding-left:0px;
+    }
+  }
+</style>
+{% schema %}
+  {
+    "name": "spec",
+    "class":"spec",
+    "settings": []
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}
