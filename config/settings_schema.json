@@ -16,7 +16,7 @@
       },
       {
         "type": "text",
-        "id": "insurance_checkbox",
+        "id": "insurance_checkbox1",
         "label": "Show/hide checkbox text"
       },
       {

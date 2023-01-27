@@ -1,11 +1,11 @@
-{%- assign mod_product = mod_product | default: product | default: false -%}
+{%- assign mod_product = mod_product | default: product.metafields.insurance.product.value | default: false -%}
 
 {%- if mod_product -%}
   {%- assign current_variant = mod_product.selected_or_first_available_variant -%}
 
   <template class="js-insurance-template">
     {% comment %} Product {% endcomment %}
-    <div class="insurance-wrapper js-insurance">
+    <insurance-product class="insurance-wrapper js-insurance">
       <div class="insurance-checkbox insurance-checkbox--primary">
         <input
           id="insurance-checkbox"
@@ -13,7 +13,7 @@
           type="checkbox"
           name="insurance-checkbox"
         >
-        <label for="insurance-checkbox">{{- settings.insurance_checkbox -}}</label>
+        <label for="insurance-checkbox">sfs{{- settings.insurance_checkbox1 -}}</label>
       </div><!-- /.insurance-checkbox -->
 
       <div class="insurance js-insurance-product">
@@ -51,7 +51,7 @@
                     value="0"
                     disabled
                     selected>
-                    {{- 'product.variants.choose_option' | t: option: option.name -}}
+                    {{- 'products.product.insurance.choose_option' | t: option: option.name -}}
                   </option>
 
                   {% for variant in mod_product.variants %}
@@ -140,6 +140,6 @@
           </div><!-- /.insurance__consent -->
         {%- endif -%}
       </div><!-- /.insurance -->
-    </div><!-- /.insurance-wrapper -->
+    </insurance-product><!-- /.insurance-wrapper -->
   </template>
 {%- endif -%}
