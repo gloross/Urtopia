@@ -17,7 +17,7 @@
       {
         "type": "text",
         "id": "insurance_checkbox",
-        "label": "Show/hide checkbox text"
+        "label": "Show\/hide checkbox text"
       },
       {
         "type": "richtext",
