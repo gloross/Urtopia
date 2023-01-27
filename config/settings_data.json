@@ -1,7 +1,7 @@
 {
   "current": {
     "insurance_checkbox": "Add Insuranced",
-    "insurance_description": "<p><a href=\"https:\/\/bike.qover.com\/widget\/product-page?lang=en&key=pk_F2654BC3CEC684D9ED1E&depreciation=false&damageDeductible=DAMAGE_DEDUCTIBLE_STANDARD_10PC&theftDeductible=THEFT_DEDUCTIBLE_STANDARD_10PC&country=DE\" title=\"https:\/\/bike.qover.com\/widget\/product-page?lang=en&key=pk_F2654BC3CEC684D9ED1E&depreciation=false&damageDeductible=DAMAGE_DEDUCTIBLE_STANDARD_10PC&theftDeductible=THEFT_DEDUCTIBLE_STANDARD_10PC&country=DE\">Learn more<\/a> about the insurance.<\/p>",
+    "insurance_description": "<p><a href=\"https:\/\/bike.qover.com\/widget\/product-page?lang=en&key=pk_F2654BC3CEC684D9ED1E&depreciation=false&damageDeductible=DAMAGE_DEDUCTIBLE_STANDARD_10PC&theftDeductible=THEFT_DEDUCTIBLE_STANDARD_10PC&country=DE\" target=\"_blank\" title=\"https:\/\/bike.qover.com\/widget\/product-page?lang=en&key=pk_F2654BC3CEC684D9ED1E&depreciation=false&damageDeductible=DAMAGE_DEDUCTIBLE_STANDARD_10PC&theftDeductible=THEFT_DEDUCTIBLE_STANDARD_10PC&country=DE\">Learn more<\/a> about the insurance.<\/p>",
     "insurance_error": "Please choose a country",
     "insurance_consent_product": "<p>By clicking \"Add to cart\", you accept <a href=\"https:\/\/api.prd.qover.io\/documents\/download?apikey=pk_F2654BC3CEC684D9ED1E&productReference=BIKE&country=BE&language=en&type=generalConditions\" target=\"_blank\">terms & conditions<\/a> and <a href=\"https:\/\/api.prd.qover.io\/documents\/download?apikey=pk_F2654BC3CEC684D9ED1E&productReference=BIKE&country=BE&language=en&type=IPID\" target=\"_blank\">insurance product information document<\/a>.<\/p>",
     "insurance_consent_error": "Please confirm you accept the general conditions.",
