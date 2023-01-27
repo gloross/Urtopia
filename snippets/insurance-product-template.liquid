@@ -29,12 +29,6 @@
             {{- mod_product.metafields.insurance.product_title | default: mod_product.title -}}
           </p><!-- /.insurance__title -->
 
-          {%- if settings.insurance_description != blank -%}
-            <div class="insurance__entry js-insurance-entry">
-              {{- settings.insurance_description -}}
-            </div>
-          {%- endif -%}
-
           <span class="insurance__price js-insurance-price">
             {{- current_variant.price | money -}}
           </span><!-- /.insurance__price -->
@@ -93,7 +87,7 @@
 
               {%- if settings.insurance_error != blank -%}
                 <p class="insurance__error is-hidden js-insurance-error">
-                  {{- settings.insurance_error -}}
+                  {{- 'products.product.insurance.option_error' | t: option: option.name -}}
                 </p><!-- /.insurance__error -->
               {%- endif -%}
             </div><!-- /.insurance__select -->
@@ -104,6 +98,12 @@
           <div class="insurance__description">
             {{- mod_product.content -}}
           </div><!-- /.insurance__description -->
+        {%- endif -%}
+
+        {%- if settings.insurance_description != blank -%}
+          <div class="insurance__entry js-insurance-entry">
+            {{- settings.insurance_description -}}
+          </div>
         {%- endif -%}
 
         {% comment %} Consent {% endcomment %}

@@ -25,11 +25,6 @@
         "label": "Description"
       },
       {
-        "type": "text",
-        "id": "insurance_error",
-        "label": "Select country error"
-      },
-      {
         "type": "header",
         "content": "Insurance checkbox consent 1"
       },

@@ -94,6 +94,7 @@
     border-radius: 5px;
     margin-top: 10px;
     background: #f4f4f4;
+    line-height: 1.6;
   }
   
   .insurance__image {
@@ -119,7 +120,6 @@
   
   /* Title */
   .insurance__title {
-    padding-right: 70px;
     margin-bottom: 3px;
   }
   
@@ -157,6 +157,12 @@
     margin-bottom: 0;
   }
   
+  .insurance__description ul {
+    padding-left: 0;
+    margin: 0;
+    list-style: none;
+  }
+  
   .insurance__description li {
     position: relative;
     padding-left: 22px;
@@ -177,15 +183,11 @@
   
   /* Price */
   .insurance__price {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    z-index: 5;
   }
   
   /* Select */
   .insurance__select {
-    margin-top: 6px;
+    margin-top: 4px;
   }
   
   .insurance__select label {
@@ -219,6 +221,10 @@
   
   .insurance__consent:first-child {
     margin-top: 0;
+  }
+
+  .insurance__consent.is-hidden {
+    display: none !important;
   }
   
   .insurance__consent p {
