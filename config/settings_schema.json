@@ -8,6 +8,68 @@
     "theme_support_url": "https:\/\/support.shopify.com\/"
   },
   {
+    "name": "Insurance",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Main"
+      },
+      {
+        "type": "text",
+        "id": "insurance_checkbox",
+        "label": "Show/hide checkbox text"
+      },
+      {
+        "type": "richtext",
+        "id": "insurance_description",
+        "label": "Description"
+      },
+      {
+        "type": "text",
+        "id": "insurance_error",
+        "label": "Select country error"
+      },
+      {
+        "type": "header",
+        "content": "Insurance checkbox consent 1"
+      },
+      {
+        "type": "richtext",
+        "id": "insurance_consent_product",
+        "label": "Checkbox text"
+      },
+      {
+        "type": "text",
+        "id": "insurance_consent_error",
+        "label": "Consent 1 error"
+      },
+      {
+        "type": "header",
+        "content": "Insurance checkbox consent 2"
+      },
+      {
+        "type": "richtext",
+        "id": "insurance_consent_product_2",
+        "label": "Checkbox text"
+      },
+      {
+        "type": "text",
+        "id": "insurance_consent_error_2",
+        "label": "Consent 2 error"
+      },
+      {
+        "type": "header",
+        "content": "Cart"
+      },
+      {
+        "type": "text",
+        "id": "insurance_properties_for",
+        "label": "\"For\" text",
+        "info": "The text that sits left of the related product name in the Insurance item in the cart."
+      }
+    ]
+  },
+  {
     "name": "t:settings_schema.colors.name",
     "settings": [
       {
