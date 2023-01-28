@@ -104,7 +104,7 @@
     "predictive_search_show_price": false,
     "favicon": "shopify:\/\/shop_images\/squre.png",
     "currency_code_enabled": true,
-    "cart_type": "drawer",
+    "cart_type": "page",
     "show_vendor": false,
     "show_cart_note": false,
     "cart_drawer_collection": "accessories",
