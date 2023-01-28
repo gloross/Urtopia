@@ -55,7 +55,8 @@
                     <option
                       value="{{ variant.metafields.insurance.variant_name }}"
                       data-price="{{- variant.price | money -}}"
-                      data-id="{{- mod_product.title | handle -}}-{{- variant.id -}}">
+                      data-id="{{- mod_product.title | handle -}}-{{- variant.id -}}"
+                      data-variant-id="{{- variant.id -}}">
                       {{- variant.title -}}
                     </option>
                   {%- endfor -%}
@@ -136,7 +137,7 @@
       {% comment %} Product Variant ID {% endcomment %}
       <input
         name="items[1]properties[_product_variant_id]"
-        value="{{- current_variant.id -}}"
+        value="{{- product.variants.first.id -}}"
         type="hidden"
         class="js-insurance-field js-insurance-product-variant-id">
 

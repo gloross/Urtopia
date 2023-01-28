@@ -472,7 +472,7 @@ document.body.addEventListener("mouseout", (evt) => {
 });
   </script>
 
-<script>
+{%- comment -%} <script>
   {% for line_item in cart.items %}
     console.log({{ line_item | json }})
 
@@ -480,7 +480,7 @@ document.body.addEventListener("mouseout", (evt) => {
       console.log({{ prop | json }})
     {% endfor %}
   {% endfor %}
-</script>
+</script> {%- endcomment -%}
 
   {%- render 'insurance-templates' -%}
 </body>

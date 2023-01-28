@@ -12,7 +12,6 @@ class InsuranceProduct extends HTMLElement {
     this.error = this.querySelector('.js-insurance-error');
     this.variantIdField = document.querySelectorAll('.js-insurance-variant-id');
     this.metafields = document.querySelectorAll('.js-insurance-field');
-    this.productVariantId = document.querySelector('.js-insurance-product-variant-id');
     this.productMainSelector = document.querySelector('input[name="id"][data-product-id]');
     this.variantLabels = document.querySelectorAll('[data-option-name] > label');
     this.addToCart = document.querySelector('[data-pf-type="ProductATC"]');
@@ -28,7 +27,7 @@ class InsuranceProduct extends HTMLElement {
     this.handleVariantChange();
     this.handleCheckboxConsent();
     this.validateForm();
-    this.handleFields('disable');
+    // this.handleFields('disable');
     
     document.addEventListener('click', (event) => {
       if (!event.target.closest('.js-fake-add-to-cart')) {
@@ -40,7 +39,7 @@ class InsuranceProduct extends HTMLElement {
       this.validateForm();
 
       if (!this.checkbox.checked || (this.checkbox.checked && this.isFormValid)) {
-        this.addToCart.click();
+        // this.addToCart.click();
       }
     });
   }
@@ -144,10 +143,11 @@ class InsuranceProduct extends HTMLElement {
     // Insurance Variant Change
     this.mainSelect.addEventListener('change', (event) => {
       this.mainSelectCurrentOption = this.mainSelect.options[this.mainSelect.selectedIndex];
-      const variantId = this.mainSelect.value;
-      const price = this.mainSelect.options[this.mainSelect.selectedIndex].dataset.price;
+      const variantId = this.mainSelectCurrentOption.dataset.variantId;
+      const price = this.mainSelectCurrentOption.dataset.price;
 
       this.price.textContent = price;
+      console.log(this.variantIdField)
       this.variantIdField.forEach(field => field.value = variantId);
       this.error?.classList.add('is-hidden');
 
@@ -160,11 +160,14 @@ class InsuranceProduct extends HTMLElement {
     // Product Variant change
     this.variantLabels.forEach(label => {
       label.addEventListener('click', (event) => {
+        const productVariantId = document.querySelectorAll('.js-insurance-product-variant-id');
+
         // Wait for the main select to get it's value changed
         // Not the greatest solution but it does the job, sorry
         setTimeout(() => {
           const variantId = this.productMainSelector.value;
-          this.productVariantId.value = variantId;
+
+          productVariantId.value = variantId;
         }, 100);
       });
     })
@@ -235,8 +238,10 @@ class Insurance {
     this.generateFakeAddToCart();
     this.moveInsuranceMetafieldsInPlace();
     this.moveInsuranceProductInPlace();
+
+    this.mainVariantInput.disabled = true;
   }
-  
+
   moveInsuranceMetafieldsInPlace() {
     const htmlString = this.templateInsuranceMetafields.innerHTML;
     const html = this.createElementFromHTML(htmlString);
@@ -247,7 +252,7 @@ class Insurance {
   generateFakeAddToCart() {
     this.fakeButton = this.addToCart.cloneNode(true);
     this.fakeButton.removeAttribute('data-pf-type');
-    this.fakeButton.removeAttribute('onclick');
+    this.fakeButton.setAttribute('onclick', 'addToCartMultiple("atc")');
     this.fakeButton.classList.add('js-fake-add-to-cart');
 
     this.insertBefore(this.fakeButton, this.addToCart);
@@ -278,3 +283,94 @@ class Insurance {
 }
 
 const insurance = new Insurance();
+
+
+
+
+
+
+var cartList = {"items":[]};
+var cart1 =
+  document.querySelector("cart-notification") ||
+  document.querySelector("cart-drawer");
+var adding = false;
+
+function addToCartMultiple(parse) {
+  console.log('multiple');
+  if (adding == false) {
+    changeAddToCartText(parse,1);
+    adding = true;
+    var form = document.querySelector("form#product_form_7633738727640");
+    let formData = new FormData(form);
+    id = formData.get("id");
+
+    for(var pair of formData.entries()){
+      console.log(pair[0], pair[1]);
+    }
+
+    cartList.items.push({ id: id, quantity: 1 });
+    // console.log(cartList.items)
+
+
+    /*
+    if(giveawayChooseIndex==1)
+    {
+      cartList.items.push({ id: "43502341095640", quantity: 1 },{ id: "43565513834712", quantity: 1 })
+    }
+      else{
+      cartList.items.push({ id: "42615024713944", quantity: 1 },{ id: "42615024976088", quantity: 1 },{ id: "42615024550104", quantity: 1 })
+    }*/
+
+
+    if(cart1){
+    	var sections = cart1.getSectionsToRender().map((section) => section.id);
+    	cartList.sections = sections.join(",");
+    }
+
+    fetch("/cart/add.js", {
+      method: "POST",
+      body: formData
+    })
+    .then((res) => res.json())
+    .then((res1) => {
+      res1.key = "";
+      cartList.items.splice(-1, 1);
+	  	let body = {
+        trace_name: "de-order-pc"+parse
+      }	
+
+      if(window.innerWidth <=768){
+        body.trace_name = "de-order-mb"+parse;
+      }
+
+      fetch("https://api.newurtopia.com/third_part/book_ride/traces", {
+        method: "POST",
+        body: JSON.stringify(body),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+
+      if (parse=="buynow") {
+        window.location.href="https://newurtopia.de/checkout"
+      } else {
+        console.log('...', res1)
+        res1.items.shift();
+        console.log(res1)
+        cart1.renderContents(res1);
+        console.log('...2')
+        changeAddToCartText(parse, 0);
+      }
+    })
+    .catch((err) => {
+      changeAddToCartText(parse, 0);
+      cartList.items.splice(-1, 1);
+      console.log(err)
+
+      $(".error-tip").css("visibility","visible");
+      setTimeout(() => {
+        $(".error-tip").css("visibility","hidden");
+      }, 5000)
+    });
+  }
+}
