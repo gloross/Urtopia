@@ -182,7 +182,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     {% render 'meta-tags' %}
 
     {%- if template.name == 'product' -%}
-      <script src="{{ 'insurance-product.js' | asset_url }}" defer></script>
+      <script src="{{ 'insurance.js' | asset_url }}" defer></script>
     {%- endif -%}
 
     <script src="{{ 'global.js' | asset_url }}" defer="defer"></script>
