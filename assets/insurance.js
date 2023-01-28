@@ -8,6 +8,7 @@ class InsuranceProduct extends HTMLElement {
     this.checkbox = this.querySelector('.js-insurance-checkbox');
     this.checkboxesConsent = this.querySelectorAll('.js-insurance-consent');
     this.price = this.querySelector('.js-insurance-price');
+    this.descriptions = this.querySelectorAll('.js-insurance-description');
     this.error = this.querySelector('.js-insurance-error');
     this.variantIdField = document.querySelectorAll('.js-insurance-variant-id');
     this.metafields = document.querySelectorAll('.js-insurance-field');
@@ -17,6 +18,7 @@ class InsuranceProduct extends HTMLElement {
     this.addToCart = document.querySelector('[data-pf-type="ProductATC"]');
     this.fakeAddToCart = null;
     this.isFormValid = false;
+    this.mainSelectCurrentOption = null;
     
     this.init();
   }
@@ -141,6 +143,7 @@ class InsuranceProduct extends HTMLElement {
   handleVariantChange() {
     // Insurance Variant Change
     this.mainSelect.addEventListener('change', (event) => {
+      this.mainSelectCurrentOption = this.mainSelect.options[this.mainSelect.selectedIndex];
       const variantId = this.mainSelect.value;
       const price = this.mainSelect.options[this.mainSelect.selectedIndex].dataset.price;
 
@@ -148,6 +151,7 @@ class InsuranceProduct extends HTMLElement {
       this.variantIdField.forEach(field => field.value = variantId);
       this.error?.classList.add('is-hidden');
 
+      this.refreshDescription();
       // this.refreshTermsAndConditionsLinks();
       // this.refreshEntryLink();
       this.showCheckboxesConsent();
@@ -164,6 +168,13 @@ class InsuranceProduct extends HTMLElement {
         }, 100);
       });
     })
+  }
+
+  refreshDescription() {
+    this.descriptions.forEach((description) => {
+      const isHidden = description.getAttribute('id') != this.mainSelectCurrentOption.dataset.id;
+      description.classList.toggle('is-hidden', isHidden);
+    });
   }
 
   handleCheckboxConsent() {
@@ -243,7 +254,7 @@ class Insurance {
     const html = this.createElementFromHTML(htmlString);
 
     this.insertBefore(html, this.fakeButton);
-    this.template.remove();
+    // this.template.remove();
   }
   
   insertBefore(element, selector) {
@@ -256,7 +267,7 @@ class Insurance {
     const div = document.createElement('div');
 
     div.innerHTML = htmlString.trim();
-    
+
     return div.firstChild;
   }
 }

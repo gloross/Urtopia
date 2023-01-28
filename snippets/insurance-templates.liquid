@@ -49,39 +49,13 @@
                   </option>
 
                   {% for variant in mod_product.variants %}
-                    {% assign country_code = 'GB' %}
-                    {% assign language_code = 'en' %}
-
-                    {%- case variant.title -%}
-                      {%- when 'United Kingdom' -%}
-                        {% assign country_code = 'GB' %}
-                        {% assign language_code = 'en' %}
-
-                      {%- when 'Belgium' -%}
-                        {% assign country_code = 'BE' %}
-                        {% assign language_code = 'en' %}
-
-                      {%- when 'France' -%}
-                        {% assign country_code = 'FR' %}
-                        {% assign language_code = 'fr' %}
-
-                      {%- when 'Netherlands' -%}
-                        {% assign country_code = 'NL' %}
-                        {% assign language_code = 'en' %}
-
-                      {%- when 'Germany' -%}
-                        {% assign country_code = 'DE' %}
-                        {% assign language_code = 'de' %}
-                    {%- endcase -%}
-
                     <option
                       value="{{ variant.id | escape }}"
-                      data-country-code="{{- country_code -}}"
-                      data-language-code="{{- language_code -}}"
-                      data-price="{{- variant.price | money -}}">
+                      data-price="{{- variant.price | money -}}"
+                      data-id="{{- mod_product.title | handle -}}-{{- variant.id -}}">
                       {{- variant.title -}}
                     </option>
-                  {% endfor %}
+                  {%- endfor -%}
                 </select>
               </div><!-- /.insurance_options -->
 
@@ -94,11 +68,15 @@
           {% endfor %}
         </div><!-- /.insurance__content -->
 
-        {%- if mod_product.content != blank -%}
-          <div class="insurance__description">
-            {{- mod_product.content -}}
-          </div><!-- /.insurance__description -->
-        {%- endif -%}
+        {%- for variant in mod_product.variants -%}
+          {%- assign variant_description = variant.metafields.insurance.description -%}
+          
+          {%- if variant_description != blank -%}
+            <div class="insurance__description js-insurance-description{% unless forloop.first %} is-hidden{% endunless %}" id="{{- mod_product.title | handle -}}-{{- variant.id -}}">
+              {{- variant_description -}}
+            </div><!-- /.insurance__description -->
+          {%- endif -%}
+        {%- endfor -%}
 
         {%- if settings.insurance_description != blank -%}
           <div class="insurance__entry js-insurance-entry">
@@ -141,5 +119,35 @@
         {%- endif -%}
       </div><!-- /.insurance -->
     </insurance-product><!-- /.insurance-wrapper -->
+  </template>
+
+  <template class="js-insurance-metafields">
+    {% comment %} Variant ID {% endcomment %}
+    <input
+      name="items[1]id"
+      value="{{- insurance_product.selected_or_first_available_variant.id -}}"
+      type="hidden"
+      class="js-insurance-field js-insurance-variant-id">
+
+    {% comment %} Product Variant ID {% endcomment %}
+    <input
+      name="items[1]properties[_product_variant_id]"
+      value="{{- variant.id -}}"
+      type="hidden"
+      class="js-insurance-field js-insurance-product-variant-id">
+
+    {% comment %} Model {% endcomment %}
+    <input
+      name="items[1]properties[_model]"
+      value="{{- insurance_product.metafields.insurance.model -}}"
+      type="hidden"
+      class="js-insurance-field">
+
+    {% comment %} Damage Deductible {% endcomment %}
+    <input
+      name="items[1]properties[_damage_deductible]"
+      value=""
+      type="hidden"
+      class="js-insurance-field">
   </template>
 {%- endif -%}
