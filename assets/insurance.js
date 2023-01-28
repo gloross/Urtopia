@@ -233,8 +233,8 @@ class Insurance {
   
   init() {
     this.generateFakeAddToCart();
-    this.moveInsuranceProductInPlace();
     this.moveInsuranceMetafieldsInPlace();
+    this.moveInsuranceProductInPlace();
   }
   
   moveInsuranceMetafieldsInPlace() {

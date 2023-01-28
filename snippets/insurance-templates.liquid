@@ -129,21 +129,21 @@
       {% comment %} Variant ID {% endcomment %}
       <input
         name="items[1]id"
-        value="{{- insurance_product.selected_or_first_available_variant.id -}}"
+        value="{{- current_variant.id -}}"
         type="hidden"
         class="js-insurance-field js-insurance-variant-id">
 
       {% comment %} Product Variant ID {% endcomment %}
       <input
         name="items[1]properties[_product_variant_id]"
-        value="{{- variant.id -}}"
+        value="{{- current_variant.id -}}"
         type="hidden"
         class="js-insurance-field js-insurance-product-variant-id">
 
       {% comment %} Model {% endcomment %}
       <input
       name="items[1]properties[_model]"
-      value="{{- insurance_product.metafields.insurance.model -}}"
+      value="{{- mod_product.metafields.insurance.model -}}"
       type="hidden"
       class="js-insurance-field">
       
@@ -156,7 +156,7 @@
       {% comment %} Insurance Variant Id {% endcomment %}
       <input
         name="items[0]properties[_insurance_variant_id]"
-        value="{{- insurance_product.selected_or_first_available_variant.id -}}"
+        value="{{- current_variant.id -}}"
         type="hidden"
         class="js-insurance-field js-insurance-variant-id">
     </div>
