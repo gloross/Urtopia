@@ -100,7 +100,14 @@ padding-bottom: {{ section.settings.padding_bottom }}px;
             {% assign alltotal = threedivided | plus: helmetQuantity %}
 
             {%- for item in cart.items -%}
-            <tr class="cart-item" id="CartItem-{{ item.index | plus: 1 }}">
+            <tr 
+              class="cart-item" 
+              id="CartItem-{{ item.index | plus: 1 }}"
+              data-cart-item="{{ item.key }}"
+              data-line-item="{{ forloop.index }}"
+              data-line-item-variant-id="{{- item.variant_id -}}"
+              {% if item.properties['_insurance_variant_id'] %} data-insurance-variant-id="{{- item.properties['_insurance_variant_id'] -}}"{% endif %}
+              {% if item.properties['_product_variant_id'] %} data-insurance-product-variant-id="{{- item.properties['_product_variant_id'] -}}"{% endif %}>
               <td class="cart-item__media">
                 {% if item.image %}
                 {% comment %} Leave empty space due to a:empty CSS display: none rule {% endcomment %}
@@ -115,13 +122,39 @@ padding-bottom: {{ section.settings.padding_bottom }}px;
 
               <td class="cart-item__details">
                 {%- if settings.show_vendor -%}
-                <p class="caption-with-letter-spacing">{{ item.product.vendor }}</p>
+                  <p class="caption-with-letter-spacing">{{ item.product.vendor }}</p>
                 {%- endif -%}
 
-                <a href="{{ item.url }}" class="cart-item__name h4 break">{{ item.product.title | escape }}</a>
-                {%- if item.variant.inventory_quantity<=0-%} <div>Back-ordered Item
-      </div>
-      {%- endif -%}
+                {%- if item.properties._product_variant_id != blank -%}
+                  {%- comment -%} Insurance title {%- endcomment -%}
+                  <span class="cart-item__name h4 break">{{ item.product.metafields.insurance.product_title }}</span>
+                {%- else -%}
+                  {%- comment -%} Regular title {%- endcomment -%}
+                  <a href="{{ item.url }}" class="cart-item__name h4 break">{{ item.product.title | escape }}</a>
+                {%- endif -%}
+
+                {% comment %} Find the related Product to the Insurance and get it's variant.title {% endcomment %}
+                {%- assign main_product_title = '' -%}
+
+                {%- for main_product_item in cart.items -%}
+                  {%- assign product_insurance_id = main_product_item.properties._insurance_variant_id -%}
+
+                  {%- if product_insurance_id contains item.id -%}
+                    {%- if item.properties._product_variant_id contains main_product_item.id -%}
+                      {%- assign main_product_title = main_product_item.title -%}
+                    {%- endif -%}
+                  {%- endif -%}
+                {%- endfor -%}
+
+                {%- if main_product_title != blank -%}
+                  <p class="">
+                    {{ settings.insurance_properties_for }} {{- main_product_title -}}
+                  </p>
+                {%- endif -%}
+
+                {%- if item.variant.inventory_quantity <= 0 -%}
+                  <div>Back-ordered Item</div>
+                {%- endif -%}
       {%- if item.original_price != item.final_price -%}
       <div class="cart-item__discounted-prices">
         <span class="visually-hidden">
@@ -171,21 +204,30 @@ padding-bottom: {{ section.settings.padding_bottom }}px;
         {%- endif -%}
 
         {%- for property in item.properties -%}
-        {%- assign property_first_char = property.first | slice: 0 -%}
-        {%- if property.last != blank and property_first_char != '_' -%}
-        <div class="product-option">
-          <dt>{{ property.first }}: </dt>
-          <dd>
-            {%- if property.last contains '/uploads/' -%}
-            <a href="{{ property.last }}" class="link" target="_blank">
-              {{ property.last | split: '/' | last }}
-            </a>
-            {%- else -%}
-            {{ property.last }}
-            {%- endif -%}
-          </dd>
-        </div>
-        {%- endif -%}
+          {%- assign property_first_char = property.first | slice: 0 -%}
+
+          {%- if 
+            p.first == '_product_variant_id' or
+            p.first == '_insurance_variant_id' or
+            p.first == '_model' or
+            p.first == '_variant_name' -%}
+            {%- continue -%}
+          {%- endif -%}
+        
+          {%- if property.last != blank and property_first_char != '_' -%}
+            <div class="product-option">
+              <dt>{{ property.first }}: </dt>
+              <dd>
+                {%- if property.last contains '/uploads/' -%}
+                  <a href="{{ property.last }}" class="link" target="_blank">
+                    {{ property.last | split: '/' | last }}
+                  </a>
+                {%- else -%}
+                  {{ property.last }}
+                {%- endif -%}
+              </dd>
+            </div>
+          {%- endif -%}
         {%- endfor -%}
       </dl>
 

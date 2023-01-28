@@ -472,6 +472,16 @@ document.body.addEventListener("mouseout", (evt) => {
 });
   </script>
 
+<script>
+  {% for line_item in cart.items %}
+    console.log({{ line_item | json }})
+
+    {% for prop in line_item.properties %}
+      console.log({{ prop | json }})
+    {% endfor %}
+  {% endfor %}
+</script>
+
   {%- render 'insurance-templates' -%}
 </body>
 </html>

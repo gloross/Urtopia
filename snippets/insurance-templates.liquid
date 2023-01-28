@@ -3,7 +3,7 @@
 {%- if mod_product -%}
   {%- assign current_variant = mod_product.selected_or_first_available_variant -%}
 
-  <template class="js-insurance-template">
+  <template class="js-insurance-product-template">
     {% comment %} Product {% endcomment %}
     <insurance-product class="insurance-wrapper js-insurance">
       <div class="insurance-checkbox insurance-checkbox--primary">
@@ -40,7 +40,10 @@
               <div class="insurance_options">
                 <label for="insurance-option-{{- option_index -}}">{{- option.name -}}</label>
 
-                <select id="insurance-option-{{- option_index -}}" class="js-insurance-main-select">
+                <select 
+                  id="insurance-option-{{- option_index -}}" 
+                  class="js-insurance-main-select"
+                  name="items[1]properties[_variant_name]">
                   <option
                     value="0"
                     disabled
@@ -50,7 +53,7 @@
 
                   {% for variant in mod_product.variants %}
                     <option
-                      value="{{ variant.id | escape }}"
+                      value="{{ variant.metafields.insurance.variant_name }}"
                       data-price="{{- variant.price | money -}}"
                       data-id="{{- mod_product.title | handle -}}-{{- variant.id -}}">
                       {{- variant.title -}}
@@ -121,33 +124,41 @@
     </insurance-product><!-- /.insurance-wrapper -->
   </template>
 
-  <template class="js-insurance-metafields">
-    {% comment %} Variant ID {% endcomment %}
-    <input
-      name="items[1]id"
-      value="{{- insurance_product.selected_or_first_available_variant.id -}}"
-      type="hidden"
-      class="js-insurance-field js-insurance-variant-id">
+  <template class="js-insurance-metafields-template" data-append-to="#product_form_{{- product.id -}}">
+    <div>
+      {% comment %} Variant ID {% endcomment %}
+      <input
+        name="items[1]id"
+        value="{{- insurance_product.selected_or_first_available_variant.id -}}"
+        type="hidden"
+        class="js-insurance-field js-insurance-variant-id">
 
-    {% comment %} Product Variant ID {% endcomment %}
-    <input
-      name="items[1]properties[_product_variant_id]"
-      value="{{- variant.id -}}"
-      type="hidden"
-      class="js-insurance-field js-insurance-product-variant-id">
+      {% comment %} Product Variant ID {% endcomment %}
+      <input
+        name="items[1]properties[_product_variant_id]"
+        value="{{- variant.id -}}"
+        type="hidden"
+        class="js-insurance-field js-insurance-product-variant-id">
 
-    {% comment %} Model {% endcomment %}
-    <input
+      {% comment %} Model {% endcomment %}
+      <input
       name="items[1]properties[_model]"
       value="{{- insurance_product.metafields.insurance.model -}}"
       type="hidden"
       class="js-insurance-field">
+      
+      <input
+        name="items[0]id"
+        value="{{ product.variants.first.id }}"
+        type="hidden"
+        class="js-insurance-field">
 
-    {% comment %} Damage Deductible {% endcomment %}
-    <input
-      name="items[1]properties[_damage_deductible]"
-      value=""
-      type="hidden"
-      class="js-insurance-field">
+      {% comment %} Insurance Variant Id {% endcomment %}
+      <input
+        name="items[0]properties[_insurance_variant_id]"
+        value="{{- insurance_product.selected_or_first_available_variant.id -}}"
+        type="hidden"
+        class="js-insurance-field js-insurance-variant-id">
+    </div>
   </template>
 {%- endif -%}

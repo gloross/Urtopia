@@ -56,8 +56,8 @@ class InsuranceProduct extends HTMLElement {
     if (this.mainSelect.value == 0) {
       this.isFormValid = false;
       
-      const error = this.mainSelect.parentNode.parentNode.querySelector('.js-insurance-error');
       // Show error
+      const error = this.mainSelect.parentNode.parentNode.querySelector('.js-insurance-error');
       error?.classList.remove('is-hidden');
     }
     
@@ -220,22 +220,28 @@ customElements.define('insurance-product', InsuranceProduct);
 
 class Insurance {
   constructor() {
-    this.template = document.querySelector('.js-insurance-template');
+    this.templateInsuranceProduct = document.querySelector('.js-insurance-product-template');
+    this.templateInsuranceMetafields = document.querySelector('.js-insurance-metafields-template');
     this.addToCart = document.querySelector('[data-pf-type="ProductATC"]');
+    this.mainVariantInput = document.querySelector('input[name="id"]');
     this.fakeButton = null;
     
-    if (!this.template) return;
+    if (!this.templateInsuranceProduct || !this.templateInsuranceMetafields) return;
     
     this.init();
   }
   
   init() {
-    this.generateInsuranceMetafields();
     this.generateFakeAddToCart();
     this.moveInsuranceProductInPlace();
+    this.moveInsuranceMetafieldsInPlace();
   }
   
-  generateInsuranceMetafields() {
+  moveInsuranceMetafieldsInPlace() {
+    const htmlString = this.templateInsuranceMetafields.innerHTML;
+    const html = this.createElementFromHTML(htmlString);
+
+    document.querySelector(this.templateInsuranceMetafields.dataset.appendTo).prepend(html);
   }
 
   generateFakeAddToCart() {
@@ -250,11 +256,10 @@ class Insurance {
   }
   
   moveInsuranceProductInPlace() {
-    const htmlString = this.template.innerHTML;
+    const htmlString = this.templateInsuranceProduct.innerHTML;
     const html = this.createElementFromHTML(htmlString);
 
     this.insertBefore(html, this.fakeButton);
-    // this.template.remove();
   }
   
   insertBefore(element, selector) {
