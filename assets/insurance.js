@@ -30,25 +30,17 @@ class InsuranceProduct extends HTMLElement {
     this.handleFields('disable');
     
     document.addEventListener('click', (event) => {
-      event.preventDefault();
-
       if (!event.target.closest('.js-fake-add-to-cart')) {
         return;
       }
 
       this.fakeAddToCart = event.target.closest('.js-fake-add-to-cart');
-      
-      console.log(this.checkbox.checked)
-      if (!this.checkbox.checked) return;
-      
-      console.log('validate')
+
       this.validateForm();
-      
-      if (!this.isFormValid) return;
-      console.log('is valid')
-      
-      addToCartMultiple('atc');
-      console.log('add to cart')
+
+      if (!this.checkbox.checked || (this.checkbox.checked && this.isFormValid)) {
+        // this.addToCart.click();
+      }
     });
   }
 
@@ -264,6 +256,7 @@ class Insurance {
   generateFakeAddToCart() {
     this.fakeButton = this.addToCart.cloneNode(true);
     this.fakeButton.removeAttribute('data-pf-type');
+    this.fakeButton.setAttribute('onclick', 'addToCartMultiple("atc")');
     this.fakeButton.classList.add('js-fake-add-to-cart');
 
     this.insertBefore(this.fakeButton, this.addToCart);
@@ -294,6 +287,11 @@ class Insurance {
 }
 
 const insurance = new Insurance();
+
+
+
+
+
 
 
 function addToCartMultiple(parse) {
@@ -333,7 +331,7 @@ function addToCartMultiple(parse) {
     
     if(cart1New){
       const sections = cart1New.getSectionsToRender().map((section) => section.id);
-      cartListNew.sections = sections.join(",");
+    	cartListNew.sections = sections.join(",");
     }
     
     fetch("/cart/add.js", {
@@ -346,7 +344,7 @@ function addToCartMultiple(parse) {
     .then((res) => res.json())
     .then((res1) => {
       res1.key = "";
-      let body = {
+	  	let body = {
         trace_name: "de-order-pc"+parse
       }	
 
