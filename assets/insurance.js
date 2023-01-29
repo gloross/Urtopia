@@ -34,12 +34,14 @@ class InsuranceProduct extends HTMLElement {
         return;
       }
 
+      event.preventDefault();
+
       this.fakeAddToCart = event.target.closest('.js-fake-add-to-cart');
 
       this.validateForm();
 
-      if (!this.checkbox.checked || (this.checkbox.checked && this.isFormValid)) {
-        // this.addToCart.click();
+      if (this.checkbox.checked && this.isFormValid) {
+        this.addToCart.click();
       }
     });
   }
@@ -256,11 +258,12 @@ class Insurance {
   generateFakeAddToCart() {
     this.fakeButton = this.addToCart.cloneNode(true);
     this.fakeButton.removeAttribute('data-pf-type');
-    this.fakeButton.setAttribute('onclick', 'addToCartMultiple("atc")');
+    this.fakeButton.removeAttribute('onsubmit');
     this.fakeButton.classList.add('js-fake-add-to-cart');
 
     this.insertBefore(this.fakeButton, this.addToCart);
     
+    this.addToCart.setAttribute('onclick', 'addToCartMultiple("atc")');
     this.addToCart.classList.add('hidden');
   }
   
