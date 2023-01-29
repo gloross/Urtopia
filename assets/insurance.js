@@ -296,7 +296,7 @@ class Insurance {
 const insurance = new Insurance();
 
 
-addToCartMultiple(parse) {
+function addToCartMultiple(parse) {
   const cartListNew = {items:[]};
   const cart1New =
     document.querySelector("cart-notification") ||
