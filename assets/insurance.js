@@ -30,6 +30,8 @@ class InsuranceProduct extends HTMLElement {
     this.handleFields('disable');
     
     document.addEventListener('click', (event) => {
+      event.preventDefault();
+
       if (!event.target.closest('.js-fake-add-to-cart')) {
         return;
       }
@@ -40,7 +42,9 @@ class InsuranceProduct extends HTMLElement {
       
       this.validateForm();
       
-      if (!this.isFormValid) event.preventDefault();
+      if (!this.isFormValid) return;
+
+      addToCartMultiple('atc');
     });
   }
 
@@ -256,7 +260,6 @@ class Insurance {
   generateFakeAddToCart() {
     this.fakeButton = this.addToCart.cloneNode(true);
     this.fakeButton.removeAttribute('data-pf-type');
-    this.fakeButton.setAttribute('onclick', 'addToCartMultiple("atc")');
     this.fakeButton.classList.add('js-fake-add-to-cart');
 
     this.insertBefore(this.fakeButton, this.addToCart);
