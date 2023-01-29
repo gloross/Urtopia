@@ -15,10 +15,11 @@ class InsuranceProduct extends HTMLElement {
     this.mainVariantSelector = document.querySelector('input[name="id"][data-product-id]');
     this.variantLabels = document.querySelectorAll('[data-option-name] > label');
     this.addToCart = document.querySelector('[data-pf-type="ProductATC"]');
+    this.variantIdInput = document.querySelector('.js-product-variant-id');
     this.fakeAddToCart = null;
     this.isFormValid = false;
     this.mainSelectCurrentOption = null;
-    
+
     this.init();
   }
 
@@ -28,6 +29,8 @@ class InsuranceProduct extends HTMLElement {
     this.handleCheckboxConsent();
     this.validateForm();
     this.handleFields('disable');
+    
+    this.mainVariantSelector.disabled = true;
     
     document.addEventListener('click', (event) => {
       if (!event.target.closest('.js-fake-add-to-cart')) {
@@ -161,14 +164,14 @@ class InsuranceProduct extends HTMLElement {
     // Product Variant change
     this.variantLabels.forEach(label => {
       label.addEventListener('click', (event) => {
-        const productVariantId = document.querySelectorAll('.js-insurance-product-variant-id');
-
         // Wait for the main select to get it's value changed
         // Not the greatest solution but it does the job, sorry
         setTimeout(() => {
+          const insuranceProductVariantId = document.querySelectorAll('.js-insurance-product-variant-id');
           const variantId = this.mainVariantSelector.value;
-
-          productVariantId.value = variantId;
+          
+          this.variantIdInput.value = variantId;
+          insuranceProductVariantId.value = variantId;
         }, 100);
       });
     })
@@ -227,10 +230,8 @@ class Insurance {
     this.templateInsuranceProduct = document.querySelector('.js-insurance-product-template');
     this.templateInsuranceMetafields = document.querySelector('.js-insurance-metafields-template');
     this.addToCart = document.querySelector('[data-pf-type="ProductATC"]');
-    this.mainVariantInput = document.querySelector('input[name="id"]');
     this.fakeButton = null;
-    this.variantIdInput = document.querySelector('.js-product-variant-id');
-    
+
     if (!this.templateInsuranceProduct || !this.templateInsuranceMetafields) return;
     
     this.init();
@@ -240,12 +241,6 @@ class Insurance {
     this.generateFakeAddToCart();
     this.moveInsuranceMetafieldsInPlace();
     this.moveInsuranceProductInPlace();
-
-    this.mainVariantInput.disabled = true;
-
-    this.mainVariantInput.addEventListener('change', () => {
-      this.variantIdInput.value = this.mainVariantInput.value;
-    });
   }
 
   moveInsuranceMetafieldsInPlace() {
