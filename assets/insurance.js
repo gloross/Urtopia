@@ -12,7 +12,7 @@ class InsuranceProduct extends HTMLElement {
     this.error = this.querySelector('.js-insurance-error');
     this.variantIdField = document.querySelectorAll('.js-insurance-variant-id');
     this.metafields = document.querySelectorAll('.js-insurance-field');
-    this.productMainSelector = document.querySelector('input[name="id"][data-product-id]');
+    this.mainVariantSelector = document.querySelector('input[name="id"][data-product-id]');
     this.variantLabels = document.querySelectorAll('[data-option-name] > label');
     this.addToCart = document.querySelector('[data-pf-type="ProductATC"]');
     this.fakeAddToCart = null;
@@ -57,7 +57,7 @@ class InsuranceProduct extends HTMLElement {
       
       // Show error
       const error = this.mainSelect.parentNode.parentNode.querySelector('.js-insurance-error');
-      error?.classList.remove('is-hidden');
+      error?.classList.remove('hidden');
     }
     
     // Show Consent Error
@@ -68,14 +68,14 @@ class InsuranceProduct extends HTMLElement {
         const error = checkbox.parentNode.querySelector('.js-insurance-error');
         // Show error
         checkbox.classList.add('error');
-        error?.classList.remove('is-hidden');
+        error?.classList.remove('hidden');
       }
     });
   }
 
   showCheckboxesConsent() {
     this.checkboxesConsent.forEach(checkbox => {
-      checkbox.parentNode.classList.remove('is-hidden');
+      checkbox.parentNode.classList.remove('hidden');
     });
   }
 
@@ -148,7 +148,7 @@ class InsuranceProduct extends HTMLElement {
 
       this.price.textContent = price;
       this.variantIdField.forEach(field => field.value = variantId);
-      this.error?.classList.add('is-hidden');
+      this.error?.classList.add('hidden');
 
       this.refreshDescription();
       // this.refreshTermsAndConditionsLinks();
@@ -164,7 +164,7 @@ class InsuranceProduct extends HTMLElement {
         // Wait for the main select to get it's value changed
         // Not the greatest solution but it does the job, sorry
         setTimeout(() => {
-          const variantId = this.productMainSelector.value;
+          const variantId = this.mainVariantSelector.value;
 
           productVariantId.value = variantId;
         }, 100);
@@ -175,7 +175,7 @@ class InsuranceProduct extends HTMLElement {
   refreshDescription() {
     this.descriptions.forEach((description) => {
       const isHidden = description.getAttribute('id') != this.mainSelectCurrentOption.dataset.id;
-      description.classList.toggle('is-hidden', isHidden);
+      description.classList.toggle('hidden', isHidden);
     });
   }
 
@@ -185,7 +185,7 @@ class InsuranceProduct extends HTMLElement {
         if (checkbox.checked) {
           const error = checkbox.parentNode.querySelector('.js-insurance-error');
 
-          error.classList.add('is-hidden');
+          error.classList.add('hidden');
           checkbox.classList.add('error');
         }
       });
@@ -197,11 +197,11 @@ class InsuranceProduct extends HTMLElement {
 
     switch (status) {
       case 'enable':
-        this.product.classList.remove('is-hidden');
+        this.product.classList.remove('hidden');
         this.metafields.forEach(field => field.removeAttribute('disabled'));
         return;
       case 'disable':
-        this.product.classList.add('is-hidden');
+        this.product.classList.add('hidden');
         this.metafields.forEach(field => field.setAttribute('disabled', ''));
         return;
     }
@@ -239,10 +239,10 @@ class Insurance {
     this.moveInsuranceMetafieldsInPlace();
     this.moveInsuranceProductInPlace();
 
-    this.mainVariantInput.disabled = true;
+    // this.mainVariantInput.disabled = true;
 
     this.mainVariantInput.addEventListener('change', () => {
-      this.variantIdInput = this.mainVariantInput.value;
+      this.variantIdInput.value = this.mainVariantInput.value;
     });
   }
 
@@ -261,7 +261,7 @@ class Insurance {
 
     this.insertBefore(this.fakeButton, this.addToCart);
     
-    this.addToCart.style.display = 'none';
+    // this.addToCart.classList.add('hidden');
   }
   
   moveInsuranceProductInPlace() {
@@ -309,10 +309,6 @@ function addToCartMultiple(parse) {
     const form = document.querySelector("form#product_form_7633738727640");
     const formData = new FormData(form);
 
-    // for(var pair of formData.entries()){
-    //   console.log(pair[0], pair[1]);
-    // }
-
     const item0 = { 
       id: formData.get('items[0]id'),
       quantity: 1,
@@ -332,28 +328,11 @@ function addToCartMultiple(parse) {
     }
 
     cartListNew.items.push(item0, item1);
-
-    // cartListNew.items.forEach(item => {
-    //   console.log(item)
-    // })
-
-    /*
-    if(giveawayChooseIndex==1)
-    {
-      cartListNew.items.push({ id: "43502341095640", quantity: 1 },{ id: "43565513834712", quantity: 1 })
-    }
-      else{
-      cartListNew.items.push({ id: "42615024713944", quantity: 1 },{ id: "42615024976088", quantity: 1 },{ id: "42615024550104", quantity: 1 })
-    }*/
-
-    // console.log(cart1New);
     
     if(cart1New){
       const sections = cart1New.getSectionsToRender().map((section) => section.id);
     	cartListNew.sections = sections.join(",");
     }
-    
-    console.log(cartListNew);
     
     fetch("/cart/add.js", {
       method: "POST",
@@ -364,8 +343,7 @@ function addToCartMultiple(parse) {
     })
     .then((res) => res.json())
     .then((res1) => {
-      res1.key = "";
-      // cartListNew.items.splice(-1, 1);
+      // res1.key = "";
 	  	// let body = {
       //   trace_name: "de-order-pc"+parse
       // }	
@@ -385,19 +363,26 @@ function addToCartMultiple(parse) {
       if (parse=="buynow") {
         window.location.href="/checkout"
       } else {
-        console.log('...', res1)
+        // Remove insurance product before showing the Notify block
+        res1.items.forEach((item, index) => {
+          console.log(item.properties)
+          if (item.properties['_product_variant_id']) {
+            console.log('removing')
+            res1.items.splice(index, 1); 
+          }
+        });
 
-        // res1.items.shift();
+        console.log(res1)
+
         cart1New.renderContents(res1);
-        console.log('finish renderContents')
         changeAddToCartText(parse, 0);
       }
     })
     .catch((err) => {
+      throw new Error(err);
+      
       changeAddToCartText(parse, 0);
-      // cartListNew.items.splice(-1, 1);
-      console.log(err)
-
+      
       $(".error-tip").css("visibility","visible");
       setTimeout(() => {
         $(".error-tip").css("visibility","hidden");

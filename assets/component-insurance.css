@@ -9,10 +9,6 @@
   margin-bottom: 20px;
 }
 
-.insurance-wrapper .is-hidden {
-  display: none !important;
-}
-
 .insurance-wrapper:last-child {
   margin-bottom: 0;
 }

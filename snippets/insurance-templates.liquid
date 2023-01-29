@@ -36,7 +36,7 @@
           {% for option in mod_product.options_with_values %}
             {%- assign option_index = forloop.index0 -%}
 
-            <div class="insurance__select{% if mod_product.variants.size == 1 %} is-hidden{% endif %}">
+            <div class="insurance__select{% if mod_product.variants.size == 1 %} hidden{% endif %}">
               <div class="insurance_options">
                 <label for="insurance-option-{{- option_index -}}">{{- option.name -}}</label>
 
@@ -64,7 +64,7 @@
               </div><!-- /.insurance_options -->
 
               {%- if settings.insurance_error != blank -%}
-                <p class="insurance__error is-hidden js-insurance-error">
+                <p class="insurance__error hidden js-insurance-error">
                   {{- 'products.product.insurance.option_error' | t: option: option.name -}}
                 </p><!-- /.insurance__error -->
               {%- endif -%}
@@ -76,7 +76,7 @@
           {%- assign variant_description = variant.metafields.insurance.description -%}
           
           {%- if variant_description != blank -%}
-            <div class="insurance__description js-insurance-description{% unless forloop.first %} is-hidden{% endunless %}" id="{{- mod_product.title | handle -}}-{{- variant.id -}}">
+            <div class="insurance__description js-insurance-description{% unless forloop.first %} hidden{% endunless %}" id="{{- mod_product.title | handle -}}-{{- variant.id -}}">
               {{- variant_description -}}
             </div><!-- /.insurance__description -->
           {%- endif -%}
@@ -90,7 +90,7 @@
 
         {% comment %} Consent {% endcomment %}
         {%- if settings.insurance_consent_product != blank -%}
-          <div class="insurance__consent insurance-checkbox is-hidden">
+          <div class="insurance__consent insurance-checkbox hidden">
             <input type="checkbox" name="insurance-consent" id="insurance-consent" class="checkbox insurance__consent-checkbox js-insurance-consent">
 
             <label for="insurance-consent">
@@ -98,7 +98,7 @@
             </label>
 
             {%- if settings.insurance_consent_error != blank -%}
-              <p class="insurance__consent-error is-hidden js-insurance-error">
+              <p class="insurance__consent-error hidden js-insurance-error">
                 {{- settings.insurance_consent_error -}}
               </p><!-- /.insurance__error -->
             {%- endif -%}
@@ -107,7 +107,7 @@
 
         {% comment %} Consent 2 {% endcomment %}
         {%- if settings.insurance_consent_product_2 != blank -%}
-          <div class="insurance__consent insurance-checkbox is-hidden">
+          <div class="insurance__consent insurance-checkbox hidden">
             <input type="checkbox" name="insurance-consent-2" id="insurance-consent-2" class="checkbox insurance__consent-checkbox js-insurance-consent">
 
             <label for="insurance-consent-2">
@@ -115,7 +115,7 @@
             </label>
 
             {%- if settings.insurance_consent_error_2 != blank -%}
-              <p class="insurance__consent-error is-hidden js-insurance-error">
+              <p class="insurance__consent-error hidden js-insurance-error">
                 {{- settings.insurance_consent_error_2 -}}
               </p><!-- /.insurance__error -->
             {%- endif -%}
@@ -152,7 +152,7 @@
         name="items[0]id"
         value="{{ product.selected_or_first_available_variant.id }}"
         type="hidden"
-        class="js-insurance-field js-product-variant-id">
+        class="js-product-variant-id">
 
       {% comment %} Insurance Variant Id {% endcomment %}
       <input
