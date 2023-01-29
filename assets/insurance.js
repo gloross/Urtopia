@@ -39,7 +39,6 @@ class InsuranceProduct extends HTMLElement {
       this.fakeAddToCart = event.target.closest('.js-fake-add-to-cart');
 
       this.validateForm();
-      console.log('opa')
 
       if (!this.checkbox.checked || (this.checkbox.checked && this.isFormValid)) {
         this.addToCart.click();
@@ -301,34 +300,44 @@ function addToCartInsurance(parse) {
     document.querySelector("cart-drawer");
   let addingNew = false;
   
-  console.log('multiple');
   if (addingNew == false) {
     changeAddToCartText(parse,1);
     addingNew = true;
 
     const form = document.querySelector("form#product_form_7633738727640");
     const formData = new FormData(form);
-
+    
     const item0 = { 
       id: formData.get('items[0]id'),
-      quantity: 1,
-      properties: {
+      quantity: 1
+    }
+    
+    if (formData.get('items[0]properties[_insurance_variant_id]')) {
+      item0.properties = {
         _insurance_variant_id: formData.get('items[0]properties[_insurance_variant_id]')
       }
     }
     
-    const item1 = { 
-      id: formData.get('items[1]id'), 
-      quantity: 1,
-      properties: {
-        _product_variant_id: formData.get('items[1]properties[_product_variant_id]'),
-        _model: formData.get('items[1]properties[_model]'),
-        _variant_name: formData.get('items[1]properties[_variant_name]')
+    // If has insurance product
+    if (formData.get('items[1]id')) {
+      let item1 = { 
+        id: formData.get('items[1]id'), 
+        quantity: 1
       }
-    }
+  
+      if (formData.get('items[1]properties[_product_variant_id]') && formData.get('items[1]properties[_product_variant_id]') && formData.get('items[1]properties[_variant_name]')) {
+        item1.properties = {
+          _product_variant_id: formData.get('items[1]properties[_product_variant_id]'),
+          _model: formData.get('items[1]properties[_model]'),
+          _variant_name: formData.get('items[1]properties[_variant_name]')
+        }
+      }
 
-    cartListNew.items.push(item1, item0);
+      cartListNew.items.push(item1);
+    }
     
+    cartListNew.items.push(item0);
+
     if(cart1New){
       const sections = cart1New.getSectionsToRender().map((section) => section.id);
     	cartListNew.sections = sections.join(",");
