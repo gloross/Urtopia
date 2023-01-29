@@ -239,7 +239,7 @@ class Insurance {
     this.moveInsuranceMetafieldsInPlace();
     this.moveInsuranceProductInPlace();
 
-    // this.mainVariantInput.disabled = true;
+    this.mainVariantInput.disabled = true;
 
     this.mainVariantInput.addEventListener('change', () => {
       this.variantIdInput.value = this.mainVariantInput.value;
@@ -327,7 +327,7 @@ function addToCartMultiple(parse) {
       }
     }
 
-    cartListNew.items.push(item0, item1);
+    cartListNew.items.push(item1, item0);
     
     if(cart1New){
       const sections = cart1New.getSectionsToRender().map((section) => section.id);
