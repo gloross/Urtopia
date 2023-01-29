@@ -261,7 +261,7 @@ class Insurance {
 
     this.insertBefore(this.fakeButton, this.addToCart);
     
-    // this.addToCart.classList.add('hidden');
+    this.addToCart.classList.add('hidden');
   }
   
   moveInsuranceProductInPlace() {
@@ -343,36 +343,32 @@ function addToCartMultiple(parse) {
     })
     .then((res) => res.json())
     .then((res1) => {
-      // res1.key = "";
-	  	// let body = {
-      //   trace_name: "de-order-pc"+parse
-      // }	
+      res1.key = "";
+	  	let body = {
+        trace_name: "de-order-pc"+parse
+      }	
 
-      // if(window.innerWidth <=768){
-      //   body.trace_name = "de-order-mb"+parse;
-      // }
+      if(window.innerWidth <=768){
+        body.trace_name = "de-order-mb"+parse;
+      }
 
-      // fetch("https://api.newurtopia.com/third_part/book_ride/traces", {
-      //   method: "POST",
-      //   body: JSON.stringify(body),
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      // })
+      fetch("https://api.newurtopia.com/third_part/book_ride/traces", {
+        method: "POST",
+        body: JSON.stringify(body),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
 
       if (parse=="buynow") {
         window.location.href="/checkout"
       } else {
         // Remove insurance product before showing the Notify block
-        res1.items.forEach((item, index) => {
-          console.log(item.properties)
-          if (item.properties['_product_variant_id']) {
-            console.log('removing')
-            // res1.items.splice(index, 1); 
-          }
-        });
-
-        console.log(res1)
+        // res1.items.forEach((item, index) => {
+        //   if (item.properties['_product_variant_id']) {
+        //     // res1.items.splice(index, 1); 
+        //   }
+        // });
 
         cart1New.renderContents(res1);
         changeAddToCartText(parse, 0);
