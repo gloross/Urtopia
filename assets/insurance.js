@@ -39,8 +39,10 @@ class InsuranceProduct extends HTMLElement {
       this.fakeAddToCart = event.target.closest('.js-fake-add-to-cart');
 
       this.validateForm();
+      console.log('opa')
 
       if (this.checkbox.checked && this.isFormValid) {
+        console.log('clicked')
         this.addToCart.click();
       }
     });
@@ -258,12 +260,12 @@ class Insurance {
   generateFakeAddToCart() {
     this.fakeButton = this.addToCart.cloneNode(true);
     this.fakeButton.removeAttribute('data-pf-type');
-    this.fakeButton.removeAttribute('onsubmit');
+    this.fakeButton.removeAttribute('onclick');
     this.fakeButton.classList.add('js-fake-add-to-cart');
 
     this.insertBefore(this.fakeButton, this.addToCart);
     
-    this.addToCart.setAttribute('onclick', 'addToCartMultiple("atc")');
+    this.addToCart.setAttribute('onclick', 'addToCartInsurance("atc")');
     this.addToCart.classList.add('hidden');
   }
   
@@ -293,11 +295,7 @@ const insurance = new Insurance();
 
 
 
-
-
-
-
-function addToCartMultiple(parse) {
+function addToCartInsurance(parse) {
   const cartListNew = {items:[]};
   const cart1New =
     document.querySelector("cart-notification") ||
