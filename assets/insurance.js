@@ -374,6 +374,15 @@ function addToCartInsurance(parse) {
         //   }
         // });
 
+        // Swap items' places
+        function swapElements(arr, i1, i2) {
+          arr[i1] = arr.splice(i2, 1, arr[i1])[0];
+        }
+        
+        if (res1.items.length == 2) {
+          swapElements(res1.items, 0, 1);
+        }
+        
         cart1New.renderContents(res1);
         changeAddToCartText(parse, 0);
       }

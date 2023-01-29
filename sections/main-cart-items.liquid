@@ -105,6 +105,20 @@ padding-bottom: {{ section.settings.padding_bottom }}px;
               {% if item.properties._product_variant_id != blank %}
                 {%- assign is_insurance_product = true -%}
               {%- endif -%}
+
+              {% comment %} Find the related Product to the Insurance and get it's variant.title {% endcomment %}
+              {%- assign main_product_title = '' -%}
+
+              {%- for main_product_item in cart.items -%}
+                {%- assign insurance_variant_id = main_product_item.properties._insurance_variant_id -%}
+
+                {%- if insurance_variant_id contains item.id -%}
+                  {%- if item.properties._product_variant_id contains main_product_item.id -%}
+                    {%- assign main_product_title = main_product_item.title -%}
+                    {%- break -%}
+                  {%- endif -%}
+                {%- endif -%}
+              {%- endfor -%}
             
               <tr 
                 class="cart-item" 
@@ -133,25 +147,17 @@ padding-bottom: {{ section.settings.padding_bottom }}px;
 
                   {%- if item.properties._product_variant_id != blank -%}
                     {%- comment -%} Insurance title {%- endcomment -%}
-                    <p class="h4 break">{{ item.product.metafields.insurance.title }}</p>
+                    <p class="h4 break">
+                      {{ item.product.metafields.insurance.title }} - 
+
+                      {% if main_product_title != blank %}
+                        {{ main_product_title }}
+                      {% endif %}
+                    </p>
                   {%- else -%}
                     {%- comment -%} Regular title {%- endcomment -%}
                     <a href="{{ item.url }}" class="cart-item__name h4 break">{{ item.product.title | escape }}</a>
                   {%- endif -%}
-
-                  {% comment %} Find the related Product to the Insurance and get it's variant.title {% endcomment %}
-                  {%- assign main_product_title = '' -%}
-
-                  {%- for main_product_item in cart.items -%}
-                    {%- assign insurance_variant_id = main_product_item.properties._insurance_variant_id -%}
-
-                    {%- if insurance_variant_id contains item.id -%}
-                      {%- if item.properties._product_variant_id contains main_product_item.id -%}
-                        {%- assign main_product_title = main_product_item.title -%}
-                        {%- break -%}
-                      {%- endif -%}
-                    {%- endif -%}
-                  {%- endfor -%}
 
                   {%- if item.variant.inventory_quantity <= 0 -%}
                     {% comment %} if it isn't an insurance product {% endcomment %}
@@ -194,12 +200,6 @@ padding-bottom: {{ section.settings.padding_bottom }}px;
                     <div class="product-option">
                       {{ item.original_price | money }}
                     </div>
-                  {%- endif -%}
-
-                  {%- if main_product_title != blank -%}
-                    <p class="product-option">
-                      {{ settings.insurance_properties_for }} {{- main_product_title -}}
-                    </p>
                   {%- endif -%}
 
                   {%- if item.product.has_only_default_variant == false or item.properties.size != 0 or
