@@ -368,7 +368,7 @@ function addToCartMultiple(parse) {
           console.log(item.properties)
           if (item.properties['_product_variant_id']) {
             console.log('removing')
-            res1.items.splice(index, 1); 
+            // res1.items.splice(index, 1); 
           }
         });
 

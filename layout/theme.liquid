@@ -182,7 +182,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     {% render 'meta-tags' %}
 
     {%- if template.name == 'product' -%}
-      {%- comment -%} <script src="{{ 'insurance.js' | asset_url }}" defer></script> {%- endcomment -%}
+      <script src="{{ 'insurance.js' | asset_url }}" defer></script>
     {%- endif -%}
 
     <script src="{{ 'global.js' | asset_url }}" defer="defer"></script>
@@ -482,7 +482,7 @@ document.body.addEventListener("mouseout", (evt) => {
   {% endfor %}
 </script> {%- endcomment -%}
 
-  {%- comment -%} {%- render 'insurance-templates' -%} {%- endcomment -%}
+  {%- render 'insurance-templates' -%}
 </body>
 </html>
     
