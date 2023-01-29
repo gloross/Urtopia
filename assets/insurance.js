@@ -35,12 +35,12 @@ class InsuranceProduct extends HTMLElement {
       }
 
       this.fakeAddToCart = event.target.closest('.js-fake-add-to-cart');
-
+      
+      if (!this.checkbox.checked) return;
+      
       this.validateForm();
-
-      if (!this.checkbox.checked || (this.checkbox.checked && this.isFormValid)) {
-        // this.addToCart.click();
-      }
+      
+      if (!this.isFormValid) event.preventDefault();
     });
   }
 
