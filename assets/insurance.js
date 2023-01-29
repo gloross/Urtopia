@@ -38,14 +38,111 @@ class InsuranceProduct extends HTMLElement {
 
       this.fakeAddToCart = event.target.closest('.js-fake-add-to-cart');
       
+      console.log(this.checkbox.checked)
       if (!this.checkbox.checked) return;
       
+      console.log('validate')
       this.validateForm();
       
       if (!this.isFormValid) return;
-
-      addToCartMultiple('atc');
+      console.log('is valid')
+      
+      this.addToCartMultiple('atc');
+      console.log('add to cart')
     });
+  }
+
+  addToCartMultiple(parse) {
+    const cartListNew = {items:[]};
+    const cart1New =
+      document.querySelector("cart-notification") ||
+      document.querySelector("cart-drawer");
+    let addingNew = false;
+    
+    console.log('multiple');
+    if (addingNew == false) {
+      changeAddToCartText(parse,1);
+      addingNew = true;
+  
+      const form = document.querySelector("form#product_form_7633738727640");
+      const formData = new FormData(form);
+  
+      const item0 = { 
+        id: formData.get('items[0]id'),
+        quantity: 1,
+        properties: {
+          _insurance_variant_id: formData.get('items[0]properties[_insurance_variant_id]')
+        }
+      }
+      
+      const item1 = { 
+        id: formData.get('items[1]id'), 
+        quantity: 1,
+        properties: {
+          _product_variant_id: formData.get('items[1]properties[_product_variant_id]'),
+          _model: formData.get('items[1]properties[_model]'),
+          _variant_name: formData.get('items[1]properties[_variant_name]')
+        }
+      }
+  
+      cartListNew.items.push(item1, item0);
+      
+      if(cart1New){
+        const sections = cart1New.getSectionsToRender().map((section) => section.id);
+        cartListNew.sections = sections.join(",");
+      }
+      
+      fetch("/cart/add.js", {
+        method: "POST",
+        body: JSON.stringify(cartListNew), // formData
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      .then((res) => res.json())
+      .then((res1) => {
+        res1.key = "";
+        let body = {
+          trace_name: "de-order-pc"+parse
+        }	
+  
+        if(window.innerWidth <=768){
+          body.trace_name = "de-order-mb"+parse;
+        }
+  
+        fetch("https://api.newurtopia.com/third_part/book_ride/traces", {
+          method: "POST",
+          body: JSON.stringify(body),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+  
+        if (parse=="buynow") {
+          window.location.href="/checkout"
+        } else {
+          // Remove insurance product before showing the Notify block
+          // res1.items.forEach((item, index) => {
+          //   if (item.properties['_product_variant_id']) {
+          //     // res1.items.splice(index, 1); 
+          //   }
+          // });
+  
+          cart1New.renderContents(res1);
+          changeAddToCartText(parse, 0);
+        }
+      })
+      .catch((err) => {
+        throw new Error(err);
+        
+        changeAddToCartText(parse, 0);
+        
+        $(".error-tip").css("visibility","visible");
+        setTimeout(() => {
+          $(".error-tip").css("visibility","hidden");
+        }, 5000)
+      });
+    }
   }
 
   validateForm() {
@@ -297,95 +394,3 @@ const insurance = new Insurance();
 
 
 
-function addToCartMultiple(parse) {
-  const cartListNew = {items:[]};
-  const cart1New =
-    document.querySelector("cart-notification") ||
-    document.querySelector("cart-drawer");
-  let addingNew = false;
-  
-  console.log('multiple');
-  if (addingNew == false) {
-    changeAddToCartText(parse,1);
-    addingNew = true;
-
-    const form = document.querySelector("form#product_form_7633738727640");
-    const formData = new FormData(form);
-
-    const item0 = { 
-      id: formData.get('items[0]id'),
-      quantity: 1,
-      properties: {
-        _insurance_variant_id: formData.get('items[0]properties[_insurance_variant_id]')
-      }
-    }
-    
-    const item1 = { 
-      id: formData.get('items[1]id'), 
-      quantity: 1,
-      properties: {
-        _product_variant_id: formData.get('items[1]properties[_product_variant_id]'),
-        _model: formData.get('items[1]properties[_model]'),
-        _variant_name: formData.get('items[1]properties[_variant_name]')
-      }
-    }
-
-    cartListNew.items.push(item1, item0);
-    
-    if(cart1New){
-      const sections = cart1New.getSectionsToRender().map((section) => section.id);
-    	cartListNew.sections = sections.join(",");
-    }
-    
-    fetch("/cart/add.js", {
-      method: "POST",
-      body: JSON.stringify(cartListNew), // formData
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-    .then((res) => res.json())
-    .then((res1) => {
-      res1.key = "";
-	  	let body = {
-        trace_name: "de-order-pc"+parse
-      }	
-
-      if(window.innerWidth <=768){
-        body.trace_name = "de-order-mb"+parse;
-      }
-
-      fetch("https://api.newurtopia.com/third_part/book_ride/traces", {
-        method: "POST",
-        body: JSON.stringify(body),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-
-      if (parse=="buynow") {
-        window.location.href="/checkout"
-      } else {
-        // Remove insurance product before showing the Notify block
-        // res1.items.forEach((item, index) => {
-        //   if (item.properties['_product_variant_id']) {
-        //     // res1.items.splice(index, 1); 
-        //   }
-        // });
-
-        cart1New.renderContents(res1);
-        changeAddToCartText(parse, 0);
-      }
-    })
-    .catch((err) => {
-      throw new Error(err);
-      
-      changeAddToCartText(parse, 0);
-      
-      $(".error-tip").css("visibility","visible");
-      setTimeout(() => {
-        $(".error-tip").css("visibility","hidden");
-      }, 5000)
-    });
-  }
-}
