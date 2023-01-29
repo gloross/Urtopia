@@ -27,7 +27,7 @@ class InsuranceProduct extends HTMLElement {
     this.handleVariantChange();
     this.handleCheckboxConsent();
     this.validateForm();
-    // this.handleFields('disable');
+    this.handleFields('disable');
     
     document.addEventListener('click', (event) => {
       if (!event.target.closest('.js-fake-add-to-cart')) {
@@ -147,7 +147,6 @@ class InsuranceProduct extends HTMLElement {
       const price = this.mainSelectCurrentOption.dataset.price;
 
       this.price.textContent = price;
-      console.log(this.variantIdField)
       this.variantIdField.forEach(field => field.value = variantId);
       this.error?.classList.add('is-hidden');
 
@@ -228,6 +227,7 @@ class Insurance {
     this.addToCart = document.querySelector('[data-pf-type="ProductATC"]');
     this.mainVariantInput = document.querySelector('input[name="id"]');
     this.fakeButton = null;
+    this.variantIdInput = document.querySelector('.js-product-variant-id');
     
     if (!this.templateInsuranceProduct || !this.templateInsuranceMetafields) return;
     
@@ -240,6 +240,10 @@ class Insurance {
     this.moveInsuranceProductInPlace();
 
     this.mainVariantInput.disabled = true;
+
+    this.mainVariantInput.addEventListener('change', () => {
+      this.variantIdInput = this.mainVariantInput.value;
+    });
   }
 
   moveInsuranceMetafieldsInPlace() {
@@ -289,82 +293,109 @@ const insurance = new Insurance();
 
 
 
-var cartList = {"items":[]};
-var cart1 =
-  document.querySelector("cart-notification") ||
-  document.querySelector("cart-drawer");
-var adding = false;
 
 function addToCartMultiple(parse) {
+  const cartListNew = {items:[]};
+  const cart1New =
+    document.querySelector("cart-notification") ||
+    document.querySelector("cart-drawer");
+  let addingNew = false;
+  
   console.log('multiple');
-  if (adding == false) {
+  if (addingNew == false) {
     changeAddToCartText(parse,1);
-    adding = true;
-    var form = document.querySelector("form#product_form_7633738727640");
-    let formData = new FormData(form);
-    id = formData.get("id");
+    addingNew = true;
 
-    for(var pair of formData.entries()){
-      console.log(pair[0], pair[1]);
+    const form = document.querySelector("form#product_form_7633738727640");
+    const formData = new FormData(form);
+
+    // for(var pair of formData.entries()){
+    //   console.log(pair[0], pair[1]);
+    // }
+
+    const item0 = { 
+      id: formData.get('items[0]id'),
+      quantity: 1,
+      properties: {
+        _insurance_variant_id: formData.get('items[0]properties[_insurance_variant_id]')
+      }
+    }
+    
+    const item1 = { 
+      id: formData.get('items[1]id'), 
+      quantity: 1,
+      properties: {
+        _product_variant_id: formData.get('items[1]properties[_product_variant_id]'),
+        _model: formData.get('items[1]properties[_model]'),
+        _variant_name: formData.get('items[1]properties[_variant_name]')
+      }
     }
 
-    cartList.items.push({ id: id, quantity: 1 });
-    // console.log(cartList.items)
+    cartListNew.items.push(item0, item1);
 
+    // cartListNew.items.forEach(item => {
+    //   console.log(item)
+    // })
 
     /*
     if(giveawayChooseIndex==1)
     {
-      cartList.items.push({ id: "43502341095640", quantity: 1 },{ id: "43565513834712", quantity: 1 })
+      cartListNew.items.push({ id: "43502341095640", quantity: 1 },{ id: "43565513834712", quantity: 1 })
     }
       else{
-      cartList.items.push({ id: "42615024713944", quantity: 1 },{ id: "42615024976088", quantity: 1 },{ id: "42615024550104", quantity: 1 })
+      cartListNew.items.push({ id: "42615024713944", quantity: 1 },{ id: "42615024976088", quantity: 1 },{ id: "42615024550104", quantity: 1 })
     }*/
 
-
-    if(cart1){
-    	var sections = cart1.getSectionsToRender().map((section) => section.id);
-    	cartList.sections = sections.join(",");
+    // console.log(cart1New);
+    
+    if(cart1New){
+      const sections = cart1New.getSectionsToRender().map((section) => section.id);
+    	cartListNew.sections = sections.join(",");
     }
-
+    
+    console.log(cartListNew);
+    
     fetch("/cart/add.js", {
       method: "POST",
-      body: formData
+      body: JSON.stringify(cartListNew), // formData
+      headers: {
+        'Content-Type': 'application/json'
+      }
     })
     .then((res) => res.json())
     .then((res1) => {
       res1.key = "";
-      cartList.items.splice(-1, 1);
-	  	let body = {
-        trace_name: "de-order-pc"+parse
-      }	
+      // cartListNew.items.splice(-1, 1);
+	  	// let body = {
+      //   trace_name: "de-order-pc"+parse
+      // }	
 
-      if(window.innerWidth <=768){
-        body.trace_name = "de-order-mb"+parse;
-      }
+      // if(window.innerWidth <=768){
+      //   body.trace_name = "de-order-mb"+parse;
+      // }
 
-      fetch("https://api.newurtopia.com/third_part/book_ride/traces", {
-        method: "POST",
-        body: JSON.stringify(body),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
+      // fetch("https://api.newurtopia.com/third_part/book_ride/traces", {
+      //   method: "POST",
+      //   body: JSON.stringify(body),
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      // })
 
       if (parse=="buynow") {
-        window.location.href="https://newurtopia.de/checkout"
+        window.location.href="/checkout"
       } else {
         console.log('...', res1)
-        res1.items.shift();
-        console.log(res1)
-        cart1.renderContents(res1);
-        console.log('...2')
+
+        // res1.items.shift();
+        cart1New.renderContents(res1);
+        console.log('finish renderContents')
         changeAddToCartText(parse, 0);
       }
     })
     .catch((err) => {
       changeAddToCartText(parse, 0);
-      cartList.items.splice(-1, 1);
+      // cartListNew.items.splice(-1, 1);
       console.log(err)
 
       $(".error-tip").css("visibility","visible");
