@@ -41,8 +41,7 @@ class InsuranceProduct extends HTMLElement {
       this.validateForm();
       console.log('opa')
 
-      if (this.checkbox.checked && this.isFormValid) {
-        console.log('clicked')
+      if (!this.checkbox.checked || (this.checkbox.checked && this.isFormValid)) {
         this.addToCart.click();
       }
     });
