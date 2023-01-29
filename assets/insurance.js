@@ -29,7 +29,7 @@ class InsuranceProduct extends HTMLElement {
     this.handleCheckboxConsent();
     this.validateForm();
     this.handleFields('disable');
-    
+
     this.mainVariantSelector.disabled = true;
     
     document.addEventListener('click', (event) => {
@@ -167,7 +167,7 @@ class InsuranceProduct extends HTMLElement {
         // Wait for the main select to get it's value changed
         // Not the greatest solution but it does the job, sorry
         setTimeout(() => {
-          const insuranceProductVariantId = document.querySelectorAll('.js-insurance-product-variant-id');
+          const insuranceProductVariantId = document.querySelector('.js-insurance-product-variant-id');
           const variantId = this.mainVariantSelector.value;
           
           this.variantIdInput.value = variantId;
