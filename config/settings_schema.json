@@ -55,12 +55,6 @@
       {
         "type": "header",
         "content": "Cart"
-      },
-      {
-        "type": "text",
-        "id": "insurance_properties_for",
-        "label": "\"For\" text",
-        "info": "The text that sits left of the related product name in the Insurance item in the cart."
       }
     ]
   },
