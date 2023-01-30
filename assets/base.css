@@ -2921,3 +2921,27 @@ margin-top:-20px!important;
 
 }
 
+/* Insurance Product Page */
+body.is-insurance-product main .shopify-section {
+  display: none;
+}
+
+body.is-insurance-product main .shopify-section:first-child {
+  display: block;
+  padding-bottom: 45px;
+}
+
+@media screen and (min-width: 750px) {
+  body.is-insurance-product main .shopify-section:first-child {
+    padding-bottom: 60px;
+  }
+}
+
+body.is-insurance-product .product-form__quantity,
+body.is-insurance-product .product-form__buttons,
+body.is-insurance-product .price,
+body.is-insurance-product .product__tax,
+body.is-insurance-product share-button,
+body.is-insurance-product variant-radios {
+  display: none;
+}
