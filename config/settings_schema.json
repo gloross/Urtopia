@@ -51,10 +51,6 @@
         "type": "text",
         "id": "insurance_consent_error_2",
         "label": "Consent 2 error"
-      },
-      {
-        "type": "header",
-        "content": "Cart"
       }
     ]
   },
