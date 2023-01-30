@@ -119,6 +119,23 @@ padding-bottom: {{ section.settings.padding_bottom }}px;
                   {%- endif -%}
                 {%- endif -%}
               {%- endfor -%}
+
+              {%- assign has_insurance_product = false -%}
+              
+              {%- comment -%} Check if the item has an active Insurance product in cart {%- endcomment -%}
+              {%- for insurance_item in cart.items -%}
+                {%- assign item_prop_insurance_variant_id = item.properties._insurance_variant_id | times: 1 -%}
+                {%- assign insurance_prop_product_id = insurance_item.properties._product_variant_id | times: 1 -%}
+
+                {%- if item == insurance_item -%}
+                  {%- continue -%}
+                {%- endif -%}
+                
+                {%- if item.id == insurance_prop_product_id and insurance_item.id == item_prop_insurance_variant_id -%}
+                  {%- assign has_insurance_product = true -%}
+                  {%- break -%}
+                {%- endif -%}
+              {%- endfor -%}
             
               <tr 
                 class="cart-item" 
@@ -309,7 +326,7 @@ padding-bottom: {{ section.settings.padding_bottom }}px;
                       {{ 'products.product.quantity.label' | t }}
                     </label>
 
-                    <quantity-input class="quantity{% if is_insurance_product %} is-hidden{% endif %}">
+                    <quantity-input class="quantity{% if has_insurance_product or is_insurance_product %} is-hidden{% endif %}">
                       <button class="quantity__button no-js-hidden" name="minus" type="button">
                         <span class="visually-hidden">{{ 'products.product.quantity.decrease' | t: product:
                           item.product.title | escape }}</span>

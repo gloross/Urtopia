@@ -4,7 +4,17 @@ class CartRemoveButton extends HTMLElement {
     this.addEventListener('click', (event) => {
       event.preventDefault();
       const cartItems = this.closest('cart-items') || this.closest('cart-drawer-items');
-      cartItems.updateQuantity(this.dataset.index, 0,"","remove");//更改
+
+      const lineItem = this.closest('[data-line-item]');
+      const lineID = lineItem.dataset.lineItem;
+      const insuranceId = lineItem.dataset.insuranceVariantId;
+
+      // Remove the Product and it's Insurance product
+      if (insuranceId) {
+        cartItems.removeInsuranceProducts(lineItem, insuranceId);
+      } else {
+        cartItems.updateQuantity(this.dataset.index, 0,"","remove");//更改
+      }
     });
   }
 }
@@ -22,6 +32,28 @@ class CartItems extends HTMLElement {
     }, 300);
 
     this.addEventListener('change', this.debouncedOnChange.bind(this));
+  }
+
+  removeInsuranceProducts(lineItemDomObject, insuranceId) {
+    const lineItemVariantID = lineItemDomObject.dataset.lineItemVariantId;
+    const formData = {
+      updates: {
+        [parseInt(lineItemVariantID)]: 0,
+        [parseInt(insuranceId)]: 0
+      }
+    }
+
+    let info = fetch('/cart/update.js', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': `application/json` },
+      body: JSON.stringify(formData)
+    }).then(response => response.json()).then(data => {
+      location.reload(true);
+      
+      return data
+    }).catch((error) => {
+      throw new Error(error);
+    });
   }
 
   onChange(event) {
