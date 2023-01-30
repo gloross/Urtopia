@@ -6,12 +6,12 @@ class CartRemoveButton extends HTMLElement {
       const cartItems = this.closest('cart-items') || this.closest('cart-drawer-items');
 
       const lineItem = this.closest('[data-line-item]');
-      const lineID = lineItem.dataset.lineItem;
+      const lineId = lineItem.dataset.lineItemVariantId;
       const insuranceId = lineItem.dataset.insuranceVariantId;
 
       // Remove the Product and it's Insurance product
       if (insuranceId) {
-        cartItems.removeInsuranceProducts(lineItem, insuranceId);
+        cartItems.removeInsuranceProducts(lineId, insuranceId);
       } else {
         cartItems.updateQuantity(this.dataset.index, 0,"","remove");//更改
       }
@@ -34,22 +34,33 @@ class CartItems extends HTMLElement {
     this.addEventListener('change', this.debouncedOnChange.bind(this));
   }
 
-  removeInsuranceProducts(lineItemDomObject, insuranceId) {
-    const lineItemVariantID = lineItemDomObject.dataset.lineItemVariantId;
-    const formData = {
-      updates: {
-        [parseInt(lineItemVariantID)]: 0,
-        [parseInt(insuranceId)]: 0
+  removeInsuranceProducts(lineItemId, insuranceId) {
+    const items = document.querySelectorAll('.cart-items [data-cart-item]');
+    let itemsQuantityArray = [];
+
+    items.forEach(item => {
+      if (item.dataset.lineItemVariantId == lineItemId && item.dataset.insuranceVariantId == insuranceId) { // is main product with insurance
+        itemsQuantityArray.push(0);
+      } else if (item.dataset.lineItemVariantId == insuranceId && item.dataset.insuranceProductVariantId == lineItemId) { // is the insurance
+        itemsQuantityArray.push(0);
+      } else { // is everything else
+        itemsQuantityArray.push(parseInt(item.dataset.quantity));
       }
+    });
+    
+    const formData = {
+      updates: itemsQuantityArray
     }
+
+    console.log(formData)
 
     let info = fetch('/cart/update.js', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Accept': `application/json` },
       body: JSON.stringify(formData)
     }).then(response => response.json()).then(data => {
-      location.reload(true);
-      
+      // location.reload(true);
+
       return data
     }).catch((error) => {
       throw new Error(error);

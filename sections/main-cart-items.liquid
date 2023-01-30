@@ -142,6 +142,7 @@ padding-bottom: {{ section.settings.padding_bottom }}px;
                 id="CartItem-{{ item.index | plus: 1 }}"
                 data-cart-item="{{ item.key }}"
                 data-line-item="{{ forloop.index }}"
+                data-quantity="{{- item.quantity -}}"
                 data-line-item-variant-id="{{- item.variant_id -}}"
                 {% if item.properties['_insurance_variant_id'] %} data-insurance-variant-id="{{- item.properties['_insurance_variant_id'] -}}"{% endif %}
                 {% if item.properties['_product_variant_id'] %} data-insurance-product-variant-id="{{- item.properties['_product_variant_id'] -}}"{% endif %}>
