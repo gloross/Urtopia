@@ -472,7 +472,9 @@ document.body.addEventListener("mouseout", (evt) => {
 });
   </script>
 
-  {%- render 'insurance-templates' -%}
+  {%- if template.name == 'product' -%}
+    {%- render 'insurance-templates' -%}
+  {%- endif -%}
 </body>
 </html>
     
