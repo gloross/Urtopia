@@ -47,19 +47,17 @@ class CartItems extends HTMLElement {
         itemsQuantityArray.push(parseInt(item.dataset.quantity));
       }
     });
-    
+
     const formData = {
       updates: itemsQuantityArray
     }
-
-    console.log(formData)
 
     let info = fetch('/cart/update.js', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Accept': `application/json` },
       body: JSON.stringify(formData)
     }).then(response => response.json()).then(data => {
-      // location.reload(true);
+      location.reload(true);
 
       return data
     }).catch((error) => {
