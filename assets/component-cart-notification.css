@@ -156,6 +156,15 @@
   padding-top: 1rem;/*2->1*/
 }
 
+.cart-notification-product > div {
+  width: 100%;
+  padding-bottom: 15px;
+}
+
+.cart-notification-product > div:last-child {
+  padding-bottom: 0;
+}
+
 .cart-notification-product dl {
   margin-bottom: 0;
   margin-top: 0;
