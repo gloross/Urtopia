@@ -181,6 +181,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
     {% render 'meta-tags' %}
 
+    {%- if template.name == 'product' -%}
+      <script src="{{ 'insurance.js' | asset_url }}" defer></script>
+    {%- endif -%}
+
     <script src="{{ 'global.js' | asset_url }}" defer="defer"></script>
     {{ content_for_header }}
 
@@ -349,6 +353,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     {{ 'global-font-face.css' | asset_url | stylesheet_tag }}
     {{ 'base.css' | asset_url | stylesheet_tag }}
     {{ 'newStyle.css' | asset_url | stylesheet_tag }}
+    {{ 'component-insurance.css' | asset_url | stylesheet_tag }}
 
     {%- unless settings.type_body_font.system? -%}
       <link rel="preload" as="font" href="{{ settings.type_body_font | font_url }}" type="font/woff2" crossorigin>
@@ -376,7 +381,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
  
  </head>
 
-  <body class="gradient">
+  {%- if template.name == 'product' and product.variants[0].metafields.insurance.variant_name -%}
+    {%- assign is_insurance_product = true -%}
+  {%- endif -%}
+
+  <body class="gradient{% if is_insurance_product %} is-insurance-product{% endif %}">
     <a class="skip-to-content-link button visually-hidden" href="#MainContent">
       {{ "accessibility.skip_to_text" | t }}
     </a>
@@ -466,6 +475,10 @@ document.body.addEventListener("mouseout", (evt) => {
   }
 });
   </script>
+
+  {%- if template.name == 'product' -%}
+    {%- render 'insurance-templates' -%}
+  {%- endif -%}
 </body>
 </html>
     

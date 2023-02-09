@@ -1,0 +1,165 @@
+{%- assign mod_product = mod_product | default: product.metafields.insurance.product.value | default: false -%}
+
+{%- if mod_product -%}
+  {%- assign current_variant = mod_product.selected_or_first_available_variant -%}
+
+  <template class="js-insurance-product-template">
+    {% comment %} Product {% endcomment %}
+    <insurance-product class="insurance-wrapper js-insurance">
+      <div class="insurance-checkbox insurance-checkbox--primary">
+        <input
+          id="insurance-checkbox"
+          class="checkbox js-insurance-checkbox"
+          type="checkbox"
+          name="insurance-checkbox"
+        >
+        <label for="insurance-checkbox">{{- settings.insurance_checkbox -}}</label>
+      </div><!-- /.insurance-checkbox -->
+
+      <div class="insurance js-insurance-product">
+        <div class="insurance__image">
+          {% render 'responsive-image' with 
+            mod_product.images[0], 
+            class: 'product-image', 
+            alt: mod_product.title %}
+        </div><!-- /.insurance__image -->
+
+        <div class="insurance__content">
+          <p class="insurance__title">
+            {{- mod_product.metafields.insurance.product_title | default: mod_product.title -}}
+          </p><!-- /.insurance__title -->
+
+          <span class="insurance__price js-insurance-price">
+            {{- current_variant.price | money -}}
+          </span><!-- /.insurance__price -->
+
+          {% for option in mod_product.options_with_values %}
+            {%- assign option_index = forloop.index0 -%}
+
+            <div class="insurance__select{% if mod_product.variants.size == 1 %} hidden{% endif %}">
+              <div class="insurance_options">
+                <label for="insurance-option-{{- option_index -}}">{{- option.name -}}</label>
+
+                <select 
+                  id="insurance-option-{{- option_index -}}" 
+                  class="js-insurance-main-select"
+                  name="items[1]properties[_variant_name]">
+                  <option
+                    value="0"
+                    disabled
+                    selected>
+                    {{- 'products.product.insurance.choose_option' | t: option: option.name -}}
+                  </option>
+
+                  {% for variant in mod_product.variants %}
+                    <option
+                      value="{{ variant.metafields.insurance.variant_name }}"
+                      data-price="{{- variant.price | money -}}"
+                      data-id="{{- mod_product.title | handle -}}-{{- variant.id -}}"
+                      data-variant-id="{{- variant.id -}}">
+                      {{- variant.title -}}
+                    </option>
+                  {%- endfor -%}
+                </select>
+              </div><!-- /.insurance_options -->
+
+              {%- if settings.insurance_error != blank -%}
+                <p class="insurance__error hidden js-insurance-error">
+                  {{- 'products.product.insurance.option_error' | t: option: option.name -}}
+                </p><!-- /.insurance__error -->
+              {%- endif -%}
+            </div><!-- /.insurance__select -->
+          {% endfor %}
+        </div><!-- /.insurance__content -->
+
+        {%- for variant in mod_product.variants -%}
+          {%- assign variant_description = variant.metafields.insurance.description -%}
+          
+          {%- if variant_description != blank -%}
+            <div class="insurance__description js-insurance-description{% unless forloop.first %} hidden{% endunless %}" id="{{- mod_product.title | handle -}}-{{- variant.id -}}">
+              {{- variant_description -}}
+            </div><!-- /.insurance__description -->
+          {%- endif -%}
+        {%- endfor -%}
+
+        {%- if settings.insurance_description != blank -%}
+          <div class="insurance__entry js-insurance-entry">
+            {{- settings.insurance_description -}}
+          </div>
+        {%- endif -%}
+
+        {% comment %} Consent {% endcomment %}
+        {%- if settings.insurance_consent_product != blank -%}
+          <div class="insurance__consent insurance-checkbox hidden">
+            <input type="checkbox" name="insurance-consent" id="insurance-consent" class="checkbox insurance__consent-checkbox js-insurance-consent">
+
+            <label for="insurance-consent">
+              {{- settings.insurance_consent_product -}}
+            </label>
+
+            {%- if settings.insurance_consent_error != blank -%}
+              <p class="insurance__consent-error hidden js-insurance-error">
+                {{- settings.insurance_consent_error -}}
+              </p><!-- /.insurance__error -->
+            {%- endif -%}
+          </div><!-- /.insurance__consent -->
+        {%- endif -%}
+
+        {% comment %} Consent 2 {% endcomment %}
+        {%- if settings.insurance_consent_product_2 != blank -%}
+          <div class="insurance__consent insurance-checkbox hidden">
+            <input type="checkbox" name="insurance-consent-2" id="insurance-consent-2" class="checkbox insurance__consent-checkbox js-insurance-consent">
+
+            <label for="insurance-consent-2">
+              {{- settings.insurance_consent_product_2 -}}
+            </label>
+
+            {%- if settings.insurance_consent_error_2 != blank -%}
+              <p class="insurance__consent-error hidden js-insurance-error">
+                {{- settings.insurance_consent_error_2 -}}
+              </p><!-- /.insurance__error -->
+            {%- endif -%}
+          </div><!-- /.insurance__consent -->
+        {%- endif -%}
+      </div><!-- /.insurance -->
+    </insurance-product><!-- /.insurance-wrapper -->
+  </template>
+
+  <template class="js-insurance-metafields-template" data-append-to="#product_form_{{- product.id -}}">
+    <div>
+      {% comment %} Variant ID {% endcomment %}
+      <input
+        name="items[1]id"
+        value="{{- current_variant.id -}}"
+        type="hidden"
+        class="js-insurance-field js-insurance-variant-id">
+
+      {% comment %} Product Variant ID {% endcomment %}
+      <input
+        name="items[1]properties[_product_variant_id]"
+        value="{{- product.selected_or_first_available_variant.id -}}"
+        type="hidden"
+        class="js-insurance-field js-insurance-product-variant-id">
+
+      {% comment %} Model {% endcomment %}
+      <input
+      name="items[1]properties[_model]"
+      value="{{- mod_product.metafields.insurance.model -}}"
+      type="hidden"
+      class="js-insurance-field">
+      
+      <input
+        name="items[0]id"
+        value="{{ product.selected_or_first_available_variant.id }}"
+        type="hidden"
+        class="js-product-variant-id">
+
+      {% comment %} Insurance Variant Id {% endcomment %}
+      <input
+        name="items[0]properties[_insurance_variant_id]"
+        value="{{- current_variant.id -}}"
+        type="hidden"
+        class="js-insurance-field js-insurance-variant-id">
+    </div>
+  </template>
+{%- endif -%}

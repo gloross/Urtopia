@@ -1,0 +1,254 @@
+/* ------------------------------------------------------------ *
+  Insurance Checkbox
+* ------------------------------------------------------------ */
+
+.insurance-wrapper {
+  display: block;
+  max-width: 500px;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.insurance-wrapper:last-child {
+  margin-bottom: 0;
+}
+
+.insurance-checkbox label {
+  cursor: pointer;
+  margin-left: 3px;
+}
+
+.insurance-checkbox label a {
+  text-decoration: underline;
+}
+
+/* Primary */
+.insurance-checkbox--primary {
+  max-width: 500px;
+}
+
+.insurance-checkbox--primary input {
+  position: absolute;
+  appearance: none;
+}
+
+.insurance-checkbox--primary label {
+  position: relative;
+  display: block;
+  min-height: 50px;
+  padding: 10px 15px 10px 40px;
+  border-radius: 5px;
+  margin-left: 0;
+  background: #f4f8fd;
+  font-size: 16px;
+  color: #020a0a;
+  font-weight: bold;
+}
+
+.insurance-checkbox--primary label:before {
+  content: '';
+  position: absolute;
+  top: 18px;
+  left: 15px;
+  width: 13px;
+  height: 13px;
+  border: 1px solid rgba(51,51,51,.3);
+  border-radius: 2px;
+  background: #fff;
+}
+
+.insurance-checkbox--primary label:after {
+  content: '';
+  position: absolute;
+  top: 19px;
+  left: 19px;
+  transform: rotate(45deg) skew(5deg);
+  width: 5px;
+  height: 9px;
+  border-width: 0 2px 2px 0;
+  border-style: solid;
+  border-color: transparent #fff #fff transparent;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.insurance-checkbox--primary input:checked + label:before {
+  background: #0075ff;
+  border-color: #0075ff;
+}
+
+.insurance-checkbox--primary input:checked + label:hover:before {
+  background: #005cc8;
+}
+
+.insurance-checkbox--primary input:checked + label:after {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* ------------------------------------------------------------ *
+  Insurance
+* ------------------------------------------------------------ */
+
+.insurance {
+  position: relative;
+  display: flex;
+  flex-flow: row wrap;
+  max-width: 500px;
+  padding: 15px;
+  border-radius: 5px;
+  margin-top: 10px;
+  background: #f4f8fd;
+  line-height: 1.6;
+}
+
+.insurance__image {
+  flex: 0 0 115px;
+  padding-right: 15px;
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+
+.insurance__image img {
+  border-radius: 5px;
+  perspective: 1px;
+}
+
+.insurance__content {
+  flex: 1 0 225px;
+  margin-bottom: 10px;
+}
+
+.insurance__content:last-child {
+  margin-bottom: 0;
+}
+
+/* Title */
+.insurance__title {
+  margin-bottom: 3px;
+  font-weight: bold;
+}
+
+.insurance__title:last-child {
+  margin-bottom: 0;
+}
+
+/* Entry */
+.insurance__entry {
+  margin-bottom: 6px;
+  font-size: 14px;
+}
+
+.insurance__entry a {
+  text-decoration: underline;
+}
+
+/* Description */
+.insurance__description {
+  flex: 1 0 100%;
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+.insurance__description:last-child {
+  margin-bottom: 0;
+}
+
+.insurance__description a {
+  text-decoration: underline;
+}
+
+.insurance__description p,
+.insurance__description ul {
+  margin-bottom: 10px;
+}
+
+.insurance__description p:last-child,
+.insurance__description ul:last-child {
+  margin-bottom: 0;
+}
+
+.insurance__description ul {
+  padding-left: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.insurance__description li {
+  position: relative;
+  padding-left: 22px;
+}
+
+.insurance__description li:before {
+  content: '';
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  transform: rotate(45deg);
+  width: 6px;
+  height: 11px;
+  border-width: 1.5px;
+  border-style: solid;
+  border-color: transparent #fd4b17 #fd4b17 transparent;
+}
+
+/* Price */
+.insurance__price {
+}
+
+/* Select */
+.insurance__select {
+  margin-top: 4px;
+}
+
+.insurance__select label {
+  display: inline-block;
+  margin-right: 5px;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.insurance__select select {
+  height: 30px;
+  padding: 0 8px;
+  border: 1px solid #e2e2e2;
+  border-radius: 4px;
+  font-size: 13px;
+  line-height: 30px;
+}
+
+/* Error */
+.insurance__error,
+p.insurance__consent-error {
+  font-size: 13px;
+  color: red;
+}
+
+/* Consent */
+.insurance__consent {
+  margin: 10px 0 0;
+  font-size: 13px;
+}
+
+.insurance__consent:first-child {
+  margin-top: 0;
+}
+
+.insurance__consent p {
+  display: inline;
+}
+
+.insurance__consent-checkbox {
+  transform: translateY(2px);
+  margin: 0;
+}
+
+p.insurance__consent-error {
+  display: block;
+}
+
+@media only screen and (max-width: 798px) {
+  .insurance__title {
+    margin-bottom: 0;
+  }
+}
