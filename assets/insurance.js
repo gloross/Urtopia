@@ -86,20 +86,26 @@ class InsuranceProduct extends HTMLElement {
   }
 
   refreshEntryLink() { 
+    console.log('in')
     if (!this.entry) return;
-
+    console.log('yes')
+    
     this.entry.querySelectorAll('a').forEach(link => {
       const href = link.getAttribute('href');
       let newHref = href;
-
+      
+      console.log('in loop')
       // Replace Lang
       if (href.includes('lang=')) {
         const languageIndex = href.indexOf('lang=');
         const currentLanguageQuery = href.substring(languageIndex, languageIndex + 7);
         newHref = newHref.replace(currentLanguageQuery, `lang=${this.languageCode}`);
+        console.log('code:', this.languageCode)
       }
-
-        link.setAttribute('href', newHref);
+      
+      link.setAttribute('href', newHref);
+      
+      console.log('daaa');
     });
   }
 
