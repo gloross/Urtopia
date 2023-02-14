@@ -16,6 +16,7 @@ class InsuranceProduct extends HTMLElement {
     this.variantLabels = document.querySelectorAll('[data-option-name] > label');
     this.addToCart = document.querySelector('[data-pf-type="ProductATC"]');
     this.variantIdInput = document.querySelector('.js-product-variant-id');
+    this.languageCode = document.querySelector('html').getAttribute('lang');
     this.fakeAddToCart = null;
     this.isFormValid = false;
     this.mainSelectCurrentOption = null;
@@ -84,59 +85,36 @@ class InsuranceProduct extends HTMLElement {
     });
   }
 
-  refreshEntryLink() { // TO DO - LOCALIZATION?
-    const selectedOption = this.mainSelect.options[this.mainSelect.selectedIndex];
-    const countryCode = selectedOption.dataset.countryCode;
-    const languageCode = selectedOption.dataset.languageCode;
-
+  refreshEntryLink() { 
     if (!this.entry) return;
 
     this.entry.querySelectorAll('a').forEach(link => {
       const href = link.getAttribute('href');
       let newHref = href;
 
-      
-      // Replace Country
-      if (href.includes('country=')) {
-        const countryIndex = href.indexOf('country=');
-        const currentCountryQuery = href.substring(countryIndex, countryIndex + 10);
-        newHref = href.replace(currentCountryQuery, `country=${countryCode}`);
-      }
-      
-       // Replace Lang
+      // Replace Lang
       if (href.includes('lang=')) {
         const languageIndex = href.indexOf('lang=');
         const currentLanguageQuery = href.substring(languageIndex, languageIndex + 7);
-        newHref = newHref.replace(currentLanguageQuery, `lang=${languageCode}`);
+        newHref = newHref.replace(currentLanguageQuery, `lang=${this.languageCode}`);
       }
 
         link.setAttribute('href', newHref);
     });
   }
 
-  refreshTermsAndConditionsLinks() { // TO DO - REWORK
-    const selectedOption = this.mainSelect.options[this.mainSelect.selectedIndex];
-    const countryCode = selectedOption.dataset.countryCode; // TO DO - LOCALIZATION?
-    const languageCode = selectedOption.dataset.languageCode; // TO DO - LOCALIZATION?
-
-    // Replace "Terms and Conditions" links URL with the correct Country Code and Language
+  refreshTermsAndConditionsLinks() {
+    // Replace "Terms and Conditions" links URL with the correct Language code
     this.checkboxesConsent.forEach(checkbox => {
       checkbox.parentNode.querySelectorAll('a').forEach(link => {
         const href = link.getAttribute('href');
         let newHref = href;
 
-        // Replace Country
-        if (href.includes('country=')) {
-          const countryIndex = href.indexOf('country=');
-          const currentCountryQuery = href.substring(countryIndex, countryIndex + 10);
-          newHref = href.replace(currentCountryQuery, `country=${countryCode}`);
-        }
-
         // Replace Language
         if (href.includes('language=')) {
           const languageIndex = href.indexOf('language=');
           const currentLanguageQuery = href.substring(languageIndex, languageIndex + 11);
-          newHref = newHref.replace(currentLanguageQuery, `language=${languageCode}`);
+          newHref = newHref.replace(currentLanguageQuery, `language=${this.languageCode}`);
         }
 
         link.setAttribute('href', newHref);
@@ -156,8 +134,8 @@ class InsuranceProduct extends HTMLElement {
       this.error?.classList.add('hidden');
 
       this.refreshDescription();
-      // this.refreshTermsAndConditionsLinks();
-      // this.refreshEntryLink();
+      this.refreshTermsAndConditionsLinks();
+      this.refreshEntryLink();
       this.showCheckboxesConsent();
     });
 
