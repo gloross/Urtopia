@@ -52,7 +52,7 @@ class InsuranceProduct extends HTMLElement {
       this.validateForm();
       
       if (!this.checkbox.checked || (this.checkbox.checked && this.isFormValid)) {
-        this.addToCart = document.querySelector(`${selectors.addToCart}:not(.js-fake-add-to-cart`);
+        this.addToCart = document.querySelector(`${selectors.addToCart}:not(.js-fake-add-to-cart)`);
         this.addToCart.click();
       }
     });
