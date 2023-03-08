@@ -1,3 +1,8 @@
+const selectors = {
+  addToCart: '[data-pf-type="ProductBox"] .addToCartBtn',
+  form: '[data-pf-type="ProductBox"] .pf-product-form'
+}
+
 class InsuranceProduct extends HTMLElement {
   constructor() {
     super();
@@ -14,16 +19,16 @@ class InsuranceProduct extends HTMLElement {
     this.metafields = document.querySelectorAll('.js-insurance-field');
     this.mainVariantSelector = document.querySelector('input[name="id"][data-product-id]');
     this.variantLabels = document.querySelectorAll('[data-option-name] > label');
-    this.addToCart = document.querySelector('[data-pf-type="ProductATC"]');
+    this.addToCart = document.querySelector(selectors.addToCart);
     this.variantIdInput = document.querySelector('.js-product-variant-id');
     this.languageCode = document.querySelector('html').getAttribute('lang');
     this.fakeAddToCart = null;
     this.isFormValid = false;
     this.mainSelectCurrentOption = null;
-
+    
     this.init();
   }
-
+  
   init() {
     this.handleVisibility();
     this.handleVariantChange();
@@ -32,26 +37,27 @@ class InsuranceProduct extends HTMLElement {
     this.handleFields('disable');
     this.refreshTermsAndConditionsLinks();
     this.refreshEntryLink();
-
+    
     this.mainVariantSelector.disabled = true;
     
     document.addEventListener('click', (event) => {
       if (!event.target.closest('.js-fake-add-to-cart')) {
         return;
       }
-
+      
       event.preventDefault();
-
+      
       this.fakeAddToCart = event.target.closest('.js-fake-add-to-cart');
-
+      
       this.validateForm();
-
+      
       if (!this.checkbox.checked || (this.checkbox.checked && this.isFormValid)) {
+        this.addToCart = document.querySelector(`${selectors.addToCart}:not(.js-fake-add-to-cart`);
         this.addToCart.click();
       }
     });
   }
-
+  
   validateForm() {
     if (!this.checkbox.checked) {
       return;
@@ -207,7 +213,7 @@ class Insurance {
   constructor() {
     this.templateInsuranceProduct = document.querySelector('.js-insurance-product-template');
     this.templateInsuranceMetafields = document.querySelector('.js-insurance-metafields-template');
-    this.addToCart = document.querySelector('[data-pf-type="ProductATC"]');
+    this.addToCart = document.querySelector(selectors.addToCart);
     this.fakeButton = null;
 
     if (!this.templateInsuranceProduct || !this.templateInsuranceMetafields) return;
@@ -232,6 +238,7 @@ class Insurance {
     this.fakeButton = this.addToCart.cloneNode(true);
     this.fakeButton.removeAttribute('data-pf-type');
     this.fakeButton.removeAttribute('onclick');
+    this.fakeButton.removeAttribute('id');
     this.fakeButton.classList.add('js-fake-add-to-cart');
 
     this.insertBefore(this.fakeButton, this.addToCart);
@@ -264,8 +271,6 @@ class Insurance {
 
 const insurance = new Insurance();
 
-
-
 function addToCartInsurance(parse) {
   const cartListNew = {items:[]};
   const cart1New =
@@ -277,7 +282,7 @@ function addToCartInsurance(parse) {
     changeAddToCartText(parse,1);
     addingNew = true;
 
-    const form = document.querySelector("form#product_form_7633738727640");
+    const form = document.querySelector(selectors.form);
     const formData = new FormData(form);
     
     const item0 = { 
@@ -345,13 +350,6 @@ function addToCartInsurance(parse) {
       if (parse=="buynow") {
         window.location.href="/checkout"
       } else {
-        // Remove insurance product before showing the Notify block
-        // res1.items.forEach((item, index) => {
-        //   if (item.properties['_product_variant_id']) {
-        //     // res1.items.splice(index, 1); 
-        //   }
-        // });
-
         // Swap items' places
         function swapElements(arr, i1, i2) {
           arr[i1] = arr.splice(i2, 1, arr[i1])[0];
@@ -367,13 +365,6 @@ function addToCartInsurance(parse) {
     })
     .catch((err) => {
       throw new Error(err);
-      
-      changeAddToCartText(parse, 0);
-      
-      $(".error-tip").css("visibility","visible");
-      setTimeout(() => {
-        $(".error-tip").css("visibility","hidden");
-      }, 5000)
     });
   }
 }
