@@ -4,86 +4,97 @@ If you plan to remove PageFly, please see the guide in our help center first: ht
 {% endcomment %}
 <!doctype html>
 <html class="no-js" lang="{{ request.locale.iso_code }}">
-  <head>{% render 'pagefly-head' %}
+  <head>
+    {% render 'pagefly-head' %}
 
-  <!-- Cozy Country Redirect Optimization Code Start -->
-  {{shop.metafields.CCR.shopat_script}} 
-  <!-- Cozy Country Redirect Optimization Code Start -->
+    <!-- Cozy Country Redirect Optimization Code Start -->
+    {{ shop.metafields.CCR.shopat_script }}
+    <!-- Cozy Country Redirect Optimization Code Start -->
 
+    <!-- Basic page needs ================================================== -->
+    <!--  -->
+    <meta charset="utf-8">
+    {%- comment -%}DemoStoreRequirements{%- endcomment -%}
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="4CyyxbiT2JJKwsI1xsr_c7Qf-ihbvBm4WMiPhI0rOeA">
+    <meta name="google-site-verification" content="1L3RQDlBxPuNpF21De0Ah8NwPfQRUDie4JA9sbgKwfo">
 
- <!-- Basic page needs ================================================== -->
-<!---->   <meta charset="utf-8">
-  {%- comment -%}DemoStoreRequirements{%- endcomment -%}
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="google-site-verification" content="4CyyxbiT2JJKwsI1xsr_c7Qf-ihbvBm4WMiPhI0rOeA" />
-  <meta name="google-site-verification" content="1L3RQDlBxPuNpF21De0Ah8NwPfQRUDie4JA9sbgKwfo" />
-  
-    
-  <script src="https://cdn.shopify.com/s/files/1/0583/5810/4213/files/1.9.1-jquery.min.js?v=1663911504"></script>
-  <script src="https://cdn.shopify.com/s/files/1/0583/5810/4213/files/1.14.2-TweenMax.js?v=1663912518"></script>
-  <script src="https://cdn.shopify.com/s/files/1/0583/5810/4213/files/2.0.3-ScrollMagic.min.js?v=1663912592"></script>
-  <script src="https://cdn.shopify.com/s/files/1/0583/5810/4213/files/2.0.3-animation.gsap.js?v=1663912682"></script>
-  <script src="https://cdn.shopify.com/s/files/1/0583/5810/4213/files/2.0.3-debug.addIndicators.js?v=1663912891"></script>
-  <script src="https://cdn.shopify.com/s/files/1/0583/5810/4213/files/8-swiper-bundle.min.js?v=1663912984"> </script>
-  <script src="https://cdn.shopify.com/s/files/1/0583/5810/4213/files/1.0.8-lozad.js?v=1663913078"></script>
-  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-205871538-3"></script>
-  <script defer crossorigin="anonymous" src="https://connect.facebook.net/de_DE/sdk.js#xfbml=1&version=v14.0" nonce="nryZARoa"></script><!--likebutton-->
-  <!-- a/b Test -->
-  <script src="https://www.googleoptimize.com/optimize.js?id=OPT-52Q8D8M"></script>
-  <!-- end of a/b Test --> 
+    <script src="https://cdn.shopify.com/s/files/1/0583/5810/4213/files/1.9.1-jquery.min.js?v=1663911504"></script>
+    <script src="https://cdn.shopify.com/s/files/1/0583/5810/4213/files/1.14.2-TweenMax.js?v=1663912518"></script>
+    <script src="https://cdn.shopify.com/s/files/1/0583/5810/4213/files/2.0.3-ScrollMagic.min.js?v=1663912592"></script>
+    <script src="https://cdn.shopify.com/s/files/1/0583/5810/4213/files/2.0.3-animation.gsap.js?v=1663912682"></script>
+    <script
+      src="https://cdn.shopify.com/s/files/1/0583/5810/4213/files/2.0.3-debug.addIndicators.js?v=1663912891"
+    ></script>
+    <script src="https://cdn.shopify.com/s/files/1/0583/5810/4213/files/8-swiper-bundle.min.js?v=1663912984"></script>
+    <script src="https://cdn.shopify.com/s/files/1/0583/5810/4213/files/1.0.8-lozad.js?v=1663913078"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-205871538-3"></script>
+    <script
+      defer
+      crossorigin="anonymous"
+      src="https://connect.facebook.net/de_DE/sdk.js#xfbml=1&version=v14.0"
+      nonce="nryZARoa"
+    ></script>
+    <!-- likebutton -->
+    <!-- a/b Test -->
+    <script src="https://www.googleoptimize.com/optimize.js?id=OPT-52Q8D8M"></script>
+    <!-- end of a/b Test -->
 
     <!--
-<link href="https://api.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.css" rel="stylesheet">
-<script src="https://api.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.js"></script>-->
+      <link href="https://api.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.css" rel="stylesheet">
+      <script src="https://api.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.js"></script>
+    -->
 
-   
     <!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-NRQWQKH');</script>
-<!-- End Google Tag Manager -->
+    <script>
+      (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+      'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+      })(window,document,'script','dataLayer','GTM-NRQWQKH');
+    </script>
+    <!-- End Google Tag Manager -->
 
     <!-- Google tag (gtag.js) ga4 -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-2WKKVDX6JH"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-2WKKVDX6JH"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
 
-  gtag('config', 'G-2WKKVDX6JH');
-</script>
+      gtag('config', 'G-2WKKVDX6JH');
+    </script>
 
     <script>
- window.addEventListener("load", function(){    
-  document.querySelectorAll("[class='addToCartBtn']").forEach(function(e){        
-    e.addEventListener('click', function(e){          
-      gtag('event', 'add_to_cart', {
-  'method': 'Google'
-});     
-    });        
-  });
-});
-</script>
-<script>
- window.addEventListener("load", function(){    
-  document.querySelectorAll("[class='checkout-button']").forEach(function(e){        
-    e.addEventListener('click', function(e){          
-      gtag('event', '支付处理中', {
-  'method': 'Google'
-});     
-    });        
-  });
-});
-</script>
+       window.addEventListener("load", function(){
+        document.querySelectorAll("[class='addToCartBtn']").forEach(function(e){
+          e.addEventListener('click', function(e){
+            gtag('event', 'add_to_cart', {
+        'method': 'Google'
+      });
+          });
+        });
+      });
+    </script>
+    <script>
+       window.addEventListener("load", function(){
+        document.querySelectorAll("[class='checkout-button']").forEach(function(e){
+          e.addEventListener('click', function(e){
+            gtag('event', '支付处理中', {
+        'method': 'Google'
+      });
+          });
+        });
+      });
+    </script>
     <!-- end Google tag (gtag.js) ga4 -->
 
-    
-<!--  GMC  -->
-  <meta name="google-site-verification" content="tmiMdWLXl8rYjTIe702rF6QSy0WXZFJyUYpQ_TQx91Q" />
-<!-- Track Type Script -->
-  <script type="text/javascript">
+    <!-- GMC -->
+    <meta name="google-site-verification" content="tmiMdWLXl8rYjTIe702rF6QSy0WXZFJyUYpQ_TQx91Q">
+    <!-- Track Type Script -->
+    <script type="text/javascript">
+      
+      
     /*** mircosoft clarity ***/
     (function(c,l,a,r,i,t,y){
         c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
@@ -149,20 +160,25 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           }
       }*/
     });
-</script>
 
-    
-  
+
+    </script>
+
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="theme-color" content="">
     <link rel="canonical" href="{{ canonical_url }}">
     <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
-    <link rel="preload" href="https://unpkg.com/swiper@8/swiper-bundle.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link
+      rel="preload"
+      href="https://unpkg.com/swiper@8/swiper-bundle.min.css"
+      as="style"
+      onload="this.onload=null;this.rel='stylesheet'"
+    >
     <link rel="stylesheet" href="https://use.typekit.net/fzb3fxo.css" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel=”stylesheet” href="https://unpkg.com/swiper@8/swiper-bundle.min.css"></noscript>
-    <noscript><link rel=”stylesheet” href="https://use.typekit.net/fzb3fxo.css"></noscript>
+    <noscript><link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css"></noscript>
+    <noscript><link rel="stylesheet" href="https://use.typekit.net/fzb3fxo.css"></noscript>
 
     {%- if settings.favicon != blank -%}
       <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
@@ -184,6 +200,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     {% endif %}
 
     {% render 'meta-tags' %}
+
+    {%- if template.name == 'product' -%}
+      <script src="{{ 'insurance.js' | asset_url }}" defer></script>
+    {%- endif -%}
 
     <script src="{{ 'global.js' | asset_url }}" defer="defer"></script>
     {{ content_for_header }}
@@ -353,6 +373,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     {{ 'global-font-face.css' | asset_url | stylesheet_tag }}
     {{ 'base.css' | asset_url | stylesheet_tag }}
     {{ 'newStyle.css' | asset_url | stylesheet_tag }}
+    {{ 'component-insurance.css' | asset_url | stylesheet_tag }}
 
     {%- unless settings.type_body_font.system? -%}
       <link rel="preload" as="font" href="{{ settings.type_body_font | font_url }}" type="font/woff2" crossorigin>
@@ -362,24 +383,30 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     {%- endunless -%}
 
     {%- if settings.predictive_search_enabled -%}
-      <link rel="stylesheet" href="{{ 'component-predictive-search.css' | asset_url }}" media="print" onload="this.media='all'">
+      <link
+        rel="stylesheet"
+        href="{{ 'component-predictive-search.css' | asset_url }}"
+        media="print"
+        onload="this.media='all'"
+      >
     {%- endif -%}
 
-    <script>document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
-    if (Shopify.designMode) {
-      document.documentElement.classList.add('shopify-design-mode');
-    }
+    <script>
+      document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
+      if (Shopify.designMode) {
+        document.documentElement.classList.add('shopify-design-mode');
+      }
     </script>
-    
-{% render 'gsf-conversion-pixels' %}
-{% if content_for_header contains "hga.helloshopowner.com" %} 
- 
- {% render 'hso-hello-google-analytics' %} 
- 
- {% endif %} 
- 
- </head>
 
-  <body class="gradient"><div class="pagefly-container">{{ content_for_layout }}</div></body>
+    {% render 'gsf-conversion-pixels' %}
+    {% if content_for_header contains 'hga.helloshopowner.com' %}
+      {% render 'hso-hello-google-analytics' %}
+    {% endif %}
+  </head>
+
+  {%- if template.name == 'product' and product.variants[0].metafields.insurance.variant_name -%}
+    {%- assign is_insurance_product = true -%}
+  {%- endif -%}
+
+  <body class="gradient{% if is_insurance_product %} is-insurance-product{% endif %}"><div class="pagefly-container">{{ content_for_layout }}</div></body>
 </html>
-    

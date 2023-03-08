@@ -149,7 +149,13 @@
       "include_taxes": "Taxes incluses.",
       "shipping_policy_html": "<a href=\"{{ link }}\">Frais d'expédition<\/a> calculés à l'étape de paiement.",
       "choose_options": "Choisir des options",
-      "choose_product_options": "Choisir des options pour {{ product_name }}"
+      "choose_product_options": "Choisir des options pour {{ product_name }}",
+      "insurance": {
+        "choose_variant": "Choisissez une variante",
+        "choose_option": "Choisis un {{ option }}",
+        "chosen_option_html": "{{ option }}: <span>{{ value }}<\/span>",
+        "option_error": "Veuillez choisir un {{ option }}"
+      }
     },
     "modal": {
       "label": "Galerie de supports multimédias"

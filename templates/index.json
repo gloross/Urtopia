@@ -229,13 +229,14 @@
         "heading": "What our customers say"
       }
     },
-    "pagefly-home": {
-      "type": "pagefly-home",
+    "ab5b994e-332c-4d8d-a7a2-c5e2b272dd3f": {
+      "type": "homePage",
+      "disabled": true,
       "settings": {
       }
     },
-    "ab5b994e-332c-4d8d-a7a2-c5e2b272dd3f": {
-      "type": "homePage",
+    "pagefly-home": {
+      "type": "pagefly-home",
       "settings": {
       }
     }
@@ -247,7 +248,7 @@
     "1656492284a17cede3",
     "16564927103a32e910",
     "1656492713cc80b30e",
-    "pagefly-home",
-    "ab5b994e-332c-4d8d-a7a2-c5e2b272dd3f"
+    "ab5b994e-332c-4d8d-a7a2-c5e2b272dd3f",
+    "pagefly-home"
   ]
 }

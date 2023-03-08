@@ -474,12 +474,27 @@
                         <span {%- if link.child_active %} class="header__active-menu-item"{% endif %}>{{ link.title | escape }}</span>
                         {% render 'icon-caret' %}
                       </summary>
-                      <div id="MegaMenu-Content-{{ forloop.index }}" class="mega-menu__content gradient motion-reduce global-settings-popup" tabindex="-1">
-                        <ul class="mega-menu__list page-width{% if link.levels == 1 %} mega-menu__list--condensed{% endif %}" role="list">
+                      <div id="MegaMenu-Content-{{ forloop.index }}" class="mega-menu__content gradient motion-reduce global-settings-popup {% if link.title == 'E-Bike' %}mega_ebike_content{% endif %}" tabindex="-1">
+                        {% if link.title == 'E-Bike' %}
+                          <div class="ebike_shippment page-width">
+                            <div><img src="https://cdn.shopify.com/s/files/1/0583/5810/4213/files/Mask_Group_17960_1.svg" alt="urtopia"/><span class="ship_font">Free Shipping</span></div>
+                            <div><img src="https://cdn.shopify.com/s/files/1/0583/5810/4213/files/Mask_Group_17959_1.svg" alt="urtopia"/><span class="ship_font">14-Day Returns</span></div>
+                            <div><img src="https://cdn.shopify.com/s/files/1/0583/5810/4213/files/Mask_Group_17958_1.svg" alt="urtopia"/><span class="ship_font">2-Year Warranty</span></div>
+                          </div>
+                        {% endif %}
+                        <ul class="mega-menu__list page-width{% if link.levels == 1 %} mega-menu__list--condensed{% endif %} {% if link.title == 'E-Bike' %}mega_ebike_ul{% endif %}" role="list">
                           {%- for childlink in link.links -%}
                             <li>
-                              <a href="{{ childlink.url }}" class="mega-menu__link mega-menu__link--level-2 link{% if childlink.current %} mega-menu__link--active{% endif %}"{% if childlink.current %} aria-current="page"{% endif %}>
-                                {{ childlink.title | escape }}
+                              <a href="{{ childlink.url }}" class="mega-menu__link mega-menu__link--level-2 link{% if childlink.current %} mega-menu__link--active{% endif %}{% if childlink.title == 'Chord' %} chord_new{% endif %}"{% if childlink.current %} aria-current="page"{% endif %}>
+                                {%- if childlink.title == 'Chord' -%}
+                                  <h2>{{ childlink.title }}</h2>
+                                  <p>In Tune with Your Ride</p>
+                                {% elsif childlink.title == 'Carbon 1' %}
+                                  <h2>{{ childlink.title }}</h2>
+                                  <p>Sporty and Futuristic</p>
+                                {% else %}
+                                  {{ childlink.title | escape }}
+                                {%- endif -%}
                               </a>
                               {%- if childlink.links != blank -%}
                                 <ul class="list-unstyled" role="list">
