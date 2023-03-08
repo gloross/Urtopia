@@ -207,7 +207,7 @@ class Insurance {
   constructor() {
     this.templateInsuranceProduct = document.querySelector('.js-insurance-product-template');
     this.templateInsuranceMetafields = document.querySelector('.js-insurance-metafields-template');
-    this.addToCart = document.querySelector('[data-pf-type="ProductATC"]');
+    this.addToCart = document.querySelector('[data-pf-type="ProductBox"] .addToCartBtn');
     this.fakeButton = null;
 
     if (!this.templateInsuranceProduct || !this.templateInsuranceMetafields) return;
